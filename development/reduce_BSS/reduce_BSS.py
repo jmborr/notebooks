@@ -26,7 +26,7 @@ autows = "__auto_ws"
 autows_monitor = autows + "_monitor"
 
 dave_grp_filename = os.path.join(output_directory, "BASIS_" + run_number + "_1run.dat")
-processed_filename = os.path.join(output_directory, "bss" + run_number + "_silicon111_sqw.nxs")
+processed_filename = os.path.join(output_directory, "BSS_" + run_number + "_silicon111sqw.nxs")
 
 Load(Filename=nexus_file, OutputWorkspace=autows)
 data=mtd[autows].extractY()[0:2520*4]
@@ -79,9 +79,9 @@ try:
     b1=data[0:2520].reshape(56,45).transpose()[::-1,::-1]
     bss[0:45,0:56]=b1
     b2=data[2520:5040].reshape(56,45).transpose()[::-1,::-1]
-    bss[0:45,57:113]=b3
-    b3=data[5040:7560].reshape(56,45).transpose()[::-1,::-1]
     bss[46:91,0:56]=b2
+    b3=data[5040:7560].reshape(56,45).transpose()[::-1,::-1]
+    bss[0:45,57:113]=b3
     b4=data[7560:10080].reshape(56,45).transpose()[::-1,::-1]
     bss[46:91,57:113]=b4
 except:
