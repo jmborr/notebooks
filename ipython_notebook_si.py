@@ -79,7 +79,7 @@ for argument in (args.name, args.source, args.destination):
     checkexists(argument)
 
 if not args.extensions:
-    extensions = 'png,jpg,jpeg,gif,py,agr'.split(',')
+    extensions = 'png,jpg,jpeg,gif,py,agr,pdb,mpg,vmd'.split(',')
 else:
     extensions = args.extensions.strip().split(',')
 
