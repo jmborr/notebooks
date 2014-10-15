@@ -26,10 +26,11 @@ def scan_notebook(name, extensions):
     s = open(tmpname).read()
     files = []
     for extension in extensions:
-        files += re.findall('\(files/(.*\.{0})\)'.format(extension),s)  # Check local link, with format (files/link)
-        matches = re.findall('src=.*files/(.*.{0})'.format(extension), s) 
+        files += re.findall('\(files/([^)]*\.{0})\)'.format(extension),s)  # Check local link, with format (files/link)
+        matches = re.findall('src=.*files/(.*.{0}.*width)'.format(extension), s) 
         files += [ match.split(extension)[0]+extension for match in matches] # clean up backspaces mess
     os.system('/bin/rm {0}'.format(tmpname))
+    files = list(set(files)) # remove duplicates
     return files
 
 def filterin(files, source):
