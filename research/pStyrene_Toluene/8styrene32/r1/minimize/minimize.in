@@ -1,0 +1,45 @@
+########################################################
+#  LAMMPS input file                                   #
+#  http://lammps.sandia.gov/doc/Section_commands.html  #
+#  mpirun -np 32 lammps_openmpi -in minimize.in        #
+########################################################
+
+
+####################
+#  Initialization  #
+####################
+units real    # Angstrom,fs,energy=Kcal/mol,electric=volt/A,mass=gr/mol,dens=gr/cm^3,atmosphere,charge=|e|
+dimension 3
+boundary p p p     # periodic boundary conditions
+atom_style full
+
+#####################
+#  Atom definition  #
+#####################
+bond_style harmonic
+angle_style harmonic
+dihedral_style harmonic
+improper_style cvff
+pair_style lj/cut/coul/long 12.0 12.0   # cutoff=12Angstroms
+read_data 8styrene32.data
+pair_modify  shift yes  mix geometric   # Lennard-Jones potential set to zero at the cutoff
+kspace_style pppm 1.0e-4
+
+################################
+#  Settings (can be repeated)  #
+################################
+neighbor 2.0 bin                 # 2Angstroms above cutoff when building the neighbor list
+neigh_modify every 1             # calculate the neighbor list every 1 steps
+timestep 1.0
+reset_timestep 0
+thermo  1                        # write thermo info every step
+log minimize.log
+dump 0 all dcd 100 minimize.dcd  # save coordinates in DCD format
+dump_modify 0 unwrap no          # wrap coordinates into primitive cell
+########################################
+#  Run a simulation (can be repeated)  #
+########################################
+min_style cg                     # conjugate gradients minimization
+minimize 0.0 1.0e-8 10000 100000 # minimize for 10000 steps
+write_restart minimize.rst       # write final restart binary file
+write_data minimize.dat          # write final data file

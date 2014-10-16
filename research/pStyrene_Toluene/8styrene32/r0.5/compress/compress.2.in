@@ -1,0 +1,55 @@
+########################################################
+#  LAMMPS input file                                   #
+#  http://lammps.sandia.gov/doc/Section_commands.html  #
+#  mpirun -np 32 lammps_openmpi -in minimize.in        #
+########################################################
+
+####################
+#  Initialization  #
+####################
+#units real         # Angstrom,fs,energy=Kcal/mol,electric=volt/A,mass=gr/mol,dens=gr/cm^3,atmosphere,charge=|e|
+#dimension 3
+#boundary p p p     # periodic boundary conditions
+#atom_style full
+
+#####################
+#  Atom definition  #
+#####################
+#bond_style harmonic
+#angle_style harmonic
+#dihedral_style harmonic
+#improper_style cvff
+#pair_style lj/cut/coul/long 12.0 12.0   # cutoff=12Angstroms
+#pair_modify  shift yes  mix geometric   # Lennard-Jones potential set to zero at the cutoff
+
+#####################
+#  Atom definition  #
+#####################
+read_restart compress.1.rst    # in place of above lines
+kspace_style pppm 1.0e-4
+
+################################
+#  Settings (can be repeated)  #
+################################
+neighbor 2.0 bin  # 2Angstroms above cutoff when building the neighbor list
+neigh_modify every 1 # calculate the neighbor list every 10steps
+thermo  10000         # write every N steps
+#thermo_style custom step time temp press pe ke etotal evdwl ecoul epair ebond eangle edihed eimp vol density lx ly lz cella cellb cellc
+thermo_style custom time temp press vol density epair emol lx ly lz
+log compress.2.log
+#dump 0 all dcd 100000 compress.2.dcd  # save coordinates in DCD format
+#dump_modify 0 unwrap no         # wrap coordinates into primitive cell
+
+########################################
+#  Run a simulation (can be repeated)  #
+########################################
+timestep 0.1 # 0.1fs per timestep
+reset_timestep 0
+group heavy type 1 3 4 5  # define a group for non-Hydrogen atoms
+fix 1 all langevin 10 10 100 12345 zero yes # T0 Tf v_damp seed, Heat bath coupled to non-Hydrogen
+fix 2 all press/berendsen iso 10.0 10.0 1000000.0  #iso Pstart Pstop Pdamp
+fix 3 all nve
+run_style verlet
+run 5000000  # run for N timesteps
+write_restart compress.2.rst # write restart file after completion of simulation
+write_data compress.2.data   # write data file after completion of simulation

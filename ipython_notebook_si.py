@@ -73,14 +73,15 @@ parser = argparse.ArgumentParser(description='Update supporting files for the ip
 parser.add_argument('name', help='filepath to the ipython notebook')
 parser.add_argument('source', help='source directory containing the files.')
 parser.add_argument('destination', help='destination directory.')
-parser.add_argument('--extensions', help='only files with selected extensions will be fetched. Default: "png,jpg,jpeg,gif,py,agr"')
+extensions='png,jpg,jpeg,gif,py,agr,pdb,mpg,vmd,conf,in'
+parser.add_argument('--extensions', help='only files with selected extensions will be fetched. Default: "{0}"'.format(extensions))
 args=parser.parse_args()
 
 for argument in (args.name, args.source, args.destination):
     checkexists(argument)
 
 if not args.extensions:
-    extensions = 'png,jpg,jpeg,gif,py,agr,pdb,mpg,vmd,conf'.split(',')
+    extensions = extensions.split(',')
 else:
     extensions = args.extensions.strip().split(',')
 
