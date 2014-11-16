@@ -40,7 +40,7 @@ def RMStoCentroid(topfile, serialtraj, mask, centroidPDB, averagePDB, outdcdfile
 cluster out /tmp/cluster representative pdb average pdb averagelinkage clusters 1 rms !@H*'''.format(serialtraj)
     execptraj(topfile, script)
     os.system('/bin/mv /tmp/cluster.rep.c0 {0}'.format(centroidPDB))
-    os.system('/bin/mv /tmp/cluster.avg.c0 {0}'.format(averagePBD))
+    os.system('/bin/mv /tmp/cluster.avg.c0 {0}'.format(averagePDB))
     os.system('/bin/rm /tmp/cluster*')
 
     script = '''trajin {0}
@@ -64,7 +64,7 @@ args=parser.parse_args()
 # Extract each of the four proteins into a trajectory
 nprotein = 4
 singletrajs = []
-tr()
+
 for protein_index in range(nprotein):
     handle, outdcdfile = mkstemp(dir='/tmp',prefix='junk',suffix='.dcd') 
     extract(args.topfile, args.indcd, protein_index, outdcdfile)
@@ -83,5 +83,5 @@ for singletraj in singletrajs: os.system('/bin/rm {0}'.format(singletraj))
 RMStoCentroid(singletopfile, serialtraj, args.mask, args.centroid, args.average, args.outdcd, args.rms)
 
 # Final cleanup
-os.system('/bin/rm {0}'.singletopfile)
+os.system('/bin/rm {0}'.format(singletopfile))
 
