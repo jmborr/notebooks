@@ -1,0 +1,4 @@
+trajin equil_rms2first.dcd
+reference average_styH.pdb
+rms reference out rms2avg_styH.dat time 1.0 :1-256&@H*
+
