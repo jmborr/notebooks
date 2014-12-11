@@ -1,0 +1,27 @@
+# DAKOTA INPUT FILE: nohup dakota dakota.in &
+
+method,
+        nl2sol
+          initial_trust_radius = 100
+          function_precision = 1e-3
+          output debug
+
+variables,
+        continuous_design   = 9
+          cdv_initial_point   1.0  1e-4  1e-5  1.0      1.0      1.0      1.0      1.0      0.0
+          cdv_lower_bounds    0.01 1e-8  1e-8  0.01     0.01     0.01     0.01     0.01   -4.e-4 
+          cdv_upper_bounds    10.  2e-4  1e-3  10.      10.      10.      10.      10.     4.e-4 
+          cdv_descriptors    'c0'   'b0' 'b1' 'e0.1'    'e0.2'  'e0.3'   'e0.4'   'e0.5' 'eshift' 
+
+interface,
+	fork
+	  analysis_driver   = 'opt_driver.py'
+	    parameters_file = 'params.in'
+	    results_file    = 'results.out'
+	    file_tag
+	    file_save
+
+responses,
+	objective_functions = 1
+	numerical_gradients
+	no_hessians
