@@ -1,0 +1,1345 @@
+#!/usr/local/bin/vmd
+# VMD script written by save_state $Revision: 1.44 $
+# VMD version: 1.9.1
+set viewplist {}
+set fixedlist {}
+proc vmdrestoremymaterials {} {
+  set mlist { Opaque Transparent BrushedMetal Diffuse Ghost Glass1 Glass2 Glass3 Glossy HardPlastic MetallicPastel Steel Translucent Edgy EdgyShiny EdgyGlass Goodsell AOShiny AOChalky AOEdgy BlownGlass GlassBubble }
+  set mymlist [material list]
+  foreach mat $mlist {
+    if { [lsearch $mymlist $mat] == -1 } { 
+      material add $mat
+    }
+  }
+  material change ambient Opaque 0.000000
+  material change diffuse Opaque 0.650000
+  material change specular Opaque 0.500000
+  material change shininess Opaque 0.534020
+  material change opacity Opaque 1.000000
+  material change outline Opaque 0.000000
+  material change outlinewidth Opaque 0.000000
+  material change transmode Opaque 0.000000
+  material change ambient Transparent 0.000000
+  material change diffuse Transparent 0.650000
+  material change specular Transparent 0.500000
+  material change shininess Transparent 0.534020
+  material change opacity Transparent 0.300000
+  material change outline Transparent 0.000000
+  material change outlinewidth Transparent 0.000000
+  material change transmode Transparent 0.000000
+  material change ambient BrushedMetal 0.080000
+  material change diffuse BrushedMetal 0.390000
+  material change specular BrushedMetal 0.340000
+  material change shininess BrushedMetal 0.150000
+  material change opacity BrushedMetal 1.000000
+  material change outline BrushedMetal 0.000000
+  material change outlinewidth BrushedMetal 0.000000
+  material change transmode BrushedMetal 0.000000
+  material change ambient Diffuse 0.000000
+  material change diffuse Diffuse 0.620000
+  material change specular Diffuse 0.000000
+  material change shininess Diffuse 0.530000
+  material change opacity Diffuse 1.000000
+  material change outline Diffuse 0.000000
+  material change outlinewidth Diffuse 0.000000
+  material change transmode Diffuse 0.000000
+  material change ambient Ghost 0.000000
+  material change diffuse Ghost 0.000000
+  material change specular Ghost 1.000000
+  material change shininess Ghost 0.230000
+  material change opacity Ghost 0.100000
+  material change outline Ghost 0.000000
+  material change outlinewidth Ghost 0.000000
+  material change transmode Ghost 0.000000
+  material change ambient Glass1 0.000000
+  material change diffuse Glass1 0.500000
+  material change specular Glass1 0.650000
+  material change shininess Glass1 0.530000
+  material change opacity Glass1 0.150000
+  material change outline Glass1 0.000000
+  material change outlinewidth Glass1 0.000000
+  material change transmode Glass1 0.000000
+  material change ambient Glass2 0.520000
+  material change diffuse Glass2 0.760000
+  material change specular Glass2 0.220000
+  material change shininess Glass2 0.590000
+  material change opacity Glass2 0.680000
+  material change outline Glass2 0.000000
+  material change outlinewidth Glass2 0.000000
+  material change transmode Glass2 0.000000
+  material change ambient Glass3 0.150000
+  material change diffuse Glass3 0.250000
+  material change specular Glass3 0.750000
+  material change shininess Glass3 0.800000
+  material change opacity Glass3 0.500000
+  material change outline Glass3 0.000000
+  material change outlinewidth Glass3 0.000000
+  material change transmode Glass3 0.000000
+  material change ambient Glossy 0.000000
+  material change diffuse Glossy 0.650000
+  material change specular Glossy 1.000000
+  material change shininess Glossy 0.880000
+  material change opacity Glossy 1.000000
+  material change outline Glossy 0.000000
+  material change outlinewidth Glossy 0.000000
+  material change transmode Glossy 0.000000
+  material change ambient HardPlastic 0.000000
+  material change diffuse HardPlastic 0.560000
+  material change specular HardPlastic 0.280000
+  material change shininess HardPlastic 0.690000
+  material change opacity HardPlastic 1.000000
+  material change outline HardPlastic 0.000000
+  material change outlinewidth HardPlastic 0.000000
+  material change transmode HardPlastic 0.000000
+  material change ambient MetallicPastel 0.000000
+  material change diffuse MetallicPastel 0.260000
+  material change specular MetallicPastel 0.550000
+  material change shininess MetallicPastel 0.190000
+  material change opacity MetallicPastel 1.000000
+  material change outline MetallicPastel 0.000000
+  material change outlinewidth MetallicPastel 0.000000
+  material change transmode MetallicPastel 0.000000
+  material change ambient Steel 0.250000
+  material change diffuse Steel 0.000000
+  material change specular Steel 0.380000
+  material change shininess Steel 0.320000
+  material change opacity Steel 1.000000
+  material change outline Steel 0.000000
+  material change outlinewidth Steel 0.000000
+  material change transmode Steel 0.000000
+  material change ambient Translucent 0.000000
+  material change diffuse Translucent 0.700000
+  material change specular Translucent 0.600000
+  material change shininess Translucent 0.300000
+  material change opacity Translucent 0.800000
+  material change outline Translucent 0.000000
+  material change outlinewidth Translucent 0.000000
+  material change transmode Translucent 0.000000
+  material change ambient Edgy 0.000000
+  material change diffuse Edgy 0.660000
+  material change specular Edgy 0.000000
+  material change shininess Edgy 0.750000
+  material change opacity Edgy 1.000000
+  material change outline Edgy 0.620000
+  material change outlinewidth Edgy 0.940000
+  material change transmode Edgy 0.000000
+  material change ambient EdgyShiny 0.000000
+  material change diffuse EdgyShiny 0.660000
+  material change specular EdgyShiny 0.960000
+  material change shininess EdgyShiny 0.750000
+  material change opacity EdgyShiny 1.000000
+  material change outline EdgyShiny 0.760000
+  material change outlinewidth EdgyShiny 0.940000
+  material change transmode EdgyShiny 0.000000
+  material change ambient EdgyGlass 0.000000
+  material change diffuse EdgyGlass 0.660000
+  material change specular EdgyGlass 0.500000
+  material change shininess EdgyGlass 0.750000
+  material change opacity EdgyGlass 0.620000
+  material change outline EdgyGlass 0.620000
+  material change outlinewidth EdgyGlass 0.940000
+  material change transmode EdgyGlass 0.000000
+  material change ambient Goodsell 0.520000
+  material change diffuse Goodsell 1.000000
+  material change specular Goodsell 0.000000
+  material change shininess Goodsell 0.000000
+  material change opacity Goodsell 1.000000
+  material change outline Goodsell 4.000000
+  material change outlinewidth Goodsell 0.900000
+  material change transmode Goodsell 0.000000
+  material change ambient AOShiny 0.000000
+  material change diffuse AOShiny 0.850000
+  material change specular AOShiny 0.200000
+  material change shininess AOShiny 0.530000
+  material change opacity AOShiny 1.000000
+  material change outline AOShiny 0.000000
+  material change outlinewidth AOShiny 0.000000
+  material change transmode AOShiny 0.000000
+  material change ambient AOChalky 0.000000
+  material change diffuse AOChalky 0.850000
+  material change specular AOChalky 0.000000
+  material change shininess AOChalky 0.530000
+  material change opacity AOChalky 1.000000
+  material change outline AOChalky 0.000000
+  material change outlinewidth AOChalky 0.000000
+  material change transmode AOChalky 0.000000
+  material change ambient AOEdgy 0.000000
+  material change diffuse AOEdgy 0.900000
+  material change specular AOEdgy 0.200000
+  material change shininess AOEdgy 0.530000
+  material change opacity AOEdgy 1.000000
+  material change outline AOEdgy 0.620000
+  material change outlinewidth AOEdgy 0.930000
+  material change transmode AOEdgy 0.000000
+  material change ambient BlownGlass 0.040000
+  material change diffuse BlownGlass 0.340000
+  material change specular BlownGlass 1.000000
+  material change shininess BlownGlass 1.000000
+  material change opacity BlownGlass 0.100000
+  material change outline BlownGlass 0.000000
+  material change outlinewidth BlownGlass 0.000000
+  material change transmode BlownGlass 1.000000
+  material change ambient GlassBubble 0.250000
+  material change diffuse GlassBubble 0.340000
+  material change specular GlassBubble 1.000000
+  material change shininess GlassBubble 1.000000
+  material change opacity GlassBubble 0.040000
+  material change outline GlassBubble 0.000000
+  material change outlinewidth GlassBubble 0.000000
+  material change transmode GlassBubble 1.000000
+}
+vmdrestoremymaterials
+# Atom selection macros
+atomselect macro at {resname ADE A THY T
+}
+atomselect macro acidic {resname ASP GLU
+}
+atomselect macro cyclic {resname HIS PHE PRO TRP TYR
+}
+atomselect macro acyclic {protein and not cyclic
+}
+atomselect macro aliphatic {resname ALA GLY ILE LEU VAL
+}
+atomselect macro alpha {protein and name CA
+}
+atomselect macro amino {protein
+}
+atomselect macro aromatic {resname HIS PHE TRP TYR
+}
+atomselect macro basic {resname ARG HIS LYS HSP
+}
+atomselect macro bonded {numbonds > 0
+}
+atomselect macro buried {resname ALA LEU VAL ILE PHE CYS MET TRP
+}
+atomselect macro cg {resname CYT C GUA G
+}
+atomselect macro charged {basic or acidic
+}
+atomselect macro hetero {not (protein or nucleic)
+}
+atomselect macro hydrophobic {resname ALA LEU VAL ILE PRO PHE MET TRP
+}
+atomselect macro small {resname ALA GLY SER
+}
+atomselect macro medium {resname VAL THR ASP ASN PRO CYS ASX PCA HYP
+}
+atomselect macro large {protein and not (small or medium)
+}
+atomselect macro neutral {resname VAL PHE GLN TYR HIS CYS MET TRP ASX GLX PCA HYP
+}
+atomselect macro polar {protein and not hydrophobic
+}
+atomselect macro purine {resname ADE A GUA G
+}
+atomselect macro pyrimidine {resname CYT C THY T URA U
+}
+atomselect macro surface {protein and not buried
+}
+atomselect macro lipid {resname DLPE DMPC DPPC GPC LPPC PALM PC PGCL POPC POPE
+}
+atomselect macro lipids {lipid
+}
+atomselect macro ion {resname AL BA CA CAL CD CES CLA CL CO CS CU CU1 CUA HG IN IOD K MG MN3 MO3 MO4 MO5 MO6 NA NAW OC7 PB POT PT RB SOD TB TL WO4 YB ZN ZN1 ZN2
+}
+atomselect macro ions {ion
+}
+atomselect macro sugar {resname AGLC
+}
+atomselect macro solvent {not (protein or sugar or nucleic or lipid)
+}
+atomselect macro carbon {name "C.*" and not ion
+}
+atomselect macro hydrogen {name "[0-9]?H.*"
+}
+atomselect macro nitrogen {name "N.*"
+}
+atomselect macro oxygen {name "O.*"
+}
+atomselect macro sulfur {name "S.*" and not ion
+}
+atomselect macro noh {not hydrogen
+}
+atomselect macro heme {resname HEM HEME
+}
+atomselect macro conformationall {altloc ""
+}
+atomselect macro conformationA {altloc "" or altloc "A"
+}
+atomselect macro conformationB {altloc "" or altloc "B"
+}
+atomselect macro conformationC {altloc "" or altloc "C"
+}
+atomselect macro conformationD {altloc "" or altloc "D"
+}
+atomselect macro conformationE {altloc "" or altloc "E"
+}
+atomselect macro conformationF {altloc "" or altloc "F"
+}
+atomselect macro drude {type DRUD or type LP
+}
+atomselect macro unparametrized beta<1
+atomselect macro addedmolefacture {occupancy 0.8}
+# Display settings
+display eyesep       0.065000
+display focallength  2.000000
+display height       6.000000
+display distance     -2.000000
+display projection   Perspective
+display nearclip set 0.500000
+display farclip  set 10.000000
+display depthcue   on
+display cuestart   0.500000
+display cueend     10.000000
+display cuedensity 0.320000
+display cuemode    Exp2
+mol new last_conformation.pdb type pdb first 0 last -1 step 1 filebonds 1 autobonds 1 waitfor all
+mol delrep 0 top
+mol representation QuickSurf 0.900000 0.500000 1.000000 1.000000
+mol color ColorID 0
+mol selection {residue 0 to 255}
+mol material BrushedMetal
+mol addrep top
+mol selupdate 0 top 0
+mol colupdate 0 top 0
+mol scaleminmax top 0 0.000000 0.000000
+mol smoothrep top 0 0
+mol drawframes top 0 {now}
+mol clipplane center 0 0 top {0.0 0.0 0.0}
+mol clipplane color  0 0 top {0.5 0.5 0.5 }
+mol clipplane normal 0 0 top {0.0 0.0 1.0}
+mol clipplane status 0 0 top {0}
+mol clipplane center 1 0 top {0.0 0.0 0.0}
+mol clipplane color  1 0 top {0.5 0.5 0.5 }
+mol clipplane normal 1 0 top {0.0 0.0 1.0}
+mol clipplane status 1 0 top {0}
+mol clipplane center 2 0 top {0.0 0.0 0.0}
+mol clipplane color  2 0 top {0.5 0.5 0.5 }
+mol clipplane normal 2 0 top {0.0 0.0 1.0}
+mol clipplane status 2 0 top {0}
+mol clipplane center 3 0 top {0.0 0.0 0.0}
+mol clipplane color  3 0 top {0.5 0.5 0.5 }
+mol clipplane normal 3 0 top {0.0 0.0 1.0}
+mol clipplane status 3 0 top {0}
+mol clipplane center 4 0 top {0.0 0.0 0.0}
+mol clipplane color  4 0 top {0.5 0.5 0.5 }
+mol clipplane normal 4 0 top {0.0 0.0 1.0}
+mol clipplane status 4 0 top {0}
+mol clipplane center 5 0 top {0.0 0.0 0.0}
+mol clipplane color  5 0 top {0.5 0.5 0.5 }
+mol clipplane normal 5 0 top {0.0 0.0 1.0}
+mol clipplane status 5 0 top {0}
+mol representation Bonds 0.300000 10.000000
+mol color Name
+mol selection {not residue 0 to 255}
+mol material Opaque
+mol addrep top
+mol selupdate 1 top 0
+mol colupdate 1 top 0
+mol scaleminmax top 1 0.000000 0.000000
+mol smoothrep top 1 0
+mol drawframes top 1 {now}
+mol clipplane center 0 1 top {0.0 0.0 0.0}
+mol clipplane color  0 1 top {0.5 0.5 0.5 }
+mol clipplane normal 0 1 top {0.0 0.0 1.0}
+mol clipplane status 0 1 top {0}
+mol clipplane center 1 1 top {0.0 0.0 0.0}
+mol clipplane color  1 1 top {0.5 0.5 0.5 }
+mol clipplane normal 1 1 top {0.0 0.0 1.0}
+mol clipplane status 1 1 top {0}
+mol clipplane center 2 1 top {0.0 0.0 0.0}
+mol clipplane color  2 1 top {0.5 0.5 0.5 }
+mol clipplane normal 2 1 top {0.0 0.0 1.0}
+mol clipplane status 2 1 top {0}
+mol clipplane center 3 1 top {0.0 0.0 0.0}
+mol clipplane color  3 1 top {0.5 0.5 0.5 }
+mol clipplane normal 3 1 top {0.0 0.0 1.0}
+mol clipplane status 3 1 top {0}
+mol clipplane center 4 1 top {0.0 0.0 0.0}
+mol clipplane color  4 1 top {0.5 0.5 0.5 }
+mol clipplane normal 4 1 top {0.0 0.0 1.0}
+mol clipplane status 4 1 top {0}
+mol clipplane center 5 1 top {0.0 0.0 0.0}
+mol clipplane color  5 1 top {0.5 0.5 0.5 }
+mol clipplane normal 5 1 top {0.0 0.0 1.0}
+mol clipplane status 5 1 top {0}
+mol rename top last_conformation.pdb
+set viewpoints([molinfo top]) {{{1 0 0 -26.8187} {0 1 0 -26.7549} {0 0 1 -26.3123} {0 0 0 1}} {{1 0 0 0} {0 1 0 0} {0 0 1 0} {0 0 0 1}} {{0.0261215 0 0 0} {0 0.0261215 0 0} {0 0 0.0261215 0} {0 0 0 1}} {{1 0 0 0} {0 1 0 0} {0 0 1 0} {0 0 0 1}}}
+lappend viewplist [molinfo top]
+set topmol [molinfo top]
+# done with molecule 0
+foreach v $viewplist {
+  molinfo $v set {center_matrix rotate_matrix scale_matrix global_matrix} $viewpoints($v)
+}
+foreach v $fixedlist {
+  molinfo $v set fixed 1
+}
+unset viewplist
+unset fixedlist
+mol top $topmol
+unset topmol
+proc vmdrestoremycolors {} {
+color scale colors RWB {1.0 0.0 0.0} {1.0 1.0 1.0} {0.0 0.0 1.0}
+color scale colors BWR {0.0 0.0 1.0} {1.0 1.0 1.0} {1.0 0.0 0.0}
+color scale colors RGryB {1.0 0.0 0.0} {0.5 0.5 0.5} {0.0 0.0 1.0}
+color scale colors BGryR {0.0 0.0 1.0} {0.5 0.5 0.5} {1.0 0.0 0.0}
+color scale colors RGB {1.0 0.0 0.0} {0.0 1.0 0.0} {0.0 0.0 1.0}
+color scale colors BGR {0.0 0.0 1.0} {0.0 1.0 0.0} {1.0 0.0 0.0}
+color scale colors RWG {1.0 0.0 0.0} {1.0 1.0 1.0} {0.0 1.0 0.0}
+color scale colors GWR {0.0 1.0 0.0} {1.0 1.0 1.0} {1.0 0.0 0.0}
+color scale colors GWB {0.0 1.0 0.0} {1.0 1.0 1.0} {0.0 0.0 1.0}
+color scale colors BWG {0.0 0.0 1.0} {1.0 1.0 1.0} {0.0 1.0 0.0}
+color scale colors BlkW {0.0 0.0 0.0} {0.5 0.5 0.5} {1.0 1.0 1.0}
+color scale colors WBlk {1.0 1.0 1.0} {0.5 0.5 0.5} {0.0 0.0 0.0}
+  color scale method RWB
+  set colorcmds {
+    {color Display {BackgroundTop} black}
+    {color Display {BackgroundBot} blue2}
+    {color Display {FPS} white}
+    {color Name {LPA} green}
+    {color Name {LPB} green}
+    {color Type {LP} green}
+    {color Type {DRUD} pink}
+    {color Element {X} cyan}
+    {color Element {Ac} ochre}
+    {color Element {Ag} ochre}
+    {color Element {Al} ochre}
+    {color Element {Am} ochre}
+    {color Element {Ar} ochre}
+    {color Element {As} ochre}
+    {color Element {At} ochre}
+    {color Element {Au} ochre}
+    {color Element {B} ochre}
+    {color Element {Ba} ochre}
+    {color Element {Be} ochre}
+    {color Element {Bh} ochre}
+    {color Element {Bi} ochre}
+    {color Element {Bk} ochre}
+    {color Element {Br} ochre}
+    {color Element {Ca} ochre}
+    {color Element {Cd} ochre}
+    {color Element {Ce} ochre}
+    {color Element {Cf} ochre}
+    {color Element {Cl} ochre}
+    {color Element {Cm} ochre}
+    {color Element {Co} ochre}
+    {color Element {Cr} ochre}
+    {color Element {Cs} ochre}
+    {color Element {Cu} ochre}
+    {color Element {Db} ochre}
+    {color Element {Ds} ochre}
+    {color Element {Dy} ochre}
+    {color Element {Er} ochre}
+    {color Element {Es} ochre}
+    {color Element {Eu} ochre}
+    {color Element {F} ochre}
+    {color Element {Fe} ochre}
+    {color Element {Fm} ochre}
+    {color Element {Fr} ochre}
+    {color Element {Ga} ochre}
+    {color Element {Gd} ochre}
+    {color Element {Ge} ochre}
+    {color Element {He} ochre}
+    {color Element {Hf} ochre}
+    {color Element {Hg} ochre}
+    {color Element {Ho} ochre}
+    {color Element {Hs} ochre}
+    {color Element {I} ochre}
+    {color Element {In} ochre}
+    {color Element {Ir} ochre}
+    {color Element {K} ochre}
+    {color Element {Kr} ochre}
+    {color Element {La} ochre}
+    {color Element {Li} ochre}
+    {color Element {Lr} ochre}
+    {color Element {Lu} ochre}
+    {color Element {Md} ochre}
+    {color Element {Mg} ochre}
+    {color Element {Mn} ochre}
+    {color Element {Mo} ochre}
+    {color Element {Mt} ochre}
+    {color Element {Na} ochre}
+    {color Element {Nb} ochre}
+    {color Element {Nd} ochre}
+    {color Element {Ne} ochre}
+    {color Element {Ni} ochre}
+    {color Element {No} ochre}
+    {color Element {Np} ochre}
+    {color Element {Os} ochre}
+    {color Element {Pa} ochre}
+    {color Element {Pb} ochre}
+    {color Element {Pd} ochre}
+    {color Element {Pm} ochre}
+    {color Element {Po} ochre}
+    {color Element {Pr} ochre}
+    {color Element {Pt} ochre}
+    {color Element {Pu} ochre}
+    {color Element {Ra} ochre}
+    {color Element {Rb} ochre}
+    {color Element {Re} ochre}
+    {color Element {Rf} ochre}
+    {color Element {Rg} ochre}
+    {color Element {Rh} ochre}
+    {color Element {Rn} ochre}
+    {color Element {Ru} ochre}
+    {color Element {Sb} ochre}
+    {color Element {Sc} ochre}
+    {color Element {Se} ochre}
+    {color Element {Sg} ochre}
+    {color Element {Si} ochre}
+    {color Element {Sm} ochre}
+    {color Element {Sn} ochre}
+    {color Element {Sr} ochre}
+    {color Element {Ta} ochre}
+    {color Element {Tb} ochre}
+    {color Element {Tc} ochre}
+    {color Element {Te} ochre}
+    {color Element {Th} ochre}
+    {color Element {Ti} ochre}
+    {color Element {Tl} ochre}
+    {color Element {Tm} ochre}
+    {color Element {U} ochre}
+    {color Element {V} ochre}
+    {color Element {W} ochre}
+    {color Element {Xe} ochre}
+    {color Element {Y} ochre}
+    {color Element {Yb} ochre}
+    {color Element {Zr} ochre}
+    {color Resname {1} silver}
+    {color Resname {2} green}
+    {color Resname {3} white}
+    {color Resname {4} pink}
+    {color Resname {5} cyan}
+    {color Resname {6} purple}
+    {color Resname {7} lime}
+    {color Resname {8} mauve}
+    {color Resname {9} ochre}
+    {color Resname {10} iceblue}
+    {color Resname {11} black}
+    {color Resname {12} yellow2}
+    {color Resname {13} yellow3}
+    {color Resname {14} green2}
+    {color Resname {15} green3}
+    {color Resname {16} cyan2}
+    {color Resname {17} cyan3}
+    {color Resname {18} blue2}
+    {color Resname {19} blue3}
+    {color Resname {20} violet}
+    {color Resname {21} violet2}
+    {color Resname {22} magenta}
+    {color Resname {23} magenta2}
+    {color Resname {24} red2}
+    {color Resname {25} red3}
+    {color Resname {26} orange2}
+    {color Resname {27} blue}
+    {color Resname {28} red}
+    {color Resname {29} gray}
+    {color Resname {30} orange}
+    {color Resname {31} yellow}
+    {color Resname {32} tan}
+    {color Resname {33} silver}
+    {color Resname {34} green}
+    {color Resname {35} white}
+    {color Resname {36} pink}
+    {color Resname {37} cyan}
+    {color Resname {38} purple}
+    {color Resname {39} lime}
+    {color Resname {40} mauve}
+    {color Resname {41} ochre}
+    {color Resname {42} iceblue}
+    {color Resname {43} black}
+    {color Resname {44} yellow2}
+    {color Resname {45} yellow3}
+    {color Resname {46} green2}
+    {color Resname {47} green3}
+    {color Resname {48} cyan2}
+    {color Resname {49} cyan3}
+    {color Resname {50} blue2}
+    {color Resname {51} blue3}
+    {color Resname {52} violet}
+    {color Resname {53} violet2}
+    {color Resname {54} magenta}
+    {color Resname {55} magenta2}
+    {color Resname {56} red2}
+    {color Resname {57} red3}
+    {color Resname {58} orange2}
+    {color Resname {59} blue}
+    {color Resname {60} red}
+    {color Resname {61} gray}
+    {color Resname {62} orange}
+    {color Resname {63} yellow}
+    {color Resname {64} tan}
+    {color Resname {65} silver}
+    {color Resname {66} green}
+    {color Resname {67} white}
+    {color Resname {68} pink}
+    {color Resname {69} cyan}
+    {color Resname {70} purple}
+    {color Resname {71} lime}
+    {color Resname {72} mauve}
+    {color Resname {73} ochre}
+    {color Resname {74} iceblue}
+    {color Resname {75} black}
+    {color Resname {76} yellow2}
+    {color Resname {77} yellow3}
+    {color Resname {78} green2}
+    {color Resname {79} green3}
+    {color Resname {80} cyan2}
+    {color Resname {81} cyan3}
+    {color Resname {82} blue2}
+    {color Resname {83} blue3}
+    {color Resname {84} violet}
+    {color Resname {85} violet2}
+    {color Resname {86} magenta}
+    {color Resname {87} magenta2}
+    {color Resname {88} red2}
+    {color Resname {89} red3}
+    {color Resname {90} orange2}
+    {color Resname {91} blue}
+    {color Resname {92} red}
+    {color Resname {93} gray}
+    {color Resname {94} orange}
+    {color Resname {95} yellow}
+    {color Resname {96} tan}
+    {color Resname {97} silver}
+    {color Resname {98} green}
+    {color Resname {99} white}
+    {color Resname {100} pink}
+    {color Resname {101} cyan}
+    {color Resname {102} purple}
+    {color Resname {103} lime}
+    {color Resname {104} mauve}
+    {color Resname {105} ochre}
+    {color Resname {106} iceblue}
+    {color Resname {107} black}
+    {color Resname {108} yellow2}
+    {color Resname {109} yellow3}
+    {color Resname {110} green2}
+    {color Resname {111} green3}
+    {color Resname {112} cyan2}
+    {color Resname {113} cyan3}
+    {color Resname {114} blue2}
+    {color Resname {115} blue3}
+    {color Resname {116} violet}
+    {color Resname {117} violet2}
+    {color Resname {118} magenta}
+    {color Resname {119} magenta2}
+    {color Resname {120} red2}
+    {color Resname {121} red3}
+    {color Resname {122} orange2}
+    {color Resname {123} blue}
+    {color Resname {124} red}
+    {color Resname {125} gray}
+    {color Resname {126} orange}
+    {color Resname {127} yellow}
+    {color Resname {128} tan}
+    {color Resname {129} silver}
+    {color Resname {130} green}
+    {color Resname {131} white}
+    {color Resname {132} pink}
+    {color Resname {133} cyan}
+    {color Resname {134} purple}
+    {color Resname {135} lime}
+    {color Resname {136} mauve}
+    {color Resname {137} ochre}
+    {color Resname {138} iceblue}
+    {color Resname {139} black}
+    {color Resname {140} yellow2}
+    {color Resname {141} yellow3}
+    {color Resname {142} green2}
+    {color Resname {143} green3}
+    {color Resname {144} cyan2}
+    {color Resname {145} cyan3}
+    {color Resname {146} blue2}
+    {color Resname {147} blue3}
+    {color Resname {148} violet}
+    {color Resname {149} violet2}
+    {color Resname {150} magenta}
+    {color Resname {151} magenta2}
+    {color Resname {152} red2}
+    {color Resname {153} red3}
+    {color Resname {154} orange2}
+    {color Resname {155} blue}
+    {color Resname {156} red}
+    {color Resname {157} gray}
+    {color Resname {158} orange}
+    {color Resname {159} yellow}
+    {color Resname {160} tan}
+    {color Resname {161} silver}
+    {color Resname {162} green}
+    {color Resname {163} white}
+    {color Resname {164} pink}
+    {color Resname {165} cyan}
+    {color Resname {166} purple}
+    {color Resname {167} lime}
+    {color Resname {168} mauve}
+    {color Resname {169} ochre}
+    {color Resname {170} iceblue}
+    {color Resname {171} black}
+    {color Resname {172} yellow2}
+    {color Resname {173} yellow3}
+    {color Resname {174} green2}
+    {color Resname {175} green3}
+    {color Resname {176} cyan2}
+    {color Resname {177} cyan3}
+    {color Resname {178} blue2}
+    {color Resname {179} blue3}
+    {color Resname {180} violet}
+    {color Resname {181} violet2}
+    {color Resname {182} magenta}
+    {color Resname {183} magenta2}
+    {color Resname {184} red2}
+    {color Resname {185} red3}
+    {color Resname {186} orange2}
+    {color Resname {187} blue}
+    {color Resname {188} red}
+    {color Resname {189} gray}
+    {color Resname {190} orange}
+    {color Resname {191} yellow}
+    {color Resname {192} tan}
+    {color Resname {193} silver}
+    {color Resname {194} green}
+    {color Resname {195} white}
+    {color Resname {196} pink}
+    {color Resname {197} cyan}
+    {color Resname {198} purple}
+    {color Resname {199} lime}
+    {color Resname {200} mauve}
+    {color Resname {201} ochre}
+    {color Resname {202} iceblue}
+    {color Resname {203} black}
+    {color Resname {204} yellow2}
+    {color Resname {205} yellow3}
+    {color Resname {206} green2}
+    {color Resname {207} green3}
+    {color Resname {208} cyan2}
+    {color Resname {209} cyan3}
+    {color Resname {210} blue2}
+    {color Resname {211} blue3}
+    {color Resname {212} violet}
+    {color Resname {213} violet2}
+    {color Resname {214} magenta}
+    {color Resname {215} magenta2}
+    {color Resname {216} red2}
+    {color Resname {217} red3}
+    {color Resname {218} orange2}
+    {color Resname {219} blue}
+    {color Resname {220} red}
+    {color Resname {221} gray}
+    {color Resname {222} orange}
+    {color Resname {223} yellow}
+    {color Resname {224} tan}
+    {color Resname {225} silver}
+    {color Resname {226} green}
+    {color Resname {227} white}
+    {color Resname {228} pink}
+    {color Resname {229} cyan}
+    {color Resname {230} purple}
+    {color Resname {231} lime}
+    {color Resname {232} mauve}
+    {color Resname {233} ochre}
+    {color Resname {234} iceblue}
+    {color Resname {235} black}
+    {color Resname {236} yellow2}
+    {color Resname {237} yellow3}
+    {color Resname {238} green2}
+    {color Resname {239} green3}
+    {color Resname {240} cyan2}
+    {color Resname {241} cyan3}
+    {color Resname {242} blue2}
+    {color Resname {243} blue3}
+    {color Resname {244} violet}
+    {color Resname {245} violet2}
+    {color Resname {246} magenta}
+    {color Resname {247} magenta2}
+    {color Resname {248} red2}
+    {color Resname {249} red3}
+    {color Resname {250} orange2}
+    {color Resname {251} blue}
+    {color Resname {252} red}
+    {color Resname {253} gray}
+    {color Resname {254} orange}
+    {color Resname {255} yellow}
+    {color Resname {256} tan}
+    {color Resname {257} silver}
+    {color Resname {258} green}
+    {color Resname {259} white}
+    {color Resname {260} pink}
+    {color Resname {261} cyan}
+    {color Resname {262} purple}
+    {color Resname {263} lime}
+    {color Resname {264} mauve}
+    {color Resname {265} ochre}
+    {color Resname {266} iceblue}
+    {color Resname {267} black}
+    {color Resname {268} yellow2}
+    {color Resname {269} yellow3}
+    {color Resname {270} green2}
+    {color Resname {271} green3}
+    {color Resname {272} cyan2}
+    {color Resname {273} cyan3}
+    {color Resname {274} blue2}
+    {color Resname {275} blue3}
+    {color Resname {276} violet}
+    {color Resname {277} violet2}
+    {color Resname {278} magenta}
+    {color Resname {279} magenta2}
+    {color Resname {280} red2}
+    {color Resname {281} red3}
+    {color Resname {282} orange2}
+    {color Resname {283} blue}
+    {color Resname {284} red}
+    {color Resname {285} gray}
+    {color Resname {286} orange}
+    {color Resname {287} yellow}
+    {color Resname {288} tan}
+    {color Resname {289} silver}
+    {color Resname {290} green}
+    {color Resname {291} white}
+    {color Resname {292} pink}
+    {color Resname {293} cyan}
+    {color Resname {294} purple}
+    {color Resname {295} lime}
+    {color Resname {296} mauve}
+    {color Resname {297} ochre}
+    {color Resname {298} iceblue}
+    {color Resname {299} black}
+    {color Resname {300} yellow2}
+    {color Resname {301} yellow3}
+    {color Resname {302} green2}
+    {color Resname {303} green3}
+    {color Resname {304} cyan2}
+    {color Resname {305} cyan3}
+    {color Resname {306} blue2}
+    {color Resname {307} blue3}
+    {color Resname {308} violet}
+    {color Resname {309} violet2}
+    {color Resname {310} magenta}
+    {color Resname {311} magenta2}
+    {color Resname {312} red2}
+    {color Resname {313} red3}
+    {color Resname {314} orange2}
+    {color Resname {315} blue}
+    {color Resname {316} red}
+    {color Resname {317} gray}
+    {color Resname {318} orange}
+    {color Resname {319} yellow}
+    {color Resname {320} tan}
+    {color Resname {321} silver}
+    {color Resname {322} green}
+    {color Resname {323} white}
+    {color Resname {324} pink}
+    {color Resname {325} cyan}
+    {color Resname {326} purple}
+    {color Resname {327} lime}
+    {color Resname {328} mauve}
+    {color Resname {329} ochre}
+    {color Resname {330} iceblue}
+    {color Resname {331} black}
+    {color Resname {332} yellow2}
+    {color Resname {333} yellow3}
+    {color Resname {334} green2}
+    {color Resname {335} green3}
+    {color Resname {336} cyan2}
+    {color Resname {337} cyan3}
+    {color Resname {338} blue2}
+    {color Resname {339} blue3}
+    {color Resname {340} violet}
+    {color Resname {341} violet2}
+    {color Resname {342} magenta}
+    {color Resname {343} magenta2}
+    {color Resname {344} red2}
+    {color Resname {345} red3}
+    {color Resname {346} orange2}
+    {color Resname {347} blue}
+    {color Resname {348} red}
+    {color Resname {349} gray}
+    {color Resname {350} orange}
+    {color Resname {351} yellow}
+    {color Resname {352} tan}
+    {color Resname {353} silver}
+    {color Resname {354} green}
+    {color Resname {355} white}
+    {color Resname {356} pink}
+    {color Resname {357} cyan}
+    {color Resname {358} purple}
+    {color Resname {359} lime}
+    {color Resname {360} mauve}
+    {color Resname {361} ochre}
+    {color Resname {362} iceblue}
+    {color Resname {363} black}
+    {color Resname {364} yellow2}
+    {color Resname {365} yellow3}
+    {color Resname {366} green2}
+    {color Resname {367} green3}
+    {color Resname {368} cyan2}
+    {color Resname {369} cyan3}
+    {color Resname {370} blue2}
+    {color Resname {371} blue3}
+    {color Resname {372} violet}
+    {color Resname {373} violet2}
+    {color Resname {374} magenta}
+    {color Resname {375} magenta2}
+    {color Resname {376} red2}
+    {color Resname {377} red3}
+    {color Resname {378} orange2}
+    {color Resname {379} blue}
+    {color Resname {380} red}
+    {color Resname {381} gray}
+    {color Resname {382} orange}
+    {color Resname {383} yellow}
+    {color Resname {384} tan}
+    {color Resname {385} silver}
+    {color Resname {386} green}
+    {color Resname {387} white}
+    {color Resname {388} pink}
+    {color Resname {389} cyan}
+    {color Resname {390} purple}
+    {color Resname {391} lime}
+    {color Resname {392} mauve}
+    {color Resname {393} ochre}
+    {color Resname {394} iceblue}
+    {color Resname {395} black}
+    {color Resname {396} yellow2}
+    {color Resname {397} yellow3}
+    {color Resname {398} green2}
+    {color Resname {399} green3}
+    {color Resname {400} cyan2}
+    {color Resname {401} cyan3}
+    {color Resname {402} blue2}
+    {color Resname {403} blue3}
+    {color Resname {404} violet}
+    {color Resname {405} violet2}
+    {color Resname {406} magenta}
+    {color Resname {407} magenta2}
+    {color Resname {408} red2}
+    {color Resname {409} red3}
+    {color Resname {410} orange2}
+    {color Resname {411} blue}
+    {color Resname {412} red}
+    {color Resname {413} gray}
+    {color Resname {414} orange}
+    {color Resname {415} yellow}
+    {color Resname {416} tan}
+    {color Resname {417} silver}
+    {color Resname {418} green}
+    {color Resname {419} white}
+    {color Resname {420} pink}
+    {color Resname {421} cyan}
+    {color Resname {422} purple}
+    {color Resname {423} lime}
+    {color Resname {424} mauve}
+    {color Resname {425} ochre}
+    {color Resname {426} iceblue}
+    {color Resname {427} black}
+    {color Resname {428} yellow2}
+    {color Resname {429} yellow3}
+    {color Resname {430} green2}
+    {color Resname {431} green3}
+    {color Resname {432} cyan2}
+    {color Resname {433} cyan3}
+    {color Resname {434} blue2}
+    {color Resname {435} blue3}
+    {color Resname {436} violet}
+    {color Resname {437} violet2}
+    {color Resname {438} magenta}
+    {color Resname {439} magenta2}
+    {color Resname {440} red2}
+    {color Resname {441} red3}
+    {color Resname {442} orange2}
+    {color Resname {443} blue}
+    {color Resname {444} red}
+    {color Resname {445} gray}
+    {color Resname {446} orange}
+    {color Resname {447} yellow}
+    {color Resname {448} tan}
+    {color Resname {449} silver}
+    {color Resname {450} green}
+    {color Resname {451} white}
+    {color Resname {452} pink}
+    {color Resname {453} cyan}
+    {color Resname {454} purple}
+    {color Resname {455} lime}
+    {color Resname {456} mauve}
+    {color Resname {457} ochre}
+    {color Resname {458} iceblue}
+    {color Resname {459} black}
+    {color Resname {460} yellow2}
+    {color Resname {461} yellow3}
+    {color Resname {462} green2}
+    {color Resname {463} green3}
+    {color Resname {464} cyan2}
+    {color Resname {465} cyan3}
+    {color Resname {466} blue2}
+    {color Resname {467} blue3}
+    {color Resname {468} violet}
+    {color Resname {469} violet2}
+    {color Resname {470} magenta}
+    {color Resname {471} magenta2}
+    {color Resname {472} red2}
+    {color Resname {473} red3}
+    {color Resname {474} orange2}
+    {color Resname {475} blue}
+    {color Resname {476} red}
+    {color Resname {477} gray}
+    {color Resname {478} orange}
+    {color Resname {479} yellow}
+    {color Resname {480} tan}
+    {color Resname {481} silver}
+    {color Resname {482} green}
+    {color Resname {483} white}
+    {color Resname {484} pink}
+    {color Resname {485} cyan}
+    {color Resname {486} purple}
+    {color Resname {487} lime}
+    {color Resname {488} mauve}
+    {color Resname {489} ochre}
+    {color Resname {490} iceblue}
+    {color Resname {491} black}
+    {color Resname {492} yellow2}
+    {color Resname {493} yellow3}
+    {color Resname {494} green2}
+    {color Resname {495} green3}
+    {color Resname {496} cyan2}
+    {color Resname {497} cyan3}
+    {color Resname {498} blue2}
+    {color Resname {499} blue3}
+    {color Resname {500} violet}
+    {color Resname {501} violet2}
+    {color Resname {502} magenta}
+    {color Resname {503} magenta2}
+    {color Resname {504} red2}
+    {color Resname {505} red3}
+    {color Resname {506} orange2}
+    {color Resname {507} blue}
+    {color Resname {508} red}
+    {color Resname {509} gray}
+    {color Resname {510} orange}
+    {color Resname {511} yellow}
+    {color Resname {512} tan}
+    {color Resname {513} silver}
+    {color Resname {514} green}
+    {color Resname {515} white}
+    {color Resname {516} pink}
+    {color Resname {517} cyan}
+    {color Resname {518} purple}
+    {color Resname {519} lime}
+    {color Resname {520} mauve}
+    {color Resname {521} ochre}
+    {color Resname {522} iceblue}
+    {color Resname {523} black}
+    {color Resname {524} yellow2}
+    {color Resname {525} yellow3}
+    {color Resname {526} green2}
+    {color Resname {527} green3}
+    {color Resname {528} cyan2}
+    {color Resname {529} cyan3}
+    {color Resname {530} blue2}
+    {color Resname {531} blue3}
+    {color Resname {532} violet}
+    {color Resname {533} violet2}
+    {color Resname {534} magenta}
+    {color Resname {535} magenta2}
+    {color Resname {536} red2}
+    {color Resname {537} red3}
+    {color Resname {538} orange2}
+    {color Resname {539} blue}
+    {color Resname {540} red}
+    {color Resname {541} gray}
+    {color Resname {542} orange}
+    {color Resname {543} yellow}
+    {color Resname {544} tan}
+    {color Resname {545} silver}
+    {color Resname {546} green}
+    {color Resname {547} white}
+    {color Resname {548} pink}
+    {color Resname {549} cyan}
+    {color Resname {550} purple}
+    {color Resname {551} lime}
+    {color Resname {552} mauve}
+    {color Resname {553} ochre}
+    {color Resname {554} iceblue}
+    {color Resname {555} black}
+    {color Resname {556} yellow2}
+    {color Resname {557} yellow3}
+    {color Resname {558} green2}
+    {color Resname {559} green3}
+    {color Resname {560} cyan2}
+    {color Resname {561} cyan3}
+    {color Resname {562} blue2}
+    {color Resname {563} blue3}
+    {color Resname {564} violet}
+    {color Resname {565} violet2}
+    {color Resname {566} magenta}
+    {color Resname {567} magenta2}
+    {color Resname {568} red2}
+    {color Resname {569} red3}
+    {color Resname {570} orange2}
+    {color Resname {571} blue}
+    {color Resname {572} red}
+    {color Resname {573} gray}
+    {color Resname {574} orange}
+    {color Resname {575} yellow}
+    {color Resname {576} tan}
+    {color Resname {577} silver}
+    {color Resname {578} green}
+    {color Resname {579} white}
+    {color Resname {580} pink}
+    {color Resname {581} cyan}
+    {color Resname {582} purple}
+    {color Resname {583} lime}
+    {color Resname {584} mauve}
+    {color Resname {585} ochre}
+    {color Resname {586} iceblue}
+    {color Resname {587} black}
+    {color Resname {588} yellow2}
+    {color Resname {589} yellow3}
+    {color Resname {590} green2}
+    {color Resname {591} green3}
+    {color Resname {592} cyan2}
+    {color Resname {593} cyan3}
+    {color Resname {594} blue2}
+    {color Resname {595} blue3}
+    {color Resname {596} violet}
+    {color Resname {597} violet2}
+    {color Resname {598} magenta}
+    {color Resname {599} magenta2}
+    {color Resname {600} red2}
+    {color Resname {601} red3}
+    {color Resname {602} orange2}
+    {color Resname {603} blue}
+    {color Resname {604} red}
+    {color Resname {605} gray}
+    {color Resname {606} orange}
+    {color Resname {607} yellow}
+    {color Resname {608} tan}
+    {color Resname {609} silver}
+    {color Resname {610} green}
+    {color Resname {611} white}
+    {color Resname {612} pink}
+    {color Resname {613} cyan}
+    {color Resname {614} purple}
+    {color Resname {615} lime}
+    {color Resname {616} mauve}
+    {color Resname {617} ochre}
+    {color Resname {618} iceblue}
+    {color Resname {619} black}
+    {color Resname {620} yellow2}
+    {color Resname {621} yellow3}
+    {color Resname {622} green2}
+    {color Resname {623} green3}
+    {color Resname {624} cyan2}
+    {color Resname {625} cyan3}
+    {color Resname {626} blue2}
+    {color Resname {627} blue3}
+    {color Resname {628} violet}
+    {color Resname {629} violet2}
+    {color Resname {630} magenta}
+    {color Resname {631} magenta2}
+    {color Resname {632} red2}
+    {color Resname {633} red3}
+    {color Resname {634} orange2}
+    {color Resname {635} blue}
+    {color Resname {636} red}
+    {color Resname {637} gray}
+    {color Resname {638} orange}
+    {color Resname {639} yellow}
+    {color Resname {640} tan}
+    {color Resname {641} silver}
+    {color Resname {642} green}
+    {color Resname {643} white}
+    {color Resname {644} pink}
+    {color Resname {645} cyan}
+    {color Resname {646} purple}
+    {color Resname {647} lime}
+    {color Resname {648} mauve}
+    {color Resname {649} ochre}
+    {color Resname {650} iceblue}
+    {color Resname {651} black}
+    {color Resname {652} yellow2}
+    {color Resname {653} yellow3}
+    {color Resname {654} green2}
+    {color Resname {655} green3}
+    {color Resname {656} cyan2}
+    {color Resname {657} cyan3}
+    {color Resname {658} blue2}
+    {color Resname {659} blue3}
+    {color Resname {660} violet}
+    {color Resname {661} violet2}
+    {color Resname {662} magenta}
+    {color Resname {663} magenta2}
+    {color Resname {664} red2}
+    {color Resname {665} red3}
+    {color Resname {666} orange2}
+    {color Resname {667} blue}
+    {color Resname {668} red}
+    {color Resname {669} gray}
+    {color Resname {670} orange}
+    {color Resname {671} yellow}
+    {color Resname {672} tan}
+    {color Resname {673} silver}
+    {color Resname {674} green}
+    {color Resname {675} white}
+    {color Resname {676} pink}
+    {color Resname {677} cyan}
+    {color Resname {678} purple}
+    {color Resname {679} lime}
+    {color Resname {680} mauve}
+    {color Resname {681} ochre}
+    {color Resname {682} iceblue}
+    {color Resname {683} black}
+    {color Resname {684} yellow2}
+    {color Resname {685} yellow3}
+    {color Resname {686} green2}
+    {color Resname {687} green3}
+    {color Resname {688} cyan2}
+    {color Resname {689} cyan3}
+    {color Resname {690} blue2}
+    {color Resname {691} blue3}
+    {color Resname {692} violet}
+    {color Resname {693} violet2}
+    {color Resname {694} magenta}
+    {color Resname {695} magenta2}
+    {color Resname {696} red2}
+    {color Resname {697} red3}
+    {color Resname {698} orange2}
+    {color Resname {699} blue}
+    {color Resname {700} red}
+    {color Resname {701} gray}
+    {color Resname {702} orange}
+    {color Resname {703} yellow}
+    {color Resname {704} tan}
+    {color Resname {705} silver}
+    {color Resname {706} green}
+    {color Resname {707} white}
+    {color Resname {708} pink}
+    {color Resname {709} cyan}
+    {color Resname {710} purple}
+    {color Resname {711} lime}
+    {color Resname {712} mauve}
+    {color Resname {713} ochre}
+    {color Resname {714} iceblue}
+    {color Resname {715} black}
+    {color Resname {716} yellow2}
+    {color Resname {717} yellow3}
+    {color Resname {718} green2}
+    {color Resname {719} green3}
+    {color Resname {720} cyan2}
+    {color Resname {721} cyan3}
+    {color Resname {722} blue2}
+    {color Resname {723} blue3}
+    {color Resname {724} violet}
+    {color Resname {725} violet2}
+    {color Resname {726} magenta}
+    {color Resname {727} magenta2}
+    {color Resname {728} red2}
+    {color Resname {729} red3}
+    {color Resname {730} orange2}
+    {color Resname {731} blue}
+    {color Resname {732} red}
+    {color Resname {733} gray}
+    {color Resname {734} orange}
+    {color Resname {735} yellow}
+    {color Resname {736} tan}
+    {color Resname {737} silver}
+    {color Resname {738} green}
+    {color Resname {739} white}
+    {color Resname {740} pink}
+    {color Resname {741} cyan}
+    {color Resname {742} purple}
+    {color Resname {743} lime}
+    {color Resname {744} mauve}
+    {color Resname {745} ochre}
+    {color Resname {746} iceblue}
+    {color Resname {747} black}
+    {color Resname {748} yellow2}
+    {color Resname {749} yellow3}
+    {color Resname {750} green2}
+    {color Resname {751} green3}
+    {color Resname {752} cyan2}
+    {color Resname {753} cyan3}
+    {color Resname {754} blue2}
+    {color Resname {755} blue3}
+    {color Resname {756} violet}
+    {color Resname {757} violet2}
+    {color Resname {758} magenta}
+    {color Resname {759} magenta2}
+    {color Resname {760} red2}
+    {color Resname {761} red3}
+    {color Resname {762} orange2}
+    {color Resname {763} blue}
+    {color Resname {764} red}
+    {color Resname {765} gray}
+    {color Resname {766} orange}
+    {color Resname {767} yellow}
+    {color Resname {768} tan}
+    {color Chain {A} blue}
+    {color Chain {B} red}
+    {color Chain {C} gray}
+    {color Chain {D} orange}
+    {color Chain {E} yellow}
+    {color Chain {F} tan}
+    {color Chain {G} silver}
+    {color Chain {H} green}
+    {color Chain {I} white}
+    {color Chain {J} pink}
+    {color Chain {K} cyan}
+    {color Chain {L} purple}
+    {color Chain {M} lime}
+    {color Chain {N} mauve}
+    {color Chain {O} ochre}
+    {color Chain {P} iceblue}
+    {color Chain {Q} black}
+    {color Chain {R} yellow2}
+    {color Chain {S} yellow3}
+    {color Chain {T} green2}
+    {color Chain {U} green3}
+    {color Chain {V} cyan2}
+    {color Chain {W} cyan3}
+    {color Chain {X} blue2}
+    {color Chain {Y} blue3}
+    {color Chain {Z} violet}
+    {color Segname {} blue}
+    {color Conformation {all} blue}
+    {color Molecule {0} blue}
+    {color Structure {3_10_Helix} blue}
+    {color Surface {Grasp} gray}
+    {color Labels {Springs} orange}
+    {color Stage {Even} gray}
+    {color Stage {Odd} silver}
+  }
+  foreach colcmd $colorcmds {
+    set val [catch {eval $colcmd}]
+  }
+  color change rgb 0 0.0 0.0 1.0
+  color change rgb 2 0.3499999940395355 0.3499999940395355 0.3499999940395355
+  color change rgb 3 1.0 0.5 0.0
+  color change rgb 4 1.0 1.0 0.0
+  color change rgb 5 0.5 0.5 0.20000000298023224
+  color change rgb 6 0.6000000238418579 0.6000000238418579 0.6000000238418579
+  color change rgb 7 0.0 1.0 0.0
+  color change rgb 9 1.0 0.6000000238418579 0.6000000238418579
+  color change rgb 11 0.6499999761581421 0.0 0.6499999761581421
+  color change rgb 12 0.5 0.8999999761581421 0.4000000059604645
+  color change rgb 13 0.8999999761581421 0.4000000059604645 0.699999988079071
+  color change rgb 14 0.5 0.30000001192092896 0.0
+  color change rgb 15 0.5 0.5 0.75
+  color change rgb 17 0.8799999952316284 0.9700000286102295 0.019999999552965164
+  color change rgb 18 0.550000011920929 0.8999999761581421 0.019999999552965164
+  color change rgb 19 0.0 0.8999999761581421 0.03999999910593033
+  color change rgb 20 0.0 0.8999999761581421 0.5
+  color change rgb 21 0.0 0.8799999952316284 1.0
+  color change rgb 22 0.0 0.7599999904632568 1.0
+  color change rgb 23 0.019999999552965164 0.3799999952316284 0.6700000166893005
+  color change rgb 24 0.009999999776482582 0.03999999910593033 0.9300000071525574
+  color change rgb 25 0.27000001072883606 0.0 0.9800000190734863
+  color change rgb 26 0.44999998807907104 0.0 0.8999999761581421
+  color change rgb 27 0.8999999761581421 0.0 0.8999999761581421
+  color change rgb 28 1.0 0.0 0.6600000262260437
+  color change rgb 29 0.9800000190734863 0.0 0.23000000417232513
+  color change rgb 30 0.8100000023841858 0.0 0.0
+  color change rgb 31 0.8899999856948853 0.3499999940395355 0.0
+  color change rgb 32 0.9599999785423279 0.7200000286102295 0.0
+}
+vmdrestoremycolors
+label textsize 1.0
