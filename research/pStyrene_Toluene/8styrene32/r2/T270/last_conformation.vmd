@@ -295,7 +295,7 @@ display cuedensity 0.320000
 display cuemode    Exp2
 mol new last_conformation.pdb type pdb first 0 last -1 step 1 filebonds 1 autobonds 1 waitfor all
 mol delrep 0 top
-mol representation QuickSurf 0.900000 0.500000 1.000000 1.000000
+mol representation QuickSurf 0.300000 0.100000 0.500000 1.000000
 mol color ColorID 0
 mol selection {residue 0 to 255}
 mol material BrushedMetal
@@ -329,7 +329,7 @@ mol clipplane center 5 0 top {0.0 0.0 0.0}
 mol clipplane color  5 0 top {0.5 0.5 0.5 }
 mol clipplane normal 5 0 top {0.0 0.0 1.0}
 mol clipplane status 5 0 top {0}
-mol representation Bonds 0.300000 10.000000
+mol representation Bonds 0.300000 80.000000
 mol color Name
 mol selection {not residue 0 to 255}
 mol material Opaque
@@ -364,7 +364,7 @@ mol clipplane color  5 1 top {0.5 0.5 0.5 }
 mol clipplane normal 5 1 top {0.0 0.0 1.0}
 mol clipplane status 5 1 top {0}
 mol rename top last_conformation.pdb
-set viewpoints([molinfo top]) {{{1 0 0 -26.8187} {0 1 0 -26.7549} {0 0 1 -26.3123} {0 0 0 1}} {{1 0 0 0} {0 1 0 0} {0 0 1 0} {0 0 0 1}} {{0.0261215 0 0 0} {0 0.0261215 0 0} {0 0 0.0261215 0} {0 0 0 1}} {{1 0 0 0} {0 1 0 0} {0 0 1 0} {0 0 0 1}}}
+set viewpoints([molinfo top]) {{{1 0 0 -26.8187} {0 1 0 -26.7549} {0 0 1 -26.3123} {0 0 0 1}} {{0.0728731 -0.97828 -0.194055 0} {-0.266458 0.168403 -0.949021 0} {0.961088 0.120866 -0.248398 0} {0 0 0 1}} {{0.0261215 0 0 0} {0 0.0261215 0 0} {0 0 0.0261215 0} {0 0 0 1}} {{1 0 0 0} {0 1 0 0} {0 0 1 0} {0 0 0 1}}}
 lappend viewplist [molinfo top]
 set topmol [molinfo top]
 # done with molecule 0
@@ -1302,6 +1302,7 @@ color scale colors WBlk {1.0 1.0 1.0} {0.5 0.5 0.5} {0.0 0.0 0.0}
     {color Segname {} blue}
     {color Conformation {all} blue}
     {color Molecule {0} blue}
+    {color Molecule {last_conformation.pdb} blue}
     {color Structure {3_10_Helix} blue}
     {color Surface {Grasp} gray}
     {color Labels {Springs} orange}
