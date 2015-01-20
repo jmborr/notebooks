@@ -1,0 +1,5 @@
+trajin dcd
+solvent byres :WAT
+closest 1 :118&@HH oxygen
+strip !:109-162&!:WAT
+trajout closestWaterToTyr118.dcd charmm
