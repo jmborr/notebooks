@@ -1,0 +1,4 @@
+trajin ../FIRST/test9_fixedatoms.dcd 1 5000 1
+trajin ../ND_RNA_water/test9_fixedatoms.dcd 1 6000 1
+rms first @1-92214
+trajout test9_fixedatoms_merged.dcd charmm
