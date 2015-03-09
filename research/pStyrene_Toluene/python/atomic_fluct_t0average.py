@@ -15,7 +15,9 @@ if __name__ == '__main__':
     parser.add_argument('nt0', type=int, help='number of times to calculate MSD, for the average')
     parser.add_argument('mask', help='ptraj mask defining the atoms for which to calculate the MSD')
     parser.add_argument('outfile', help='filename to store average MSD')
+    parser.add_argument('--seriesfile', type=str, help='filename storing MSD for each chunk')
     parser.add_argument('--reference', help='reference PDB file for extra RMSD step')
+
     args=parser.parse_args()
 
 
@@ -35,6 +37,7 @@ dt0 = int( (args.span - args.t)/args.nt0 )
 if dt0 < 1:
     raise ValueError("nt0 too large")
 
+seriesmsd='#it0 MSD\n'
 avmsd = 0
 for it0 in range(args.nt0):
     print '{0} sampling REMAIN'.format(args.nt0-it0)
@@ -51,8 +54,11 @@ for it0 in range(args.nt0):
     
     msd = numpy.array( read_column(outfn, 2, isFloat=1) )
     msd = numpy.average(msd)
+    seriesmsd += '{0:3d} {1:5.2f}\n'.format(it0, msd)
     avmsd += msd
     os.system('/bin/rm -f {0} {1}'.format(outfn,scriptfile))
 
 open(args.outfile,'w').write('{0}'.format(avmsd/args.nt0))
+if args.seriesfile:
+    open(args.seriesfile,'w').write(seriesmsd)
 print 'msd = ', avmsd/args.nt0
