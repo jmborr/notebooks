@@ -41,6 +41,7 @@ seriesmsd='#it0 MSD\n'
 avmsd = 0
 for it0 in range(args.nt0):
     print '{0} sampling REMAIN'.format(args.nt0-it0)
+    # Define the ptraj script
     t0 = it0*dt0   # first frame
     tf = t0+args.t # last frame
     script = template.replace('_t0_', str(t0))
@@ -48,16 +49,19 @@ for it0 in range(args.nt0):
     handle,outfn = mkstemp(prefix='junk', dir='/tmp')
     script = script.replace('_outfn_', outfn)
 
+    # Run the ptraj job
     handle,scriptfile = mkstemp(prefix='junk', dir='/tmp')
     open(scriptfile,'w').write(script)
     os.system('ptraj {0} < {1}'.format(args.topfile, scriptfile))
     
+    # Store results to memory
     msd = numpy.array( read_column(outfn, 2, isFloat=1) )
     msd = numpy.average(msd)
     seriesmsd += '{0:3d} {1:5.2f}\n'.format(it0, msd)
     avmsd += msd
     os.system('/bin/rm -f {0} {1}'.format(outfn,scriptfile))
 
+# Write output files
 open(args.outfile,'w').write('{0}'.format(avmsd/args.nt0))
 if args.seriesfile:
     open(args.seriesfile,'w').write(seriesmsd)
