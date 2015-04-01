@@ -1,0 +1,89 @@
+Langevin dynamics at constant pressure. Positional restraints for ions. NMR restraints between sulfur and iron atoms.
+&cntrl
+  !
+  !GENERAL MINIMIZATION AND DYNAMICS PARAMETERS
+  !
+  imin=0,    !MINIMIZATION OR MD-RUN ? (1:minimization, 0:MD run)
+  irest=1,   !restart from a previous simulation
+  ntx=5,     !read coords and vels. Also read box if ntb>0
+  ntf=1,     !force evaluation, tipically ntf=ntc, 1:complete, 2:no-bonds-with-H, 3:no-bonded
+  cut=10.0,  !electrostatics cutoff for real-space calculations
+  nsnb=10,   !update of pair list frequency, (default=25)
+  vlimit=20, !set to vlimit any velocity exceeding vlimit (default=20).
+  ntwe=1000,   !energies and temperatures written to file "mden" every ntwe steps
+  ntpr=1000,   !energy info writtent to "mdout" and "mdinfo"
+  ntwr=10000, !output frequency of restart file
+  ntwx=1000,   !coordinates written to the mdcrd file.
+  iwrap=1,   !wrap output coordinates to central cell
+  dt=0.001,  !time step in picosecond units
+  nstlim=1000000 !number of time steps
+  !
+  !TEMPERATURE REGULATION
+  !
+  ntt=3,         !Langeving dynamics
+  temp0=300,     !reference temperature
+  ig=-1,         !random seed from current date and time
+  gamma_ln=5.0,  !collision frequency (psec^(-1)), use in between 2 and 5
+  !
+  !PRESSURE REGULATION
+  !
+  ntp=1,        !1: isotropic position scaling
+  taup=1.0,     !relaxation time (psec)
+  pres0=1.013,  !reference pressure (in bars, 1atm=1.013bars)
+  !comp=44.6,   !compressibility (in 10^(-6)*bar^(-1), 44.6 appropriate for water)
+  !
+  !PERIODIC BOUNDARY CONDITIONS
+  !
+  ntb=2,    !(1:constant volume, 2: constant pressure)
+  !
+  !BOND RESTRAINTS
+  !
+  ntc=1,    !(1:no SHAKE, 2:SHAKE hydrogens, 3:SHAKE all bonds)
+  !
+  !CARTESIAN RESTRAINTS
+  !
+  !ntr=1,    !positional harmonic restraints  
+  !ntrx=1,   !Format of coordinates in refc file are Formatted (ASCII)
+  !restraint_wt=1.0        !weight (in kcal/(mol*A^2)) for the positional restraints
+  !restraintmask=':56-64'  !atoms to be restrained
+  !
+  !RMSD RESTRAINTS
+  !Restraining Potential = 0.5 * tgtmdfrc * NATTGTRMS * (RMSD-tgtrmsd)**2
+  !
+  itgtmd=1,     !Do RMSD retraints to selected atoms from recf file
+  tgtmdfrc=0.1, !force constant (Kcal/(mol*A^2))
+  tgtrmsd=0.0,  !"equilibrium" RMSD
+  tgtfitmask="(:1-55)&(@N=,O=)", !atoms to be used in the RMSD superposition transformation
+  tgtrmsmask="(:1-55)&(@N=,O=)", !atoms to be used for calculation of RMSD after the fit
+  !
+  !NMR restraints
+  nmropt=1, !NMR restraints and weight changes will be read
+  !
+&end
+&wt type='END' &end
+ &rst
+   iat=99,806,
+   iresid=0,
+   1=0.0, r2=2.2, r3=2.3, r4=999.0,
+   rk2=25.0, rk3=25.0,
+ &end
+ &rst
+ iat=150,806,
+   iresid=0,
+   r1=0.0, r2=2.2, r3=2.3, r4=999.0,
+   rk2=25.0, rk3=25.0,
+ &end
+ &rst
+ iat=577,806,
+   iresid=0,
+   r1=0.0, r2=2.2, r3=2.3, r4=999.0,
+   rk2=25.0, rk3=25.0,
+ &end
+ &rst
+ iat=620,806,
+   iresid=0,
+   r1=0.0, r2=2.2, r3=2.3, r4=999.0,
+   rk2=25.0, rk3=25.0,
+ &end
+END
+
