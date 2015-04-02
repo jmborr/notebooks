@@ -3,10 +3,11 @@ import numpy
 import argparse
 from tempfile import mkstemp
 from utilities.readingWritingFiles import read_column
+from utilities.path import which
 from pdb import set_trace as tr
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description="""Obtain MSD averaged over different chunks of the trajectory.
+    parser = argparse.ArgumentParser(description="""Obtain (R)MSD averaged over different chunks of the trajectory.
     Example: atomic_fluct_t0average.py ./8styrene32.pdb ./equil_rms2first.dcd 30000 1000  10 '@1-4133&@H*'""")
     parser.add_argument('topfile', help='input PDB file')
     parser.add_argument('trajfile', help='DCD trajectory')
@@ -17,9 +18,13 @@ if __name__ == '__main__':
     parser.add_argument('outfile', help='filename to store average MSD')
     parser.add_argument('--seriesfile', type=str, help='filename storing MSD for each chunk')
     parser.add_argument('--reference', help='reference PDB file for extra RMSD step')
+    parser.add_argument('--msd', type=str, default=None, help='Output MSD instead of RMSD')
 
     args=parser.parse_args()
 
+# Check ptraj exists
+if not which('ptraj'):
+    raise Exception('ptraj not found')
 
 template='''trajin _trajfile_  _t0_  _t0+t_
 _REFERENCE_atomicfluct _mask_ out _outfn_
@@ -37,8 +42,12 @@ dt0 = int( (args.span - args.t)/args.nt0 )
 if dt0 < 1:
     raise ValueError("nt0 too large")
 
-seriesmsd='#it0 MSD\n'
-avmsd = 0
+
+series='#it0 RMSD\n'
+if args.msd:
+    series='#it0 MSD\n'
+av = 0
+
 for it0 in range(args.nt0):
     print '{0} sampling REMAIN'.format(args.nt0-it0)
     # Define the ptraj script
@@ -55,14 +64,23 @@ for it0 in range(args.nt0):
     os.system('ptraj {0} < {1}'.format(args.topfile, scriptfile))
     
     # Store results to memory
-    msd = numpy.array( read_column(outfn, 2, isFloat=1) )
-    msd = numpy.average(msd)
-    seriesmsd += '{0:3d} {1:5.2f}\n'.format(it0, msd)
-    avmsd += msd
+    rmsd = numpy.array( read_column(outfn, 2, isFloat=1) )
+    if args.msd:
+        msd = numpy.average(rmsd*rmsd)
+        series += '{0:3d} {1:5.2f}\n'.format(it0, msd)
+        av += msd
+    else:
+        rmsd = numpy.average(rmsd)
+        series += '{0:3d} {1:5.2f}\n'.format(it0, rmsd)
+        av += rmsd
+       
     os.system('/bin/rm -f {0} {1}'.format(outfn,scriptfile))
 
 # Write output files
-open(args.outfile,'w').write('{0}'.format(avmsd/args.nt0))
+open(args.outfile,'w').write('{0}\n'.format(av/args.nt0))
 if args.seriesfile:
-    open(args.seriesfile,'w').write(seriesmsd)
-print 'msd = ', avmsd/args.nt0
+    open(args.seriesfile,'w').write(series)
+if args.msd:
+    print 'MSD = ', av/args.nt0
+else:
+    print 'RMSD = ', av/args.nt0
