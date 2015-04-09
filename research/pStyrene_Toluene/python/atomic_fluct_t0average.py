@@ -18,7 +18,7 @@ if __name__ == '__main__':
     parser.add_argument('outfile', help='filename to store average MSD')
     parser.add_argument('--seriesfile', type=str, help='filename storing MSD for each chunk')
     parser.add_argument('--reference', help='reference PDB file for extra RMSD step')
-    parser.add_argument('--msd', type=str, default=None, help='Output MSD instead of RMSD')
+    parser.add_argument('--msd', type=str, default=None, help='Output MSD instead of RMSD. Default is RMSD')
 
     args=parser.parse_args()
 
@@ -51,8 +51,8 @@ av = 0
 for it0 in range(args.nt0):
     print '{0} sampling REMAIN'.format(args.nt0-it0)
     # Define the ptraj script
-    t0 = it0*dt0   # first frame
-    tf = t0+args.t # last frame
+    t0 = 1+it0*dt0   # first frame
+    tf = t0+args.t-1   # last frame
     script = template.replace('_t0_', str(t0))
     script = script.replace('_t0+t_', str(tf))
     handle,outfn = mkstemp(prefix='junk', dir='/tmp')
