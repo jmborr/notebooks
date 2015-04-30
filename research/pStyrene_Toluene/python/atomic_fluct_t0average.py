@@ -23,8 +23,8 @@ if __name__ == '__main__':
     args=parser.parse_args()
 
 # Check ptraj exists
-if not which('ptraj'):
-    raise Exception('ptraj not found')
+if not which('cpptraj'):
+    raise Exception('cpptraj not found')
 
 template='''trajin _trajfile_  _t0_  _t0+t_
 _REFERENCE_atomicfluct _mask_ out _outfn_
@@ -50,7 +50,7 @@ av = 0
 
 for it0 in range(args.nt0):
     print '{0} sampling REMAIN'.format(args.nt0-it0)
-    # Define the ptraj script
+    # Define the cpptraj script
     t0 = 1+it0*dt0   # first frame
     tf = t0+args.t-1   # last frame
     script = template.replace('_t0_', str(t0))
@@ -58,10 +58,10 @@ for it0 in range(args.nt0):
     handle,outfn = mkstemp(prefix='junk', dir='/tmp')
     script = script.replace('_outfn_', outfn)
 
-    # Run the ptraj job
+    # Run the cpptraj job
     handle,scriptfile = mkstemp(prefix='junk', dir='/tmp')
     open(scriptfile,'w').write(script)
-    os.system('ptraj {0} < {1}'.format(args.topfile, scriptfile))
+    os.system('cpptraj {0} -i {1}'.format(args.topfile, scriptfile))
     
     # Store results to memory
     rmsd = numpy.array( read_column(outfn, 2, isFloat=1) )
