@@ -47,9 +47,9 @@ timestep 1.0
 reset_timestep 0
 group heavy type 1 3 4 5  # define a group for non-Hydrogen atoms
 
-variable deltaT equal 20  # 20K jumps
+variable deltaT equal 10  # 20K jumps
 variable temp0 equal 10   # Initial T=10K
-variable varloop loop 20  # Simulations from 10K to 410K every 20K
+variable varloop loop 48  # Simulations from 10K to 490K every 10K
 
 label temploop
   variable temp1 equal ${temp0}+${deltaT}  # final temperature
@@ -58,7 +58,7 @@ label temploop
   fix 2 all press/berendsen iso 1.0 1.0 100000.0  #iso Pstart Pstop Pdamp
   fix 3 all nve
   run_style verlet
-  run 100000  # run for N timesteps
+  run 100000  # run for 0.1ns
   write_restart heatup_T${temp1}.rst # write restart file after completion of simulation
   write_data heatup_T${temp1}.data   # write data file after completion of simulation
   unfix 1
