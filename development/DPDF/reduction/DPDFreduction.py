@@ -41,6 +41,8 @@ class DPDFreduction(PythonAlgorithm):
     self.declareProperty('MomentumTransferBins', '',
       'Momentum transfer binning scheme (in inverse Angstroms)',
       direction=Direction.Input)
+    self.declareProperty('NormalizeInQ', False,
+      'Normalize Q-slices?', direction=Direction.Input)
     self.declareProperty('CleanWorkspaces', True,
       'Do we clean intermediate steps?', direction=Direction.Input)
     self.declareProperty(MatrixWorkspaceProperty('OutputWorkspace', 'S_Q_E_sliced',
@@ -81,6 +83,7 @@ class DPDFreduction(PythonAlgorithm):
     self._vanfile = self.getProperty('Vanadium').value
     self._ebins_str = self.getProperty('EnergyBins').value
     self._qbins_str = self.getProperty('MomentumTransferBins').value
+    self._qnorm = self.getProperty('NormalizeInQ').value
     self._clean = self.getProperty('CleanWorkspaces').value
     wn_sqes = self.getPropertyValue("OutputWorkspace")
 
@@ -97,6 +100,7 @@ class DPDFreduction(PythonAlgorithm):
     wn_steni = prefix+'S_theta_E_normalized_interp'
     wn_sqe = prefix+'S_Q_E'
     wn_sqeb = prefix+'S_Q_E_binned'
+    wn_sqesn = prefix+wn_sqes+'_norm'
 
     datasearch = config["datasearch.searcharchive"]
     if datasearch != "On":
@@ -221,10 +225,16 @@ class DPDFreduction(PythonAlgorithm):
     #Slice the data by transforming to a Matrix2Dworkspace, with deltaE along the vertical axis
     api.ConvertMDHistoToMatrixWorkspace(InputWorkspace=wn_sqeb,
       Normalization='NumEventsNormalization', OutputWorkspace=wn_sqes)
-    
+
+    #Normalize along the Energy axis
+    if self._qnorm:
+        Integration(InputWorkspace=wn_sqes, OutputWorkspace=wn_sqesn)
+        Divide(LHSWorkspace=wn_sqes, RHSWorkspace=wn_sqesn, OutputWorkspace=wn_sqes)
+
     #Clean up workspaces from intermediate steps
     if self._clean:
-      for name in (wn_van, wn_reduced, wn_ste, wn_van_st, wn_sten, wn_steni, wn_sqe, wn_sqeb):
+      for name in (wn_van, wn_reduced, wn_ste, wn_van_st, wn_sten,
+        wn_steni, wn_sqe, wn_sqeb, wn_sqesn):
         api.DeleteWorkspace(name)
       if api.mtd.doesExist('PreprocessedDetectorsWS'):
         api.DeleteWorkspace('PreprocessedDetectorsWS')
