@@ -35,14 +35,15 @@ class DPDFreduction(PythonAlgorithm):
     self.declareProperty(FileProperty(name='Vanadium', defaultValue='',
       action=FileAction.OptionalLoad, extensions=['.nxs']),
       'Preprocessed vanadium file.')
+    self.declareProperty('EmptyCanRunNumbers', '', 'Empty can run numbers')
     self.declareProperty('EnergyBins', '1.5',
       'Energy transfer binning scheme (in meV)',
       direction=Direction.Input)
     self.declareProperty('MomentumTransferBins', '',
       'Momentum transfer binning scheme (in inverse Angstroms)',
       direction=Direction.Input)
-    self.declareProperty('NormalizeInQ', False,
-      'Normalize Q-slices?', direction=Direction.Input)
+    self.declareProperty('NormalizeSlices', False,
+      'Do we normalize each slice?', direction=Direction.Input)
     self.declareProperty('CleanWorkspaces', True,
       'Do we clean intermediate steps?', direction=Direction.Input)
     self.declareProperty(MatrixWorkspaceProperty('OutputWorkspace', 'S_Q_E_sliced',
@@ -50,18 +51,24 @@ class DPDFreduction(PythonAlgorithm):
 
   def validateInputs(self):
     issues = dict()
+    #Patter validator for run numbers
+    def checkRunNumbers(runs_property_name):
+      runs_string = self.getPropertyValue(runs_property_name)
+      pattern = re.compile(r'^\s*\d+\s*$|^\s*\d+\s*-\s*\d+\s*$|^\s*[\d++]+\d+\s*$')
+      if not pattern.match(runs_string):
+        issues[runs_property_name] = runs_property_name+' allowed syntaxes:\n'+\
+          '(1)Single number\n'+\
+          '(2) A continous range of numbers, like 5123-5130\n'+\
+          '(3)Addition of numbers, like 5123+5128+5130'
+      elif re.compile(r'^\s*\d+\s*-\s*\d+\s*$').match(runs_string):
+        first, second = [int(x) for x in runs_string.split('-')]
+        if first >= second:
+          issues[runs_property_name] = runs_property_name+' should be increasing'
     #check syntax for RunNumbers
-    run_numbers = self.getPropertyValue('RunNumbers')
-    pattern = re.compile(r'^\s*\d+\s*$|^\s*\d+\s*-\s*\d+\s*$|^\s*[\d++]+\d+\s*$')
-    if not pattern.match(run_numbers):
-      issues['RunNumbers'] = 'RunNumbers allowed syntaxes:\n'+\
-        '(1)Single number\n'+\
-        '(2) A continous range of numbers, like 5123-5130\n'+\
-        '(3)Addition of numbers, like 5123+5128+5130'
-    elif re.compile(r'^\s*\d+\s*-\s*\d+\s*$|').match(run_numbers):
-      first, second = [int(x) for x in run_numbers.split('-')]
-      if first >= second:
-        issues['RunNumbers'] = 'RunNumbers should be increasing'
+    checkRunNumbers('RunNumbers')
+    #check syntax for EmptyCanRunNumbers
+    if self.getPropertyValue('EmptyCanRunNumbers'):
+      checkRunNumbers('EmptyCanRunNumbers')
     #check energy bins
     ebins = self.getPropertyValue('EnergyBins')
     pattern = re.compile(r'^\s*\d+[\.\d+]*\s*$|'+\
@@ -81,9 +88,10 @@ class DPDFreduction(PythonAlgorithm):
     config['default.instrument'] = 'ARCS'
     self._runs = self.getProperty('RunNumbers').value
     self._vanfile = self.getProperty('Vanadium').value
+    self._ecruns = self.getProperty('EmptyCanRunNumbers').value
     self._ebins_str = self.getProperty('EnergyBins').value
     self._qbins_str = self.getProperty('MomentumTransferBins').value
-    self._qnorm = self.getProperty('NormalizeInQ').value
+    self._snorm = self.getProperty('NormalizeSlices').value
     self._clean = self.getProperty('CleanWorkspaces').value
     wn_sqes = self.getPropertyValue("OutputWorkspace")
 
@@ -91,6 +99,7 @@ class DPDFreduction(PythonAlgorithm):
     prefix = ''
     if self._clean:
         prefix = '__'
+    # Sample files
     wn_data = prefix+'data'
     wn_van = prefix+'vanadium'
     wn_reduced = prefix+'reduced'
@@ -101,6 +110,12 @@ class DPDFreduction(PythonAlgorithm):
     wn_sqe = prefix+'S_Q_E'
     wn_sqeb = prefix+'S_Q_E_binned'
     wn_sqesn = prefix+wn_sqes+'_norm'
+    # Empty can files
+    wn_ec_data = prefix+'ec_data'
+    wn_ec_reduced = prefix+'ec_reduced'
+    wn_ec_ste = prefix+'ec_S_theta_E'
+
+
 
     datasearch = config["datasearch.searcharchive"]
     if datasearch != "On":
@@ -115,11 +130,31 @@ class DPDFreduction(PythonAlgorithm):
     #range have been rebinned into a single histogram
     api.Load(Filename=self._vanfile, OutputWorkspace= wn_van)
 
-    #Retrieve the mask from the vanadium workspace, and apply it to the data
-    mask = api.MaskDetectors(Workspace=wn_data, MaskedWorkspace=wn_van)
+    #Load empty can event files, if present
+    if self._ecruns:
+      api.Load(Filename=self._ecruns, OutputWorkspace=wn_ec_data)
 
-    #Obtain energy range as the mean of the nominal Ei values.
-    #There is one nominal value per events file
+    #Retrieve the mask from the vanadium workspace, and apply it to the data
+    #(and empty can, if submitted)
+    mask = api.MaskDetectors(Workspace=wn_data, MaskedWorkspace=wn_van)
+    if self._ecruns:
+      mask = api.MaskDetectors(Workspace=wn_ec_data, MaskedWorkspace=wn_van)
+
+    #Obtain incident energy as the mean of the nominal Ei values.
+    #There is one nominal value per events file.
+    ws_data=api.mtd[wn_data]
+    Ei = ws_data.getRun()['EnergyRequest'].getStatistics().mean
+    Ei_std = ws_data.getRun()['EnergyRequest'].getStatistics().standard_deviation
+
+    #Verify empty can runs were obtained at similar energy
+    if self._ecruns:
+      ws_ec_data=api.mtd[wn_ec_data]
+      ec_Ei = ws_ec_data.getRun()['EnergyRequest'].getStatistics().mean
+      if abs(Ei-ec_Ei) > Ei_std:
+        raise RuntimeError('Empty can runs were obtained at a significant'+\
+          ' different incident energy than the sample runs')
+
+    #Obtain energy range
     self._ebins = [float(x) for x in re.compile(r'\d+[\.\d+]*').findall(self._ebins_str)]
     if len(self._ebins) == 1:
       ws_data=api.mtd[wn_data]
@@ -127,11 +162,27 @@ class DPDFreduction(PythonAlgorithm):
       self._ebins.insert(0, -0.5 * Ei) # prepend
       self._ebins.append(0.95 * Ei) # append
 
-    #Convert to energy transfer. The output workspace is S(detector-id,E)
+    #Enforce that the elastic energy (E=0) lies in the middle of the
+    #central bin with an appropriate small shift in the energy range
+    Ei_min_reduced = self._ebins[0]/self._ebins[1]
+    remainder = Ei_min_reduced - int(Ei_min_reduced)
+    if remainder >= 0.0:
+        erange_shift = self._ebins[1] * (0.5 - remainder)
+    else:
+        erange_shift = self._ebins[1] * (-0.5 - remainder)
+    self._ebins[0] += erange_shift #shift minimum energy
+    self._ebins[-1] += erange_shift #shift maximum energy
+
+    #Convert to energy transfer. Normalize by proton charge.
+    #The output workspace is S(detector-id,E)
     factor = 0.1 # a fine energy bin
     Erange='{0},{1},{2}'.format(self._ebins[0], factor*self._ebins[1], self._ebins[2])
     api.DgsReduction(SampleInputWorkspace=wn_data,
       EnergyTransferRange=Erange, OutputWorkspace=wn_reduced)
+    if self._ecruns:
+      api.DgsReduction(SampleInputWorkspace=wn_ec_data,
+        EnergyTransferRange=Erange, IncidentBeamNormalisation='ByCurrent',
+        OutputWorkspace=wn_ec_reduced)
 
     #Obtain maximum and minimum |Q| values, as well as dQ if none passed
     self._qbins = [float(x) for x in re.compile(r'\d+[\.\d+]*').findall(self._qbins_str)]
@@ -148,6 +199,8 @@ class DPDFreduction(PythonAlgorithm):
 
     #Clean up the events files. They take a lot of space in memory
     api.DeleteWorkspace(wn_data)
+    if self._ecruns:
+      api.DeleteWorkspace(wn_ec_data)
 
     #Convert to S(theta,E)
     ki = numpy.sqrt(Ei/ENERGY_TO_WAVEVECTOR)
@@ -164,6 +217,11 @@ class DPDFreduction(PythonAlgorithm):
     group_file_handle.close()
     api.GroupDetectors(InputWorkspace=wn_reduced, MapFile=group_file_name,
       OutputWorkspace=wn_ste)
+    if self._ecruns:
+      api.GroupDetectors(InputWorkspace=wn_ec_reduced, MapFile=group_file_name,
+        OutputWorkspace=wn_ec_ste)
+      # Substract the empty can from the can+sample
+      api.Minus(LHSWorkspace=wn_ste, RHSWorkspace=wn_ec_ste, OutputWorkspace=wn_ste)
 
     #Normalize by the vanadium intensity, but before that we need S(theta)
     #for the vanadium. Recall every detector has all energies into a single
@@ -226,10 +284,18 @@ class DPDFreduction(PythonAlgorithm):
     api.ConvertMDHistoToMatrixWorkspace(InputWorkspace=wn_sqeb,
       Normalization='NumEventsNormalization', OutputWorkspace=wn_sqes)
 
-    #Normalize along the Energy axis
-    if self._qnorm:
-        Integration(InputWorkspace=wn_sqes, OutputWorkspace=wn_sqesn)
-        Divide(LHSWorkspace=wn_sqes, RHSWorkspace=wn_sqesn, OutputWorkspace=wn_sqes)
+    #Shift the energy axis, since the reported values should be the center
+    #of the bins, instead of the minimum bin boundary
+    ws_sqes = api.mtd[wn_sqes]
+    Eaxis = ws_sqes.getAxis(1)
+    e_shift = self._ebins[1] / 2.0
+    for i in range(Eaxis.length()):
+      Eaxis.setValue(i, Eaxis.getValue(i)+e_shift)
+
+    #Normalize each slice
+    if self._snorm:
+      api.Integration(InputWorkspace=wn_sqes, OutputWorkspace=wn_sqesn)
+      api.Divide(LHSWorkspace=wn_sqes, RHSWorkspace=wn_sqesn, OutputWorkspace=wn_sqes)
 
     #Clean up workspaces from intermediate steps
     if self._clean:
