@@ -76,22 +76,35 @@ do
 
 
          #############                                  
-         ##   r0    ##
+         ##   r0.0  ##
          #############
-WD=$PROJD/8styrene32/r0
-for T in T90 T100 T110 T120 T130 T140 T150 T160 T170 T190 T200 T210 T220 T230 T240 T250 T260 T270 T280 T290 T300 T310 T320 T330 T340 T350 T360 T370 T380 T390 T400 T410 T420 T430 T440 T450 T460 T470 T480 T490 T500;do
+r='r0'; WD=$PROJD/8styrene32/r0
+for temp in `seq 90 10 500`;do
+  T=T$temp; #echo -e "\n##############\n T = $T\n##########"
   cd $WD/$T
   #ln -s ../8styrene32.pdb pdb
+  #ln -s ../8styrene32.pdb
   if [[ "T380 T390 T400 T410 T420 T430 T440 T450 T460 T470 T480 T490 T500" == *${T}* ]]
   then
     nframes=100000
-    #vmd -dispdev text -eofexit -e $PROJD/vmd/coalesce_trajectories.tcl
-    #vmd -dispdev win -eofexit -e $PROJD/vmd/rms2first.tcl
+    #vmd -dispdev text -eofexit -e $PROJD/vmd/coalesce_trajectories.tcl; sleep 9s
+    #cpptraj -p pdb -i $PROJD/amber/radial_8styrene32_r0_105001.cpptraj
   else
     nframes=10000
-    vmd -dispdev text -eofexit -e $PROJD/vmd/drop_first_frame.tcl
+    #ln -s equil.1.dcd equil.dcd
+    #cpptraj -p pdb -i $PROJD/amber/radial_8styrene32_r0_15001.cpptraj
   fi
-  echo -n "$T "; dumpdcd equil.dcd |head -1
+  #echo -n "$T "; dumpdcd equil.dcd |head -1
+  #vmd -dispdev win -eofexit -e $PROJD/vmd/rms2first.tcl; sleep 9s
+  #echo -n "$T "; dumpdcd equil_rms2first.dcd | head -1
+  #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 4560 100 '(:1-256)&(@H*)' atomicfluct_4.56ns_styH.dat --seriesfile atomicfluct_4.56ns_styH_series.dat --msd yes #atomic fluctuations of all hydrogens in the time-scale of HFBS
+  #echo -n "$T "; cat atomicfluct_4.56ns_styH.dat
+  #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 4560 100 '(:1-256)&(@H1,@H2,@H3,@H4,@H5)' atomicfluct_4.56ns_styd3.dat --seriesfile atomicfluct_4.56ns_styd3_series.dat --msd yes #atomic fluctuations of all styrene ring hydrogens in the time-scale of HFBS
+  #echo -n "$T "; cat atomicfluct_4.56ns_styd3.dat
+  #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 4560 100 '(:1-256)&(@H62,@H71,@H72,@H73)' atomicfluct_4.56ns_styd5.dat --seriesfile atomicfluct_4.56ns_styd5_series.dat --msd yes #atomic fluctuations of all styrene backbone hydrogens in the time-scale of HFBS
+  #echo -n "$T "; cat atomicfluct_4.56ns_styd5.dat
+done
+
   #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 1220 100 '(:1-256)&(@H*)' atomicfluct_1.22ns_styH.dat --seriesfile atomicfluct_1.22ns_styH_series.dat --msd yes &  #atomic fluctuations of all hydrogens in the time-scale of 1.22ns
   #echo -n "$T "; cat atomicfluct_1.22ns_styH.dat
   #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 7640 100 '(:1-256)&(@H*)' atomicfluct_7.64ns_styH.dat --seriesfile atomicfluct_7.64ns_styH_series.dat --msd yes &  #atomic fluctuations of all hydrogens in the time-scale of 7.64ns
@@ -121,14 +134,206 @@ for T in T90 T100 T110 T120 T130 T140 T150 T160 T170 T190 T200 T210 T220 T230 T2
 done
 
          #############                                  
+         ##  r0.2   ##
+         #############
+#REDOING SIMULATIONS FOR 410. REMOVE LINE if [[ "T410" != *${T}* ]];then WHEN FINISHED
+r='r0.2'; WD=$PROJD/8styrene32/$r
+for temp in `seq 80 10 490`;do
+  T=T$temp; #echo -e "\n##############\n T = $T\n##########"
+if [[ "T410" != *${T}* ]];then
+  cd $WD/$T
+  #ln -s ../8styrene32.pdb
+  #ln -s ../8styrene32.pdb pdb
+  if [[ "T260 T270 T280 T290 T300 T310 T320 T330 T340 T350 T360 T370 T380 T390 T400 T410 T420 T430 T440 T450 T460 T470 T480 T490" == *${T}* ]]
+  then
+    nframes=100000
+    #vmd -dispdev text -eofexit -e $PROJD/vmd/coalesce_trajectories.tcl
+    #cpptraj -p pdb -i $PROJD/amber/radial_8styrene32_105001.cpptraj
+    #python $PROJD/python/CMAnalysis.py 8styrene32.pdb equil.dcd 5001 105001 100 'not resnum 1:256 and name C' 6.11 contacts_tolC_tolC.h5
+    #python $PROJD/python/CMAnalysis.py 8styrene32.pdb equil.dcd 5001 105001 100 'not resnum 1:256 and name C' 7.0 contacts_tolC_tolC_7.0.h5
+  else
+    nframes=10000
+    #ln -s equil.1.dcd equil.dcd
+    #cpptraj -p pdb -i $PROJD/amber/radial_8styrene32_15001.cpptraj
+    #python $PROJD/python/CMAnalysis.py 8styrene32.pdb equil.dcd 5001 15001 10 'not resnum 1:256 and name C' 6.11 contacts_tolC_tolC.h5
+    #python $PROJD/python/CMAnalysis.py 8styrene32.pdb equil.dcd 5001 15001 10 'not resnum 1:256 and name C' 7.0 contacts_tolC_tolC_7.0.h5
+  fi
+  #vmd -dispdev win -eofexit -e $PROJD/vmd/rms2first.tcl
+  #echo -n "$T "; dumpdcd equil_rms2first.dcd | head -1
+  #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 4560 100 '(:1-256)&(@H*)' atomicfluct_4.56ns_styH.dat --seriesfile atomicfluct_4.56ns_styH_series.dat --msd yes #atomic fluctuations of all polymer hydrogens in the time-scale of HFBS
+  #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 4560 100 '(:1-256)&(@H1,@H2,@H3,@H4,@H5)' atomicfluct_4.56ns_styd3.dat --seriesfile atomicfluct_4.56ns_styd3_series.dat --msd yes #atomic fluctuations of all styrene ring hydrogens in the time-scale of HFBS
+  #echo -n "$T "; cat atomicfluct_4.56ns_styd3.dat
+  #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 4560 100 '(:1-256)&(@H62,@H71,@H72,@H73)' atomicfluct_4.56ns_styd5.dat --seriesfile atomicfluct_4.56ns_styd5_series.dat --msd yes #atomic fluctuations of all styrene backbone hydrogens in the time-scale of HFBS
+  #echo -n "$T "; cat atomicfluct_4.56ns_styd5.dat
+  #echo -n "$T "; cat atomicfluct_4.56ns_styH.dat
+  #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 4560 100 '(!(:1-256))&(@H=)' atomicfluct_4.56ns_tol.dat --seriesfile  atomicfluct_4.56ns_tol_series.dat --msd yes #atomic fluctuations of all toluene hydrogens in the time-scale of HFBS
+  #echo -n "$T "; cat atomicfluct_4.56ns_tol.dat
+  #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 4560 100 '(!(:1-256))&(@H1,@H2,@H3,@H4,@H5)' atomicfluct_4.56ns_told3.dat --seriesfile  atomicfluct_4.56ns_told3_series.dat --msd yes #atomic fluctuations of all toluene hydrogens in the time-scale of HFBS
+  #echo -n "$T "; cat atomicfluct_4.56ns_tol.dat
+  #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 4560 100 '(!(:1-256))&(@C)' atomicfluct_4.56ns_tolC.dat --seriesfile  atomicfluct_4.56ns_tolC_series.dat --msd yes #atomic fluctuations of central carobon of toluene in the time-scale of HFBS
+  #echo -n "$T "; cat atomicfluct_4.56ns_tolC.dat
+  #mkdir atomicfluct_4.56ns_told3
+  #for ires in `seq 257 307`;do
+  #  atoms="':${ires}&(@H1,@H2,@H3,@H4,@H5)'"
+  #  python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 4560 100 $atoms atomicfluct_4.56ns_told3/atomicfluct_4.56ns_tol${ires}d3.dat --seriesfile  atomicfluct_4.56ns_told3/atomicfluct_4.56ns_tol${ires}d3_series.dat --msd yes #atomic fluctuations of all toluene hydrogens in the time-scale of HFBS
+  #done
+  #mkdir atomicfluct_4.56ns_styd3
+  #for ires in `seq 1 256`;do
+  #  atoms="':${ires}&(@H1,@H2,@H3,@H4,@H5)'"
+  #  python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 4560 100 $atoms atomicfluct_4.56ns_styd3/atomicfluct_4.56ns_sty${ires}d3.dat --seriesfile  atomicfluct_4.56ns_styd3/atomicfluct_4.56ns_sty${ires}d3_series.dat --msd yes #atomic fluctuations of all toluene hydrogens in the time-scale of HFBS
+  #done
+  #mkdir atomicfluct_4.56ns_tolC
+  #for ires in `seq 257 307`;do
+  #  atoms="':${ires}&(@C)'"
+  #  python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 4560 100 $atoms atomicfluct_4.56ns_tolC/atomicfluct_4.56ns_tol${ires}C.dat --seriesfile  atomicfluct_4.56ns_tolC/atomicfluct_4.56ns_tol${ires}C_series.dat --msd yes #atomic fluctuations of central carbon of tol in the time-scale of HFBS
+  #done
+  #watershell (:257)&(@C) sty_around_tol257.dat lower 6.0 upper 8.0 (:1-256)&(@C)
+  #python $PROJD/python/cluster_contacts.py contacts_tolC_tolC.h5 257-307 contacts_tolC_tolC_cluster_sizes.dat
+  #echo -n "$temp "; head -2 contacts_tolC_tolC_cluster_sizes.dat|tail --lines=1|tr '#' ' '
+  #python $PROJD/python/cluster_contacts.py contacts_tolC_tolC_7.0.h5 257-307 contacts_tolC_tolC_7.0_cluster_sizes.dat
+  #echo -n "$temp "; head -2 contacts_tolC_tolC_7.0_cluster_sizes.dat|tail --lines=1|tr '#' ' '
+fi
+done
+popwindow.py 1s 'Finished r0.2 jobs'
+
+         #############                                  
+         ##  r0.3   ##
+         #############
+#REDOING SIMULATIONS FOR 370. REMOVE LINE if [[ "T370" != *${T}* ]];then WHEN FINISHED
+r='r0.3'; WD=$PROJD/8styrene32/r0.3
+for temp in `seq 80 10 490`;do
+  T=T$temp; #echo -e "\n##############\n T = $T\n##########"
+if [[ "T370" != *${T}* ]];then
+  cd $WD/$T
+  #ln -s ../8styrene32.pdb
+  #ln -s ../8styrene32.pdb pdb
+  if [[ "T260 T270 T280 T290 T300 T310 T320 T330 T340 T350 T360 T370 T380 T390 T400 T410 T420 T430 T440 T450 T460 T470 T480 T490" == *${T}* ]]
+  then
+    nframes=100000
+    #vmd -dispdev text -eofexit -e $PROJD/vmd/coalesce_trajectories.tcl
+    #cpptraj -p pdb -i $PROJD/amber/radial_8styrene32_105001.cpptraj
+    #python $PROJD/python/CMAnalysis.py 8styrene32.pdb equil.dcd 5001 105001 100 'not resnum 1:256 and name C' 6.11 contacts_tolC_tolC.h5
+    #python $PROJD/python/CMAnalysis.py 8styrene32.pdb equil.dcd 5001 105001 100 'not resnum 1:256 and name C' 7.0 contacts_tolC_tolC_7.0.h5
+  else
+    nframes=10000
+    #ln -s equil.1.dcd equil.dcd
+    #cpptraj -p pdb -i $PROJD/amber/radial_8styrene32_15001.cpptraj
+    #python $PROJD/python/CMAnalysis.py 8styrene32.pdb equil.dcd 5001 15001 10 'not resnum 1:256 and name C' 6.11 contacts_tolC_tolC.h5
+    #python $PROJD/python/CMAnalysis.py 8styrene32.pdb equil.dcd 5001 15001 10 'not resnum 1:256 and name C' 7.0 contacts_tolC_tolC_7.0.h5
+  fi
+  #vmd -dispdev win -eofexit -e $PROJD/vmd/rms2first.tcl; sleep 9s
+  #echo -n "$T "; dumpdcd equil.dcd|head -1
+  #echo -n "$T "; dumpdcd equil_rms2first.dcd | head -1
+  #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 4560 100 '(:1-256)&(@H*)' atomicfluct_4.56ns_styH.dat --seriesfile atomicfluct_4.56ns_styH_series.dat --msd yes #atomic fluctuations of all hydrogens in the time-scale of HFBS
+  #echo -n "$T "; cat atomicfluct_4.56ns_styH.dat
+  #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 4560 100 '(:1-256)&(@H1,@H2,@H3,@H4,@H5)' atomicfluct_4.56ns_styd3.dat --seriesfile atomicfluct_4.56ns_styd3_series.dat --msd yes #atomic fluctuations of all styrene ring hydrogens in the time-scale of HFBS
+  #echo -n "$T "; cat atomicfluct_4.56ns_styd3.dat
+  #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 4560 100 '(:1-256)&(@H62,@H71,@H72,@H73)' atomicfluct_4.56ns_styd5.dat --seriesfile atomicfluct_4.56ns_styd5_series.dat --msd yes #atomic fluctuations of all styrene backbone hydrogens in the time-scale of HFBS
+  #echo -n "$T "; cat atomicfluct_4.56ns_styd5.dat
+  #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 4560 100 '(!(:1-256))&(@H=)' atomicfluct_4.56ns_tol.dat --seriesfile  atomicfluct_4.56ns_tol_series.dat --msd yes #atomic fluctuations of all toluene hydrogens in the time-scale of HFBS
+  #echo -n "$T "; cat atomicfluct_4.56ns_tol.dat
+  #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 4560 100 '(!(:1-256))&(@C)' atomicfluct_4.56ns_tolC.dat --seriesfile  atomicfluct_4.56ns_tolC_series.dat --msd yes #atomic fluctuations of central carobon of toluene in the time-scale of HFBS
+  #echo -n "$T "; cat atomicfluct_4.56ns_tolC.dat
+  #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 4560 100 '(!(:1-256))&(@H1,@H2,@H3,@H4,@H5)' atomicfluct_4.56ns_told3.dat --seriesfile  atomicfluct_4.56ns_told3_series.dat --msd yes #atomic fluctuations of all toluene hydrogens in the time-scale of HFBS
+  #python $PROJD/python/cluster_contacts.py contacts_tolC_tolC.h5 257-333 contacts_tolC_tolC_cluster_sizes.dat 
+  #echo -n "$temp "; head -2 contacts_tolC_tolC_cluster_sizes.dat|tail --lines=1|tr '#' ' '
+  #python $PROJD/python/cluster_contacts.py contacts_tolC_tolC_7.0.h5 257-333 contacts_tolC_tolC_7.0_cluster_sizes.dat
+  #echo -n "$temp "; head -2 contacts_tolC_tolC_7.0_cluster_sizes.dat|tail --lines=1|tr '#' ' '
+fi
+done
+popwindow.py 1s 'Finished r0.3 jobs'
+
+         #############                                  
+         ##  r0.4   ##
+         #############
+r='r0.4'; WD=$PROJD/8styrene32/r0.4
+for temp in `seq 80 10 490`;do
+  T=T$temp; #echo -e "\n##############\n T = $T\n##########"
+  cd $WD/$T
+  #ln -s ../8styrene32.pdb
+  #ln -s ../8styrene32.pdb pdb
+  if [[ "T260 T270 T280 T290 T300 T310 T320 T330 T340 T350 T360 T370 T380 T390 T400 T410 T420 T430 T440 T450 T460 T470 T480 T490" == *${T}* ]]
+  then
+    nframes=100000
+    #vmd -dispdev text -eofexit -e $PROJD/vmd/coalesce_trajectories.tcl; sleep 9s
+    #cpptraj -p pdb -i $PROJD/amber/radial_8styrene32_105001.cpptraj
+    #python $PROJD/python/CMAnalysis.py 8styrene32.pdb equil.dcd 5001 105001 100 'not resnum 1:256 and name C' 6.11 contacts_tolC_tolC.h5
+    #python $PROJD/python/CMAnalysis.py 8styrene32.pdb equil.dcd 5001 105001 100 'not resnum 1:256 and name C' 7.0 contacts_tolC_tolC_7.0.h5
+  else
+    nframes=10000
+    #ln -s equil.1.dcd equil.dcd
+    #cpptraj -p pdb -i $PROJD/amber/radial_8styrene32_15001.cpptraj
+    #python $PROJD/python/CMAnalysis.py 8styrene32.pdb equil.dcd 5001 15001 10 'not resnum 1:256 and name C' 6.11 contacts_tolC_tolC.h5
+    #python $PROJD/python/CMAnalysis.py 8styrene32.pdb equil.dcd 5001 15001 10 'not resnum 1:256 and name C' 7.0 contacts_tolC_tolC_7.0.h5
+  fi
+  #echo -n "$T "; dumpdcd equil.dcd|head -1
+  #vmd -dispdev win -eofexit -e $PROJD/vmd/rms2first.tcl; sleep 9s
+  #echo -n "$T "; dumpdcd equil_rms2first.dcd | head -1
+  #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 4560 100 '(:1-256)&(@H*)' atomicfluct_4.56ns_styH.dat --seriesfile atomicfluct_4.56ns_styH_series.dat --msd yes #atomic fluctuations of all hydrogens in the time-scale of HFBS
+  #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 4560 100 '(:1-256)&(@H1,@H2,@H3,@H4,@H5)' atomicfluct_4.56ns_styd3.dat --seriesfile atomicfluct_4.56ns_styd3_series.dat --msd yes #atomic fluctuations of all styrene ring hydrogens in the time-scale of HFBS
+  #echo -n "$T "; cat atomicfluct_4.56ns_styd3.dat
+  #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 4560 100 '(:1-256)&(@H62,@H71,@H72,@H73)' atomicfluct_4.56ns_styd5.dat --seriesfile atomicfluct_4.56ns_styd5_series.dat --msd yes #atomic fluctuations of all styrene backbone hydrogens in the time-scale of HFBS
+  #echo -n "$T "; cat atomicfluct_4.56ns_styd5.dat
+  #echo -n "$T "; cat atomicfluct_4.56ns_styH.dat
+  #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 4560 100 '(!(:1-256))&(@H=)' atomicfluct_4.56ns_tol.dat --seriesfile  atomicfluct_4.56ns_tol_series.dat --msd yes #atomic fluctuations of all toluene hydrogens in the time-scale of HFBS
+  #echo -n "$T "; cat atomicfluct_4.56ns_tol.dat
+  #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 4560 100 '(!(:1-256))&(@C)' atomicfluct_4.56ns_tolC.dat --seriesfile  atomicfluct_4.56ns_tolC_series.dat --msd yes #atomic fluctuations of central carobon of toluene in the time-scale of HFBS
+  #echo -n "$T "; cat atomicfluct_4.56ns_tolC.dat
+  #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 4560 100 '(!(:1-256))&(@H1,@H2,@H3,@H4,@H5)' atomicfluct_4.56ns_told3.dat --seriesfile  atomicfluct_4.56ns_told3_series.dat --msd yes #atomic fluctuations of all toluene hydrogens in the time-scale of HFBS
+  #python $PROJD/python/cluster_contacts.py contacts_tolC_tolC.h5 257-358 contacts_tolC_tolC_cluster_sizes.dat
+  #echo -n "$temp "; head -2 contacts_tolC_tolC_cluster_sizes.dat|tail --lines=1|tr '#' ' '
+  #python $PROJD/python/cluster_contacts.py contacts_tolC_tolC_7.0.h5 257-358 contacts_tolC_tolC_7.0_cluster_sizes.dat
+  #echo -n "$temp "; head -2 contacts_tolC_tolC_7.0_cluster_sizes.dat|tail --lines=1|tr '#' ' '
+done
+popwindow.py 1s 'Finished r0.4 jobs'
+
+
+         #############                                  
          ##  r0.5   ##
          #############
-WD=$PROJD/8styrene32/r0.5
-for  T in T270 T280 T290 T310 T330 T350 T370 T380 T400 T410 T420 T430 T440 T450;do
+#REDOING SIMULATIONS FOR 160 and 390. REMOVE LINES if [[ "T160 T390" != *${T}* ]];then WHEN FINISHED
+r='r0.5'; WD=$PROJD/8styrene32/r0.5
+for temp in `seq 90 10 490`;do
+  T=T$temp; #echo -e "\n##############\n T = $T\n##########"
+if [[ "T160 T390" != *${T}* ]];then
   cd $WD/$T
   #ln -s ../8styrene32.pdb pdb
-  nframes=10000
-  if [[ "T400 T410 T420 T430 T440 T450" == *${T}* ]];then nframes=30000;fi
+  #ln -s ../8styrene32.pdb .
+  if [[ "T320 T330 T340 T350 T360 T370 T380 T390 T400 T410 T420 T430 T440 T450 T460 T470 T480 T490" == *${T}* ]];then
+    nframes=100000
+    #vmd -dispdev text -eofexit -e $PROJD/vmd/coalesce_trajectories.tcl; sleep 9s
+    #cpptraj -p pdb -i $PROJD/amber/radial_8styrene32_105001.cpptraj
+    #python $PROJD/python/CMAnalysis.py 8styrene32.pdb equil.dcd 5001 105001 100 'not resnum 1:256 and name C' 6.11 contacts_tolC_tolC.h5
+    #python $PROJD/python/CMAnalysis.py 8styrene32.pdb equil.dcd 5001 105001 100 'not resnum 1:256 and name C' 7.0 contacts_tolC_tolC_7.0.h5
+  else
+    nframes=10000
+    #ln -s equil.1.dcd equil.dcd
+    #cpptraj -p pdb -i $PROJD/amber/radial_8styrene32_15001.cpptraj
+    #python $PROJD/python/CMAnalysis.py 8styrene32.pdb equil.dcd 5001 15001 10 'not resnum 1:256 and name C' 6.11 contacts_tolC_tolC.h5
+    #python $PROJD/python/CMAnalysis.py 8styrene32.pdb equil.dcd 5001 15001 10 'not resnum 1:256 and name C' 7.0 contacts_tolC_tolC_7.0.h5
+  fi
+  #echo -n "$T "; dumpdcd equil.dcd|head -1
+  #vmd -dispdev win -eofexit -e $PROJD/vmd/rms2first.tcl; sleep 9s
+  #echo -n "$T "; dumpdcd equil_rms2first.dcd | head -1
+  #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 4560 100 '(:1-256)&(@H*)' atomicfluct_4.56ns_styH.dat --seriesfile atomicfluct_4.56ns_styH_series.dat --msd yes #atomic fluctuations of all hydrogens in the time-scale of HFBS
+  #echo -n "$T "; cat atomicfluct_4.56ns_styH.dat
+  #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 4560 100 '(:1-256)&(@H1,@H2,@H3,@H4,@H5)' atomicfluct_4.56ns_styd3.dat --seriesfile atomicfluct_4.56ns_styd3_series.dat --msd yes #atomic fluctuations of all styrene ring hydrogens in the time-scale of HFBS
+  #echo -n "$T "; cat atomicfluct_4.56ns_styd3.dat
+  #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 4560 100 '(:1-256)&(@H62,@H71,@H72,@H73)' atomicfluct_4.56ns_styd5.dat --seriesfile atomicfluct_4.56ns_styd5_series.dat --msd yes #atomic fluctuations of all styrene backbone hydrogens in the time-scale of HFBS
+  #echo -n "$T "; cat atomicfluct_4.56ns_styd5.dat
+  #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 4560 100 '(!(:1-256))&(@H=)' atomicfluct_4.56ns_tol.dat --seriesfile  atomicfluct_4.56ns_tol_series.dat --msd yes #atomic fluctuations of all toluene hydrogens in the time-scale of HFBS
+  #echo -n "$T "; cat atomicfluct_4.56ns_tol.dat
+  #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 4560 100 '(!(:1-256))&(@C)' atomicfluct_4.56ns_tolC.dat --seriesfile  atomicfluct_4.56ns_tolC_series.dat --msd yes #atomic fluctuations of central carobon of toluene in the time-scale of HFBS
+  #echo -n "$T "; cat atomicfluct_4.56ns_tolC.dat
+  #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 4560 100 '(!(:1-256))&(@H1,@H2,@H3,@H4,@H5)' atomicfluct_4.56ns_told3.dat --seriesfile  atomicfluct_4.56ns_told3_series.dat --msd yes #atomic fluctuations of all toluene hydrogens in the time-scale of HFBS
+  #python $PROJD/python/cluster_contacts.py contacts_tolC_tolC.h5 257-384 contacts_tolC_tolC_cluster_sizes.dat 
+  #echo -n "$temp "; head -2 contacts_tolC_tolC_cluster_sizes.dat|tail --lines=1|tr '#' ' '
+  #python $PROJD/python/cluster_contacts.py contacts_tolC_tolC_7.0.h5 257-384 contacts_tolC_tolC_7.0_cluster_sizes.dat
+  #echo -n "$temp "; head -2 contacts_tolC_tolC_7.0_cluster_sizes.dat|tail --lines=1|tr '#' ' '
+fi
+done
+popwindow.py 1s 'Finished r0.5 jobs'
+
   #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 1220 100 '(:1-256)&(@H*)' atomicfluct_1.22ns_styH.dat --seriesfile atomicfluct_1.22ns_styH_series.dat --msd yes &
   #echo -n "$T "; cat atomicfluct_1.22ns_styH.dat
   #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 7640 100 '(:1-256)&(@H*)' atomicfluct_7.64ns_styH.dat --seriesfile atomicfluct_7.64ns_styH_series.dat --msd yes &
@@ -147,8 +352,7 @@ for  T in T270 T280 T290 T310 T330 T350 T370 T380 T400 T410 T420 T430 T440 T450;
   #python $PROJD/python/diffusion_t0average.py residueCM.pdb equil_rms2first_residueCM.crd $nframes 1.0 5000 100 ':1-256' diffusion_styCM.dat &  
   #time python $PROJD/python/atomic_fluct_t0average.py residueCM.pdb equil_rms2first_residueCM.crd $nframes 1073 60 ':1-256' atomicfluct_BASIS_styCM.dat --seriesfile atomicfluct_BASIS_styCM_series.dat --msd yes &
   #python $PROJD/python/CMtrajectory.py pdb equil_rms2first.dcd 32 8 CM.pdb equil_rms2first_CM.crd
-  time python $PROJD/python/atomic_fluct_t0average.py CM.pdb equil_rms2first_CM.crd $nframes 1073 99 ':1-8' atomicfluct_BASIS_CM.dat --seriesfile atomicfluct_BASIS_CM_series.dat --msd yes &
-  sleep 9s
+  #time python $PROJD/python/atomic_fluct_t0average.py CM.pdb equil_rms2first_CM.crd $nframes 1073 99 ':1-8' atomicfluct_BASIS_CM.dat --seriesfile atomicfluct_BASIS_CM_series.dat --msd yes &
 #  python $PROJD/python/diffusion_t0average.py CM.pdb equil_rms2first_CM.crd $nframes 1.0 5000 100 ':1-8' diffusion_CM.dat &
 
   #python $PROJD/python/rdf.py pdb equil_rms2first.dcd C3 C --npol 8 --spacing 0.1 --maximum 30.0 &
@@ -163,9 +367,38 @@ done
          #############                                  
          ##   r1    ##
          #############
-WD=$PROJD/8styrene32/r1
-for  T in T230 T240 T250 T260 T270 T270 T280 T290 T300 T310 T320 T330 T340 T350 T360 T370 T380 T390 T400 T420 T430 T440;do
+r='r1'; WD=$PROJD/8styrene32/r1
+for temp in `seq 90 10 460`;do
+  T=T$temp; echo -e "\n##############\n T = $T\n##########"
+if [[ "T100 T160 T410" != *${T}* ]];then
   cd $WD/$T
+  #ln -s ../8styrene32.pdb pdb
+  #ln -s ../8styrene32.pdb .
+  nframes=10000
+  #echo -n "$T "; dumpdcd equil.1.dcd | head -1
+  #ln -s equil.1.dcd equil.dcd
+  #vmd -dispdev win -eofexit -e $PROJD/vmd/rms2first.tcl; sleep 9s
+  #echo -n "$T "; dumpdcd equil_rms2first.dcd | head -1
+  #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 4560 100 '(:1-256)&(@H*)' atomicfluct_4.56ns_styH.dat --seriesfile atomicfluct_4.56ns_styH_series.dat --msd yes #atomic fluctuations of all hydrogens in the time-scale of HFBS
+  #echo -n "$T "; cat atomicfluct_4.56ns_styH.dat
+  #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 4560 100 '(:1-256)&(@H1,@H2,@H3,@H4,@H5)' atomicfluct_4.56ns_styd3.dat --seriesfile atomicfluct_4.56ns_styd3_series.dat --msd yes #atomic fluctuations of all styrene ring hydrogens in the time-scale of HFBS
+  #echo -n "$T "; cat atomicfluct_4.56ns_styd3.dat
+  #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 4560 100 '(:1-256)&(@H62,@H71,@H72,@H73)' atomicfluct_4.56ns_styd5.dat --seriesfile atomicfluct_4.56ns_styd5_series.dat --msd yes #atomic fluctuations of all styrene backbone hydrogens in the time-scale of HFBS
+  #echo -n "$T "; cat atomicfluct_4.56ns_styd5.dat
+  #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 4560 100 '(!(:1-256))&(@H=)' atomicfluct_4.56ns_tol.dat --seriesfile  atomicfluct_4.56ns_tol_series.dat --msd yes #atomic fluctuations of all toluene hydrogens in the time-scale of HFBS
+  #echo -n "$T "; cat atomicfluct_4.56ns_tol.dat
+  #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 4560 100 '(!(:1-256))&(@C)' atomicfluct_4.56ns_tolC.dat --seriesfile  atomicfluct_4.56ns_tolC_series.dat --msd yes #atomic fluctuations of central carobon of toluene in the time-scale of HFBS
+  #echo -n "$T "; cat atomicfluct_4.56ns_tolC.dat
+  #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 4560 100 '(!(:1-256))&(@H1,@H2,@H3,@H4,@H5)' atomicfluct_4.56ns_told3.dat --seriesfile  atomicfluct_4.56ns_told3_series.dat --msd yes #atomic fluctuations of all toluene hydrogens in the time-scale of HFBS
+  #cpptraj -p pdb -i $PROJD/amber/radial_8styrene32_15001.cpptraj
+  #python $PROJD/python/CMAnalysis.py 8styrene32.pdb equil.dcd 5001 15001 10 'not resnum 1:256 and name C' 6.11 contacts_tolC_tolC.h5
+    #python $PROJD/python/CMAnalysis.py 8styrene32.pdb equil.dcd 5001 15001 10 'not resnum 1:256 and name C' 7.0 contacts_tolC_tolC_7.0.h5
+  #python $PROJD/python/cluster_contacts.py contacts_tolC_tolC.h5 257-512 contacts_tolC_tolC_cluster_sizes.dat 
+  #echo -n "$temp "; head -2 contacts_tolC_tolC_cluster_sizes.dat|tail --lines=1|tr '#' ' '
+  #python $PROJD/python/cluster_contacts.py contacts_tolC_tolC_7.0.h5 257-512 contacts_tolC_tolC_7.0_cluster_sizes.dat
+  #echo -n "$temp "; head -2 contacts_tolC_tolC_7.0_cluster_sizes.dat|tail --lines=1|tr '#' ' '
+fi
+done
   #ln -s ../8styrene32.pdb pdb
   #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd 10000 1220 100 '(:1-256)&(@H*)' atomicfluct_1.22ns_styH.dat --seriesfile atomicfluct_1.22ns_styH_series.dat --msd yes &
   #echo -n "$T "; cat atomicfluct_1.22ns_styH.dat #;  echo ''
@@ -184,8 +417,7 @@ for  T in T230 T240 T250 T260 T270 T270 T280 T290 T300 T310 T320 T330 T340 T350 
   #python $PROJD/python/residueCMtrajectory.py pdb equil_rms2first.dcd 512 residueCM.pdb equil_rms2first_residueCM.crd &
   #python $PROJD/python/diffusion_t0average.py residueCM.pdb equil_rms2first_residueCM.crd 10000 1.0 5000 100 ':1-256' diffusion_styCM.dat &
   #time python $PROJD/python/atomic_fluct_t0average.py residueCM.pdb equil_rms2first_residueCM.crd 10000 1073 60 ':1-256' atomicfluct_BASIS_styCM.dat --seriesfile atomicfluct_BASIS_styCM_series.dat --msd yes &
-  python $PROJD/python/CMtrajectory.py pdb equil_rms2first.dcd 32 8 CM.pdb equil_rms2first_CM.crd
-  sleep 9s
+  #python $PROJD/python/CMtrajectory.py pdb equil_rms2first.dcd 32 8 CM.pdb equil_rms2first_CM.crd
   #time python $PROJD/python/atomic_fluct_t0average.py CM.pdb equil_rms2first_CM.crd 10000 1073 99 ':1-8' atomicfluct_BASIS_CM.dat --seriesfile atomicfluct_BASIS_CM_series.dat --msd yes &
   #python $PROJD/python/diffusion_t0average.py CM.pdb equil_rms2first_CM.crd 10000 1.0 5000 100 ':1-8' diffusion_CM.dat &
 
@@ -201,10 +433,35 @@ done
          #############                                  
          ##   r2    ##
          #############
-WD=$PROJD/8styrene32/r2
-for T in T170 T190 T210 T230 T250 T270 T290 T310 T330 T350 T370 T390 T410;do
+r='r2'; WD=$PROJD/8styrene32/r2
+for temp in `seq 90 10 460`;do
+  T=T$temp; #echo -e "\n##############\n T = $T\n##########"
+if [[ "T100 T110 T300" != *${T}* ]];then
   cd $WD/$T
-  #ln -s ../8styrene32.pdb pdb
+  nframes=10000
+  #ln -s ../8styrene32.pdb .;   ln -s ../8styrene32.pdb pdb;   ln -s equil.1.dcd equil.dcd
+  #echo -n "$T "; dumpdcd equil.dcd|head -1
+  #vmd -dispdev win -eofexit -e $PROJD/vmd/rms2first.tcl; sleep 9s
+  #echo -n "$T "; dumpdcd equil_rms2first.dcd | head -1
+  #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 4560 100 '(:1-256)&(@H*)' atomicfluct_4.56ns_styH.dat --seriesfile atomicfluct_4.56ns_styH_series.dat --msd yes #atomic fluctuations of all hydrogens in the time-scale of HFBS
+  #echo -n "$T "; cat atomicfluct_4.56ns_styH.dat
+  #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 4560 100 '(:1-256)&(@H1,@H2,@H3,@H4,@H5)' atomicfluct_4.56ns_styd3.dat --seriesfile atomicfluct_4.56ns_styd3_series.dat --msd yes #atomic fluctuations of all styrene ring hydrogens in the time-scale of HFBS
+  #echo -n "$T "; cat atomicfluct_4.56ns_styd3.dat
+  #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 4560 100 '(:1-256)&(@H62,@H71,@H72,@H73)' atomicfluct_4.56ns_styd5.dat --seriesfile atomicfluct_4.56ns_styd5_series.dat --msd yes #atomic fluctuations of all styrene backbone hydrogens in the time-scale of HFBS
+  #echo -n "$T "; cat atomicfluct_4.56ns_styd5.dat
+  #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 4560 100 '(!(:1-256))&(@H=)' atomicfluct_4.56ns_tol.dat --seriesfile  atomicfluct_4.56ns_tol_series.dat --msd yes #atomic fluctuations of all toluene hydrogens in the time-scale of HFBS
+  #echo -n "$T "; cat atomicfluct_4.56ns_tol.dat
+  #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 4560 100 '(!(:1-256))&(@C)' atomicfluct_4.56ns_tolC.dat --seriesfile  atomicfluct_4.56ns_tolC_series.dat --msd yes #atomic fluctuations of central carobon of toluene in the time-scale of HFBS
+  #echo -n "$T "; cat atomicfluct_4.56ns_tolC.dat
+  #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 4560 100 '(!(:1-256))&(@H1,@H2,@H3,@H4,@H5)' atomicfluct_4.56ns_told3.dat --seriesfile  atomicfluct_4.56ns_told3_series.dat --msd yes #atomic fluctuations of all toluene hydrogens in the time-scale of HFBS
+  #cpptraj -p pdb -i $PROJD/amber/radial_8styrene32_15001.cpptraj
+  #python $PROJD/python/CMAnalysis.py 8styrene32.pdb equil.dcd 5001 15001 10 'not resnum 1:256 and name C' 6.11 contacts_tolC_tolC.h5
+  #python $PROJD/python/CMAnalysis.py 8styrene32.pdb equil.dcd 5001 15001 10 'not resnum 1:256 and name C' 7.0 contacts_tolC_tolC_7.0.h5
+  #python $PROJD/python/cluster_contacts.py contacts_tolC_tolC.h5 257-768 contacts_tolC_tolC_cluster_sizes.dat 
+  #echo -n "$temp "; head -2 contacts_tolC_tolC_cluster_sizes.dat|tail --lines=1|tr '#' ' '
+  #python $PROJD/python/cluster_contacts.py contacts_tolC_tolC_7.0.h5 257-768 contacts_tolC_tolC_7.0_cluster_sizes.dat
+fi
+done
   #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd 10000 1220 100 '(:1-256)&(@H*)' atomicfluct_1.22ns_styH.dat --seriesfile atomicfluct_1.22ns_styH_series.dat --msd yes &
   #echo -n "$T "; cat atomicfluct_1.22ns_styH.dat
   #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd 10000 7640 100 '(:1-256)&(@H*)' atomicfluct_7.64ns_styH.dat --seriesfile atomicfluct_7.64ns_styH_series.dat --msd yes &
@@ -222,8 +479,7 @@ for T in T170 T190 T210 T230 T250 T270 T290 T310 T330 T350 T370 T390 T410;do
   #python $PROJD/python/residueCMtrajectory.py pdb equil_rms2first.dcd 768 residueCM.pdb equil_rms2first_residueCM.crd &
   #python $PROJD/python/diffusion_t0average.py residueCM.pdb equil_rms2first_residueCM.crd 10000 1.0 5000 100 ':1-256' diffusion_styCM.dat &
   #time python $PROJD/python/atomic_fluct_t0average.py residueCM.pdb equil_rms2first_residueCM.crd 10000 1073 60 ':1-256' atomicfluct_BASIS_styCM.dat --seriesfile atomicfluct_BASIS_styCM_series.dat --msd yes &
-  python $PROJD/python/CMtrajectory.py pdb equil_rms2first.dcd 32 8 CM.pdb equil_rms2first_CM.crd
-  sleep 9s
+  #python $PROJD/python/CMtrajectory.py pdb equil_rms2first.dcd 32 8 CM.pdb equil_rms2first_CM.crd
   #time python $PROJD/python/atomic_fluct_t0average.py CM.pdb equil_rms2first_CM.crd 10000 1073 99 ':1-8' atomicfluct_BASIS_CM.dat --seriesfile atomicfluct_BASIS_CM_series.dat --msd yes &
   #python $PROJD/python/diffusion_t0average.py CM.pdb equil_rms2first_CM.crd 10000 1.0 5000 100 ':1-8' diffusion_CM.dat &
   #python $PROJD/python/rdf.py pdb equil_rms2first.dcd C3 C --npol 8 --spacing 0.1 --maximum 30.0 &
@@ -240,9 +496,29 @@ done
          #########################
 sleep 5h
 WD=$PROJD/1styrene32/1styrene32_4017toluene
-for T in T90 T100 T110 T120 T130 T140 T150 T160 T170 T180 T190 T200 T210 T230 T250 T270 T290 T310;do
-  cd $WD/$T; #ln -s ../1styrene32.pdb pdb
+for temp in 70 80 90 100 110 120 130 140 150 160 170 180 190 200 210 230 250 270 290 310 330 340 350 360;do
+  T="T$temp"; cd $WD/$T;
+  #ln -s ../1styrene32.pdb pdb; ln -s ../1styrene32.pdb .
+  nframes=10000
+  #echo -n "$T "; dumpdcd equil.dcd|head -1
   #vmd -dispdev win -eofexit -e $PROJD/vmd/rms2first.tcl #coalesce trajectories
+  #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 4560 100 '(:1-32)&(@H*)' atomicfluct_4.56ns_styH.dat --seriesfile atomicfluct_4.56ns_styH_series.dat --msd yes #atomic fluctuations of all hydrogens in the time-scale of HFBS
+  #echo -n "$T "; cat atomicfluct_4.56ns_styH.dat
+  #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 4560 100 '(:1-32)&(@H1,@H2,@H3,@H4,@H5)' atomicfluct_4.56ns_styd3.dat --seriesfile atomicfluct_4.56ns_styd3_series.dat --msd yes #atomic fluctuations of all styrene ring hydrogens in the time-scale of HFBS
+  #echo -n "$T "; cat atomicfluct_4.56ns_styd3.dat
+  #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 4560 100 '(:1-32)&(@H62,@H71,@H72,@H73)' atomicfluct_4.56ns_styd5.dat --seriesfile atomicfluct_4.56ns_styd5_series.dat --msd yes #atomic fluctuations of all styrene backbone hydrogens in the time-scale of HFBS
+  #echo -n "$T "; cat atomicfluct_4.56ns_styd5.dat
+  #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 4560 30 '(!(:1-32))&(@H=)' atomicfluct_4.56ns_tol.dat --seriesfile  atomicfluct_4.56ns_tol_series.dat --msd yes #atomic fluctuations of all toluene hydrogens in the time-scale of HFBS
+  #echo -n "$T "; cat atomicfluct_4.56ns_tol.dat
+  #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 4560 30 '(!(:1-32))&(@C)' atomicfluct_4.56ns_tolC.dat --seriesfile  atomicfluct_4.56ns_tolC_series.dat --msd yes &#atomic fluctuations of central carobon of toluene in the time-scale of HFBS
+  echo -n "$T "; cat atomicfluct_4.56ns_tolC.dat
+  #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 4560 30 '(!(:1-32))&(@H1,@H2,@H3,@H4,@H5)' atomicfluct_4.56ns_told3.dat --seriesfile  atomicfluct_4.56ns_told3_series.dat --msd yes & #atomic fluctuations of all toluene hydrogens in the time-scale of HFBS
+  #echo -n "$T "; cat atomicfluct_4.56ns_told3.dat
+  #cpptraj -p pdb -i $PROJD/amber/radial_1styrene32_15001.cpptraj
+  #python $PROJD/python/CMAnalysis.py 1styrene32.pdb equil.dcd 5001 15001 10 'not resnum 1:32 and name C' 6.11 contacts_tolC_tolC.h5 &
+  #python $PROJD/python/CMAnalysis.py 1styrene32.pdb equil.dcd 5001 15001 10 'not resnum 1:32 and name C' 7.0 contacts_tolC_tolC_7.0.h5
+  #python $PROJD/python/cluster_contacts.py contacts_tolC_tolC.h5 33-4139 contacts_tolC_tolC_cluster_sizes.dat 
+done
   #python $PROJD/python/cluster_trajectory.py ./pdb ./equil_rms2first.dcd 500 '(:1-32)&(@H*)' centroid_styH.pdb average_styH.pdb
   #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd 10000 1220 100 '(:1-32)&(@H*)' atomicfluct_1.22ns_styH.dat --seriesfile atomicfluct_1.22ns_styH_series.dat --msd yes &
   #echo -n "$T "; cat atomicfluct_1.22ns_styH.dat;
@@ -266,8 +542,7 @@ for T in T90 T100 T110 T120 T130 T140 T150 T160 T170 T180 T190 T200 T210 T230 T2
   #time python $PROJD/python/atomic_fluct_t0average.py residueCM.pdb equil_rms2first_residueCM.crd 10000 1073 60 ':1-32' atomicfluct_BASIS_styCM.dat --seriesfile atomicfluct_BASIS_styCM_series.dat --msd yes &
   #python $PROJD/python/CMtrajectory.py pdb equil_rms2first.dcd 32 2 CM.pdb equil_rms2first_CM.crd &#Note: we take the first 32 toluenes as another polymer. The only reason is that cpptraj will not load a pdb file containing only one atom. Thus, CM.pdb need to contain two atoms
   #time python $PROJD/python/atomic_fluct_t0average.py CM.pdb equil_rms2first_CM.crd 10000 1073 99 ':1' atomicfluct_BASIS_CM.dat --seriesfile atomicfluct_BASIS_CM_series.dat --msd yes &
-  python $PROJD/python/diffusion_t0average.py CM.pdb equil_rms2first_CM.crd 10000 1.0 5000 100 ':1' diffusion_CM.dat --rms2t0 no & # we can't do rsm to first snapshot of each chunk because our system is made up of only one atom.
-  sleep 9s
+  #python $PROJD/python/diffusion_t0average.py CM.pdb equil_rms2first_CM.crd 10000 1.0 5000 100 ':1' diffusion_CM.dat --rms2t0 no & # we can't do rsm to first snapshot of each chunk because our system is made up of only one atom.
   #python $PROJD/python/rdf.py pdb equil_rms2first.dcd C3 C --npol 1 --spacing 0.1 --maximum 30.0 &
   #python $PROJD/python/rdf.py pdb equil_rms2first.dcd C7 C --npol 1 --spacing 0.1 --maximum 30.0 &
   #time python $PROJD/python/toluene_shell.py pdb equil_rms2first.dcd C3 C toluene_shell_around_C3.dat --npol 1 --spacing 0.1 --minimum 3.0 --maximum 9.0 &
