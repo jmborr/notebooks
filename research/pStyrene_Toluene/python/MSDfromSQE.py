@@ -52,3 +52,4 @@ buf='# Q^2  IEI\n'
 for i in range(len(q2)):
     buf += '{0} {1}\n'.format(q2[i], ieiY[i])
 open(os.getcwd()+'/{0}_IEI_from_SQE.dat'.format(deutscheme), 'w').write(buf)
+print 'Files generated:', '{0}_msd_from_SQE.dat'.format(deutscheme), '{0}_IEI_from_SQE.dat'.format(deutscheme)

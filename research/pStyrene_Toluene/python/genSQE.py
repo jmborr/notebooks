@@ -77,10 +77,13 @@ whfbs=mtds.ConvolveWorkspaces(wsqe, wreshfbs, OutputWorkspace=ws_hfbs)
 #Save to files
 savedir=os.getcwd()+'/mantid_sqe'
 os.system('mkdir -p {0}'.format(savedir))
-mtds.SaveNexus(whfbs,savedir+'/{0}.nxs'.format(ws_hfbs))  #convolved
-mtds.SaveNexus(wsqe, savedir+'/{0}.nxs'.format(ws_sqe))  #not convolved
-mtds.SaveNexus(wreshfbs, savedir+'/{0}.nxs'.format(wreshfbs.name())) #resolution
-
+fname_convolved='{0}.nxs'.format(ws_hfbs)
+mtds.SaveNexus(whfbs,savedir+'/'+fname_convolved)  #convolved
+fname_sqe='{0}.nxs'.format(ws_sqe)
+mtds.SaveNexus(wsqe, savedir+'/'+fname_sqe)  #not convolved
+fname_resolution='{0}.nxs'.format(wreshfbs.name())
+mtds.SaveNexus(wreshfbs, savedir+'/'+fname_resolution) #resolution
+print 'Files saved:', fname_convolved, fname_sqe, fname_resolution
 
 
 
