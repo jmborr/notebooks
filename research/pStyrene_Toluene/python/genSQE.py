@@ -33,13 +33,18 @@ def lose_tails(ws_sas, keep):
 parser = argparse.ArgumentParser(description="""Generate S(Q,E) from simulated I(Q,t)
 and convolve with model resolution function for HFBS instrument.\n
 Example: genSQE.py 300 told3\n
-Creates directory mantid_sqe/ and stores nexus files for HFBS
+Creates directory mantid_sqe/ and stores nexus files for HFBS or BASIS
 resolution function, simulated S(Q,E), and S(Q,E) convolved with the resolution.""")
 parser.add_argument('temperature', type=str, help='temperature')
 parser.add_argument('deutsche', type=str, help='deuteration scheme')
+parser.add_argument('--instrument', type=str, default='HFBS', help='instrument. Either HFBS or BASIS. Default is BASIS')
+parser.add_argument('--outSQE', type=str, default='yes', help='Do we save S(Q,E) before convolution? Default=yes')
+parser.add_argument('--outSQEconv', type=str, default='yes', help='Do we save S(Q,E) after convolution? Default=yes')
+parser.add_argument('--outRes', type=str, default='yes', help='Do we save model resolution function for the instrument? Default=yes')
 pargs=parser.parse_args()
 deutscheme=pargs.deutsche
 T=pargs.temperature
+instr=pargs.instrument
 
 # Load I(Q,t)
 dt=1.0 # 1 picosecond
@@ -70,20 +75,31 @@ wsqe=mtds.Scale(wsqe, Factor=I0/sums.dataY(0)[0], Operation='Multiply')
 
 # Convolve with resolution function
 nspec=wsqe.getNumberHistograms()
-wreshfbs=resolfunc('HFBS',nspec,wsqe) # Create HFBS resolution function
-ws_hfbs=ws_sqe+'_HFBS'
+wreshfbs=resolfunc(instr,nspec,wsqe) # Create HFBS resolution function
+ws_hfbs=ws_sqe+'_'+instr
 whfbs=mtds.ConvolveWorkspaces(wsqe, wreshfbs, OutputWorkspace=ws_hfbs)
 
 #Save to files
 savedir=os.getcwd()+'/mantid_sqe'
 os.system('mkdir -p {0}'.format(savedir))
-fname_convolved='{0}.nxs'.format(ws_hfbs)
-mtds.SaveNexus(whfbs,savedir+'/'+fname_convolved)  #convolved
-fname_sqe='{0}.nxs'.format(ws_sqe)
-mtds.SaveNexus(wsqe, savedir+'/'+fname_sqe)  #not convolved
-fname_resolution='{0}.nxs'.format(wreshfbs.name())
-mtds.SaveNexus(wreshfbs, savedir+'/'+fname_resolution) #resolution
-print 'Files saved:', fname_convolved, fname_sqe, fname_resolution
+
+files_saved=list()
+if pargs.outSQE.lower()[0]=='y':
+    fname_sqe='{0}.nxs'.format(ws_sqe)
+    mtds.SaveNexus(wsqe, savedir+'/'+fname_sqe)  #not convolved
+    files_saved.append(fname_sqe)
+
+if pargs.outSQEconv.lower()[0]=='y':
+    fname_convolved='{0}.nxs'.format(ws_hfbs)
+    mtds.SaveNexus(whfbs,savedir+'/'+fname_convolved)  #convolved
+    files_saved.append(fname_convolved)
+
+if pargs.outRes.lower()[0]=='y':
+    fname_resolution='{0}.nxs'.format(wreshfbs.name())
+    mtds.SaveNexus(wreshfbs, savedir+'/'+fname_resolution) #resolution
+    files_saved.append(fname_resolution)
+
+print 'Files saved:', ', '.join(files_saved)
 
 
 

@@ -274,9 +274,8 @@ for temp in `seq 80 10 490`;do
   #echo -n "$T "; dumpdcd equil_cropped.dcd | head -1
   #python $PROJD/python/diffusion_t0average.py pdb equil_cropped.dcd $nframes 1.0 8000 100 '(!:1-256)&(@H1,@H2,@H3,@H4,@H5)' diffusion_styd3.dat --rms2t0 no & # MSD(t) of the hydrogens in toluene rings
   #echo -n "$T "; python $PROJD/python/benedettoMSD.py diffusion_styd3.dat BASIS #BASIS MSD according to Benedetto12 reference
-  echo -n "$T "; python $PROJD/python/benedettoMSD.py diffusion_styd3.dat HFBS #HFBS MSD according to Benedetto12 reference
+  #echo -n "$T "; python $PROJD/python/benedettoMSD.py diffusion_styd3.dat HFBS #HFBS MSD according to Benedetto12 reference
   #python $PROJD/python/CMtraj.py pdb equil_cropped.dcd '(!:1-256)&(@H1,@H2,@H3,@H4,@H5)' styd3CoM.pdb styd3CoM.dcd --aggregate byres & #trajectory and topology of Center of Masses of the hydrogens of toluene rings
-  
   #vmd -dispdev win -eofexit -e $PROJD/vmd/rms2first.tcl; sleep 9s
   #echo -n "$T "; dumpdcd equil_rms2first.dcd | head -1
   #python $PROJD/python/atomic_fluct_t0average.py pdb equil_rms2first.dcd $nframes 4560 100 '(:1-256)&(@H*)' atomicfluct_4.56ns_styH.dat --seriesfile atomicfluct_4.56ns_styH_series.dat --msd yes #atomic fluctuations of all hydrogens in the time-scale of HFBS
@@ -338,10 +337,12 @@ if [[ "T160 T390" != *${T}* ]];then
   #echo -n "$temp "; cat styd3_msd_from_SQE.dat; echo ""
   #python $PROJD/python/genSQE.py $temp styd5 #generate simulated S(Q,E) and convolved with HFBS
   #python $PROJD/python/MSDfromSQE.py styd5
-  echo -n "$temp "; cat styd5_msd_from_SQE.dat; echo ""
+  #echo -n "$temp "; cat styd5_msd_from_SQE.dat; echo ""
   #python $PROJD/python/diffusion_t0average.py pdb equil_cropped.dcd $nframes 1.0 8000 100 '(!:1-256)&(@H1,@H2,@H3,@H4,@H5)' diffusion_told3.dat --rms2t0 no & # MSD(t) of the hydrogens in toluene rings
   #echo -n "$T "; python $PROJD/python/benedettoMSD.py diffusion_told3.dat BASIS #BASIS MSD according to Benedetto12 reference
   #echo -n "$T "; python $PROJD/python/benedettoMSD.py diffusion_told3.dat HFBS #HFBS MSD according to Benedetto12 reference
+  #python $PROJD/python/CMtraj.py pdb equil_cropped.dcd '(:1-256)&(@H1,@H2,@H3,@H4,@H5)' styd3CoM.pdb styd3CoM.dcd --aggregate byres & #trajectory and topology of Center of Masses of the hydrogens of styrene rings
+  echo -n "$T "; dumpdcd styd3CoM.dcd | head -1
   #python $PROJD/python/CMtraj.py pdb equil_cropped.dcd '(!:1-256)&(@H1,@H2,@H3,@H4,@H5)' told3CoM.pdb told3CoM.dcd --aggregate byres & #trajectory and topology of Center of Masses of the hydrogens of toluene rings
   #python $PROJD/python/diffusion_t0average.py told3CoM.pdb told3CoM.dcd $nframes 1.0 8000 100 '@*' diffusion_styd3CoM.dat --rms2t0 no & #MSD(t) of Center of Masses of the hydrogens in toluene rings
   #echo -n "$T "; python $PROJD/python/benedettoMSD.py diffusion_told3CoM.dat HFBS #BASIS MSD according to Benedetto12 reference

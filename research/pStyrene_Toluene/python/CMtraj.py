@@ -13,7 +13,7 @@ from copy import deepcopy
 if __name__ == '__main__':
     argsdef={ 'aggregrate':('all', 'byres'),
     }
-    parser = argparse.ArgumentParser(description="""create PBD and CRD trajectory files of center of mass(es).
+    parser = argparse.ArgumentParser(description="""create PBD and trajectory files of center of mass(es).
     Example: CMtrajectory.py inpdb indcd mask  outpdb outdcd""")
     parser.add_argument('topfile', help='input topology as a PDB file')
     parser.add_argument('trajfile', help='input trajectory')
@@ -23,7 +23,7 @@ if __name__ == '__main__':
     parser.add_argument('--aggregate', type=str, default=argsdef['aggregrate'][0], help='CoM options:'+','.join(argsdef['aggregrate'])+'. Default=all')
     p_args=parser.parse_args()
 
-    traj = pytraj.iterload(p_args.trajfile, p_args.topfile)
+    traj = pytraj.iterload(p_args.trajfile, p_args.topfile)  # faster than pytraj.load
     #traj = pytraj.iterload(p_args.trajfile, p_args.topfile, frame_slice=(0,256,3)) #from first frame to frame 255, skipping two frames
     #traj = pytraj.load(p_args.trajfile, p_args.topfile, mask=p_args.mask) #much slower than iterload
     ptop = parmed.load_file(p_args.topfile) # parmed topology object
