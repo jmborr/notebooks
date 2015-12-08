@@ -335,6 +335,9 @@ if [[ "T160 T390" != *${T}* ]];then
   #python $PROJD/python/genSQE.py $temp styd3 #generate simulated S(Q,E) and convolved with HFBS
   #python $PROJD/python/MSDfromSQE.py styd3
   #echo -n "$temp "; cat styd3_msd_from_SQE.dat; echo ""
+  #python $PROJD/python/genSQE.py $temp styd3CoM #generate simulated S(Q,E) and convolved with HFBS
+  #python $PROJD/python/MSDfromSQE.py styd3CoM
+  #echo -n "$temp "; cat styd3CoM_msd_from_SQE.dat; echo ""
   #python $PROJD/python/genSQE.py $temp styd5 #generate simulated S(Q,E) and convolved with HFBS
   #python $PROJD/python/MSDfromSQE.py styd5
   #echo -n "$temp "; cat styd5_msd_from_SQE.dat; echo ""
@@ -342,7 +345,8 @@ if [[ "T160 T390" != *${T}* ]];then
   #echo -n "$T "; python $PROJD/python/benedettoMSD.py diffusion_told3.dat BASIS #BASIS MSD according to Benedetto12 reference
   #echo -n "$T "; python $PROJD/python/benedettoMSD.py diffusion_told3.dat HFBS #HFBS MSD according to Benedetto12 reference
   #python $PROJD/python/CMtraj.py pdb equil_cropped.dcd '(:1-256)&(@H1,@H2,@H3,@H4,@H5)' styd3CoM.pdb styd3CoM.dcd --aggregate byres & #trajectory and topology of Center of Masses of the hydrogens of styrene rings
-  echo -n "$T "; dumpdcd styd3CoM.dcd | head -1
+  #echo -n "$T "; dumpdcd styd3CoM.dcd | head -1
+  python $PROJD/python/CMtraj.py pdb equil_cropped.dcd '(:1-256)&(@H62,@H71,@H72,@H73)' styd5CoM.pdb styd5CoM.dcd --aggregate byres & #trajectory and topology of Center of Masses of the hydrogens of styrene backbone
   #python $PROJD/python/CMtraj.py pdb equil_cropped.dcd '(!:1-256)&(@H1,@H2,@H3,@H4,@H5)' told3CoM.pdb told3CoM.dcd --aggregate byres & #trajectory and topology of Center of Masses of the hydrogens of toluene rings
   #python $PROJD/python/diffusion_t0average.py told3CoM.pdb told3CoM.dcd $nframes 1.0 8000 100 '@*' diffusion_styd3CoM.dat --rms2t0 no & #MSD(t) of Center of Masses of the hydrogens in toluene rings
   #echo -n "$T "; python $PROJD/python/benedettoMSD.py diffusion_told3CoM.dat HFBS #BASIS MSD according to Benedetto12 reference
