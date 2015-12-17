@@ -1,6 +1,6 @@
 #!/bin/bash
 
-module load lammps/5-Sep-2014  #lammps version used for these project
+#module load lammps/5-Sep-2014  #lammps version used for these project
 PROJD=/SNSlocal/projects/jbq/pStyrene_Toluene
 
 ##############################
@@ -8,32 +8,32 @@ PROJD=/SNSlocal/projects/jbq/pStyrene_Toluene
 ##############################
 ratio="0.5"
 # generation of lammps file
-mkdir -p $PROJD/8styrene32/r${ratio}/msi2lmp
-cd $PROJD/8styrene32/r${ratio}/msi2lmp/
-ln -s ../8styrene32.car
-ln -s ../8styrene32.mdf
-msi2lmp 8styrene32 -class I -frc cvff.frc  # we need force-field file cvff.frc in this directory
+#mkdir -p $PROJD/8styrene32/r${ratio}/msi2lmp
+#cd $PROJD/8styrene32/r${ratio}/msi2lmp/
+#ln -s ../8styrene32.car
+#ln -s ../8styrene32.mdf
+#msi2lmp 8styrene32 -class I -frc cvff.frc  # we need force-field file cvff.frc in this directory
 # minimization
-mkdir -p $PROJD/8styrene32/r${ratio}/minimize
-cd $PROJD/8styrene32/r${ratio}/minimize
-ln -s ../msi2lmp/8styrene32.data
-mpirun -np 12 lmp_camm2 -in minimize.in
+#mkdir -p $PROJD/8styrene32/r${ratio}/minimize
+#cd $PROJD/8styrene32/r${ratio}/minimize
+#ln -s ../msi2lmp/8styrene32.data
+#mpirun -np 12 lmp_camm2 -in minimize.in
 # compression
-mkdir -p $PROJD/8styrene32/r${ratio}/compress
-cd $PROJD/8styrene32/r${ratio}/compress
-ln -s ../minimize/minimize.rst compress.0.rst
-mpirun -np 12 lmp_camm2 -in compress.1.in
-mpirun -np 12 lmp_camm2 -in compress.2.in
-mpirun -np 12 lmp_camm2 -in compress.3.in
-mpirun -np 12 lmp_camm2 -in compress.4.in
-mpirun -np 12 lmp_camm2 -in compress.5.in
-# heatup
-mkdir -p $PROJD/8styrene32/r${ratio}/heatup
-cd $PROJD/8styrene32/r${ratio}/heatup
-ln -s ../compress/compress.5.rst compress.rst
-time mpirun -np 12 lmp_camm2 -in heatup.in
+#mkdir -p $PROJD/8styrene32/r${ratio}/compress
+#cd $PROJD/8styrene32/r${ratio}/compress
+#ln -s ../minimize/minimize.rst compress.0.rst
+#mpirun -np 12 lmp_camm2 -in compress.1.in
+#mpirun -np 12 lmp_camm2 -in compress.2.in
+#mpirun -np 12 lmp_camm2 -in compress.3.in
+#mpirun -np 12 lmp_camm2 -in compress.4.in
+#mpirun -np 12 lmp_camm2 -in compress.5.in
+## heatup
+#mkdir -p $PROJD/8styrene32/r${ratio}/heatup
+#cd $PROJD/8styrene32/r${ratio}/heatup
+#ln -s ../compress/compress.5.rst compress.rst
+#time mpirun -np 12 lmp_camm2 -in heatup.in
 
-#for T in T150 T170 T190 T210 T220 T230 T250 T270 T290 T310 T330 T350 T360 T370 T380 T390 T400 T405 T410 T415 T420 T430 T440 T450 T460 T470;do
+##for T in T150 T170 T190 T210 T220 T230 T250 T270 T290 T310 T330 T350 T360 T370 T380 T390 T400 T405 T410 T415 T420 T430 T440 T450 T460 T470;do
 for T in T270 T280 T290 T310 T330 T350 T370 T390 T400 T410 T420 T430 T440 T450;do
   cd $PROJD/8styrene32/r0.5/$T
   echo -e "\n\n PROCESSING T=$T\n"; sleep 2s
@@ -321,6 +321,7 @@ if [[ "T160 T390" != *${T}* ]];then
     #python $PROJD/python/CMAnalysis.py 8styrene32.pdb equil.dcd 5001 15001 10 'not resnum 1:256 and name C' 6.11 contacts_tolC_tolC.h5
     #python $PROJD/python/CMAnalysis.py 8styrene2.pdb equil.dcd 5001 15001 10 'not resnum 1:256 and name C' 7.0 contacts_tolC_tolC_7.0.h5
   fi
+  #ln -s ../styd5CoM.pdb
   #echo -n "$T "; dumpdcd equil.dcd|head -1
   #python $PROJD/python/CMsystemTrajectory.py 8styrene32.pdb equil.dcd cm.pdb cm.crd  #get trajectory of the CM of the whole system
   #vmd -dispdev text -e $PROJD/vmd/crop_equil.tcl # Remove first 5ns, creating equil_cropped.dcd
@@ -339,14 +340,20 @@ if [[ "T160 T390" != *${T}* ]];then
   #python $PROJD/python/MSDfromSQE.py styd3CoM
   #echo -n "$temp "; cat styd3CoM_msd_from_SQE.dat; echo ""
   #python $PROJD/python/genSQE.py $temp styd5 #generate simulated S(Q,E) and convolved with HFBS
+  #python $PROJD/python/genSQE.py $temp styd5CoM #generate simulated S(Q,E) and convolved with HFBS
   #python $PROJD/python/MSDfromSQE.py styd5
   #echo -n "$temp "; cat styd5_msd_from_SQE.dat; echo ""
+  python $PROJD/python/MSDfromSQE.py styd5CoM
+  #echo -n "$temp "; cat styd5CoM_msd_from_SQE.dat; echo "" 
   #python $PROJD/python/diffusion_t0average.py pdb equil_cropped.dcd $nframes 1.0 8000 100 '(!:1-256)&(@H1,@H2,@H3,@H4,@H5)' diffusion_told3.dat --rms2t0 no & # MSD(t) of the hydrogens in toluene rings
+  #python $PROJD/python/diffusion_t0average.py pdb equil_cropped.dcd $nframes 1.0 8000 100 '(:1-256)&(@H62,@H72,@H73)' diffusion_styd5.dat --rms2t0 no & # MSD(t) of the hydrogens in toluene rings
+  #python $PROJD/python/diffusion_t0average.py styd5CoM.pdb styd5CoM.dcd $nframes 1.0 8000 100 '@*' diffusion_styd5CoM.dat --rms2t0 no & # MSD(t) of the hydrogens in toluene rings
   #echo -n "$T "; python $PROJD/python/benedettoMSD.py diffusion_told3.dat BASIS #BASIS MSD according to Benedetto12 reference
   #echo -n "$T "; python $PROJD/python/benedettoMSD.py diffusion_told3.dat HFBS #HFBS MSD according to Benedetto12 reference
   #python $PROJD/python/CMtraj.py pdb equil_cropped.dcd '(:1-256)&(@H1,@H2,@H3,@H4,@H5)' styd3CoM.pdb styd3CoM.dcd --aggregate byres & #trajectory and topology of Center of Masses of the hydrogens of styrene rings
   #echo -n "$T "; dumpdcd styd3CoM.dcd | head -1
-  python $PROJD/python/CMtraj.py pdb equil_cropped.dcd '(:1-256)&(@H62,@H71,@H72,@H73)' styd5CoM.pdb styd5CoM.dcd --aggregate byres & #trajectory and topology of Center of Masses of the hydrogens of styrene backbone
+  #python $PROJD/python/CMtraj.py pdb equil_cropped.dcd '(:1-256)&(@H62,@H71,@H73)' styd5CoM.pdb styd5CoM.dcd --aggregate byres & #trajectory and topology of Center of Masses of the hydrogens of styrene backbone
+  #echo -n "$T "; dumpdcd styd5CoM.dcd | head -1
   #python $PROJD/python/CMtraj.py pdb equil_cropped.dcd '(!:1-256)&(@H1,@H2,@H3,@H4,@H5)' told3CoM.pdb told3CoM.dcd --aggregate byres & #trajectory and topology of Center of Masses of the hydrogens of toluene rings
   #python $PROJD/python/diffusion_t0average.py told3CoM.pdb told3CoM.dcd $nframes 1.0 8000 100 '@*' diffusion_styd3CoM.dat --rms2t0 no & #MSD(t) of Center of Masses of the hydrogens in toluene rings
   #echo -n "$T "; python $PROJD/python/benedettoMSD.py diffusion_told3CoM.dat HFBS #BASIS MSD according to Benedetto12 reference

@@ -3,7 +3,6 @@ import argparse
 import numpy
 import pytraj
 import parmed
-from amber.amber14.cpptraj.command import exec_cpptraj
 from utilities.path import which
 from tempfile import mkstemp, mkdtemp
 from utilities.readingWritingFiles import write_from_numpy
@@ -25,10 +24,10 @@ if __name__ == '__main__':
 
     traj = pytraj.iterload(p_args.trajfile, p_args.topfile)  # faster than pytraj.load
     #traj = pytraj.iterload(p_args.trajfile, p_args.topfile, frame_slice=(0,256,3)) #from first frame to frame 255, skipping two frames
-    #traj = pytraj.load(p_args.trajfile, p_args.topfile, mask=p_args.mask) #much slower than iterload
+    #traj = pytraj.load(p_args.trajfile, p_args.topfile, mask=p_args.mask, frame_indices=numpy.arange(1,9)) #much slower than iterload
     ptop = parmed.load_file(p_args.topfile) # parmed topology object
     masktop = traj.top[p_args.mask] #topology of the mask atoms
-    CMselection = list()
+    CMselection = list() #Used only for the output PDB file
     if p_args.aggregate == 'byres':
         nres = masktop.n_residues
         CoM = numpy.empty((nres,traj.n_frames,3))
@@ -39,9 +38,10 @@ if __name__ == '__main__':
             except:
                 resnum = int(residue.name)
             presidue = ptop.residues[resnum-1]
-            first_atom = presidue[0]
+            first_atom = presidue[0] # selected atom to represent the whole residue in the output PDB file
             CMselection.append('@{0}'.format(first_atom.number))
-            v = pytraj.center_of_mass(traj,mask=':{0}'.format(resnum))
+            #Next, calculate CM for given residue in all frames
+            v = pytraj.center_of_mass(traj,mask='({0})&(:{1})'.format(p_args.mask,resnum))
             CoM[ires] = v
             ires += 1
         CoM = CoM.transpose((1,0,2))  #shape=(n_frames, n_residues, 3)
