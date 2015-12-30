@@ -343,8 +343,8 @@ if [[ "T160 T390" != *${T}* ]];then
   #python $PROJD/python/genSQE.py $temp styd5CoM #generate simulated S(Q,E) and convolved with HFBS
   #python $PROJD/python/MSDfromSQE.py styd5
   #echo -n "$temp "; cat styd5_msd_from_SQE.dat; echo ""
-  python $PROJD/python/MSDfromSQE.py styd5CoM
-  #echo -n "$temp "; cat styd5CoM_msd_from_SQE.dat; echo "" 
+  #python $PROJD/python/MSDfromSQE.py styd5CoM
+  echo -n "$temp "; cat styd5CoM_msd_from_SQE.dat; echo "" 
   #python $PROJD/python/diffusion_t0average.py pdb equil_cropped.dcd $nframes 1.0 8000 100 '(!:1-256)&(@H1,@H2,@H3,@H4,@H5)' diffusion_told3.dat --rms2t0 no & # MSD(t) of the hydrogens in toluene rings
   #python $PROJD/python/diffusion_t0average.py pdb equil_cropped.dcd $nframes 1.0 8000 100 '(:1-256)&(@H62,@H72,@H73)' diffusion_styd5.dat --rms2t0 no & # MSD(t) of the hydrogens in toluene rings
   #python $PROJD/python/diffusion_t0average.py styd5CoM.pdb styd5CoM.dcd $nframes 1.0 8000 100 '@*' diffusion_styd5CoM.dat --rms2t0 no & # MSD(t) of the hydrogens in toluene rings
