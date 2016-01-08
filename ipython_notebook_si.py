@@ -41,6 +41,14 @@ def filterin(files, source):
             filtered.append(file)
     return filtered
 
+def fileTooBig(files, source, size_limit):
+    "Units are bytes"
+    filtered = []
+    for file in files:
+        if os.stat(os.path.join(source,file)).st_size < size_limit:
+            filtered.append(file)
+    return filtered
+    
 def filterout(files, source, destination):
     ''' Check files newer or non-existing in destination'''
     filtered = []
@@ -73,8 +81,10 @@ parser = argparse.ArgumentParser(description='Update supporting files for the ip
 parser.add_argument('name', help='filepath to the ipython notebook')
 parser.add_argument('source', help='source directory containing the files.')
 parser.add_argument('destination', help='destination directory.')
-extensions='agr,cif,conf,cpptraj,doc,docx,gif,in,jpeg,jpg,mol2,mpg,pdb,pdf,png,PNG,pptx,ptraj,py,sdf,sh,vmd,f'
+extensions='agr,cif,conf,cpptraj,doc,docx,f,gif,in,jpeg,jpg,mol2,mpg,pbs,pdb,pdf,png,PNG,pptx,ptraj,py,sdf,sh,vmd,xml'
 parser.add_argument('--extensions', help='only files with selected extensions will be fetched. Default: "{0}"'.format(extensions))
+size_limit=10000000L #10MB
+parser.add_argument('--sizelimit', help='fetch only files with size under limit; Units are bytes; Default={0}'.format(size_limit))
 args=parser.parse_args()
 
 for argument in (args.name, args.source, args.destination):
@@ -85,7 +95,11 @@ if not args.extensions:
 else:
     extensions = args.extensions.strip().split(',')
 
+if not args.sizelimit:
+    args.sizelimit=size_limit
+
 files = scan_notebook(args.name, extensions) # Find files in source
 files = filterin(files, args.source) # Discard non-existing files in source
-files = filterout(files, args.source, args.destination) # Discard identical files in destination
+files = fileTooBig(files, args.source, args.sizelimit)
+files = filterout(files, args.source, args.destination) # Rules to discard found files
 update_destination(files, args.source, args.destination) # Transfer the files
