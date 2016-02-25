@@ -37,7 +37,7 @@ for wi in range(ws.getNumberHistograms()-1, -1, -1):
     fitString='(composite=Convolution,FixResolution=false,NumDeriv=true;'+\
         'name=TabulatedFunction,Workspace=res,WorkspaceIndex={0},Scaling=1,Shift={1},ties=(Scaling=1);'.format(wi, f0_f0_Shift)+\
         '(name=DeltaFunction,Height={0};'.format(f0_f1_f0_Height)+\
-        'name=TabulatedFunction,Workspace=fqt_sqw,WorkspaceIndex={0},Scaling={1},Shift=1.0,ties=(Shift=1)));'.format(wi+1, f0_f1_f1_Scaling)+\
+        'name=TabulatedFunction,Workspace=fqt_sqw,WorkspaceIndex={0},Scaling={1},Shift=0.0,ties=(Shift=0.0)));'.format(wi+1, f0_f1_f1_Scaling)+\
         'name=LinearBackground,A0=0.0,A1=0.0'
     outputname='fit_{0}'.format(wi)
     Fit(fitString, InputWorkspace='exp', WorkspaceIndex=wi, startX=-0.2, endX=0.2, CreateOuptut=1, Output=outputname)
