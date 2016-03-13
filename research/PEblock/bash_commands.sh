@@ -132,3 +132,52 @@ for iDir in `seq 0 "$lastIndex"`;do
 	  python $PROJD/python/diffusion_t0average.py $name.pdb ${name}_rms2prev.dcd 10000 500 7500 20 '@*' diffusion_${name}_rms2prev.dat --rms2t0=no &> /dev/null
     done
 done
+
+##############################
+# THIRD BATCH OF SIMULATIONS
+##############################
+zf4Root="/SNSlocal/projects/zf4/Block_PE_surf"
+subDirs=("Philic_BCP2/400NC/lj8_prod" "Philic_BCP2/300NC/lj8_prod" "Philic_BCP2/200NC/lj8_prod" "Philic_BCP2/50NC/lj8_prod" "Phobic_BCP2/300NC/lj8_prod" "Phobic_BCP2/200NC/lj8_prod" "Phobic_BCP2/50NC/lj8_prod")
+lastIndex=6 # seven subdirectories to work with, this is the index of last directory if start counting from zero
+for iDir in `seq 0 "$lastIndex"`;do
+    mkdir -p $PROJD/${subDirs[$iDir]}
+    #Use VMD: load dump.xyz and save the first frame as dump.pdb
+    cd $PROJD/${subDirs[$iDir]}/
+    #grep ' H '  dump.pdb > poly1.pdb       # neutral monomers of PE
+    #grep ' He ' dump.pdb > poly2.pdb       # phylic or phobic block of PE
+    #grep ' Li ' dump.pdb > polyCharge.pdb  # cation monomers of PE
+    #grep ' B '  dump.pdb > tail.pdb        # surfactant tail
+    #grep ' Be ' dump.pdb > head.pdb        # surfactant head
+    #grep ' C '  dump.pdb > Ncions.pdb      # ? counter-ions
+    #grep ' N '  dump.pdb > Pcions.pdb      # ? counter-ions
+    #perl -p -i -e 's/ He/ H /g' poly2.pdb       #change element type to hydrogen
+    #perl -p -i -e 's/ Li/ H /g' polyCharge.pdb
+    #perl -p -i -e 's/ B / H /g' tail.pdb
+    #perl -p -i -e 's/ Be/ H /g' head.pdb
+    #perl -p -i -e 's/ C / H /g' Ncions.pdb
+    #perl -p -i -e 's/ N / H /g' Pcions.pdb
+    #perl -p -i -e 's/ C / H /g' Ncions.pdb
+    #perl -p -i -e 's/ N / H /g' Pcions.pdb
+    for name in poly1 poly2 polyCharge tail head Ncions Pcions;do
+	#CREATE DCD FILES
+	#/bin/cp $PROJD/vmd/dat2dcd_thirdBatch.tcl junk.tcl
+        # XYZDIR is Monojoy's directory where the xyz file is located
+	#python $PROJD/python/replace_keyword.py junk.tcl "_XYZDIR_" $zf4Root/${subDirs[$iDir]}
+  	#python $PROJD/python/replace_keyword.py junk.tcl "_NAME_" $name
+	#vmd -dispdev text -eofexit -e junk.tcl  #generates _NAME_dcd
+	#/bin/rm junk.tcl
+	#CREATE UNWRAPED DCD FILES
+	#/bin/cp $PROJD/vmd/dat2unwrapeddcd_thirdBatch.tcl junk.tcl
+        # XYZDIR is Monojoy's directory where the xyz file is located
+	#python $PROJD/python/replace_keyword.py junk.tcl "_XYZDIR_" $zf4Root/${subDirs[$iDir]}
+  	#python $PROJD/python/replace_keyword.py junk.tcl "_NAME_" $name
+	#vmd -dispdev text -eofexit -e junk.tcl
+	#/bin/rm junk.tcl
+	#REMOVE TRANSLATIONS AND ROTATIONS AT EACH ELEMENTARY STEP (do "module load amber")
+	#/bin/cp $PROJD/cpptraj/rms2prev.cpptraj junk.cpptraj
+	#perl -pi -e "s/_NAME_/$name/g" junk.cpptraj
+	#cpptraj -p $name.pdb -i junk.cpptraj &> /dev/null
+	#CALCULATE MSD FOR rms2prev TRAJECTORIES
+	python $PROJD/python/diffusion_t0average.py $name.pdb ${name}_rms2prev.dcd 20000 500 1000 20 '@*' diffusion_${name}_rms2prev.dat --rms2t0=no &> /dev/null
+    done
+done

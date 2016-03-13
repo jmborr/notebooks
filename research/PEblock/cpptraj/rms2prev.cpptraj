@@ -1,0 +1,3 @@
+trajin _NAME__unwrapped.dcd
+rms previous out _NAME__rms2prev.dat time 5000
+trajout _NAME__rms2prev.dcd
