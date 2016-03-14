@@ -109,11 +109,11 @@ subDirs=("Philic_BCP2/300NC/lj7_prod" "Philic_BCP2/200NC/lj7_prod" "Philic_BCP2/
 lastIndex=5 # six subdirectories to work with, this is the index of last directory if start counting from zero
 for iDir in `seq 0 "$lastIndex"`;do
     #mkdir -p $PROJD/secondBatchWrapped/${subDirs[$iDir]}
-    cd $PROJD/secondBatchWrapped/${subDirs[$iDir]}
+    #cd $PROJD/secondBatchWrapped/${subDirs[$iDir]}
     for name in poly1 poly2 polyCharge tail head Ncions Pcions;do
 	#ln -s $PROJD/${subDirs[$iDir]}/${name}.pdb .
 	#CREATE DCD FILES
-         /bin/cp $PROJD/vmd/xyz2dcd.tcl junk.tcl
+         #/bin/cp $PROJD/vmd/xyz2dcd.tcl junk.tcl
          # XYZDIR is Monojoy's directory where the xyz file is located
 	 #python $PROJD/python/replace_keyword.py junk.tcl "_XYZDIR_" $zf4Root/${subDirs[$iDir]}
   	 #python $PROJD/python/replace_keyword.py junk.tcl "_NAME_" $name
@@ -129,7 +129,7 @@ for iDir in `seq 0 "$lastIndex"`;do
 	 #perl -pi -e "s/_NAME_/$name/g" junk.cpptraj
 	 #cpptraj -p $name.pdb -i junk.cpptraj &> /dev/null
 	#CALCULATE MSD FOR rms2prev TRAJECTORIES
-	  python $PROJD/python/diffusion_t0average.py $name.pdb ${name}_rms2prev.dcd 10000 500 7500 20 '@*' diffusion_${name}_rms2prev.dat --rms2t0=no &> /dev/null
+	 # python $PROJD/python/diffusion_t0average.py $name.pdb ${name}_rms2prev.dcd 10000 500 7500 20 '@*' diffusion_${name}_rms2prev.dat --rms2t0=no &> /dev/null
     done
 done
 
@@ -156,28 +156,35 @@ for iDir in `seq 0 "$lastIndex"`;do
     #perl -p -i -e 's/ Be/ H /g' head.pdb
     #perl -p -i -e 's/ C / H /g' Ncions.pdb
     #perl -p -i -e 's/ N / H /g' Pcions.pdb
-    #perl -p -i -e 's/ C / H /g' Ncions.pdb
-    #perl -p -i -e 's/ N / H /g' Pcions.pdb
+    #perl -p -i -e 's/    H/     /g' poly1.pdb     # remove trailing element name
+    #perl -p -i -e 's/   HE/     /g' poly2.pdb
+    #perl -p -i -e 's/   LI/     /g' polyCharge.pdb
+    #perl -p -i -e 's/   BE/     /g' head.pdb    
+    #perl -p -i -e 's/    B/     /g' tail.pdb
+    #perl -p -i -e 's/    C/     /g' Ncions.pdb
+    #perl -p -i -e 's/    N/     /g' Pcions.pdb
     for name in poly1 poly2 polyCharge tail head Ncions Pcions;do
 	#CREATE DCD FILES
-	#/bin/cp $PROJD/vmd/dat2dcd_thirdBatch.tcl junk.tcl
-        # XYZDIR is Monojoy's directory where the xyz file is located
-	#python $PROJD/python/replace_keyword.py junk.tcl "_XYZDIR_" $zf4Root/${subDirs[$iDir]}
-  	#python $PROJD/python/replace_keyword.py junk.tcl "_NAME_" $name
-	#vmd -dispdev text -eofexit -e junk.tcl  #generates _NAME_dcd
-	#/bin/rm junk.tcl
+	 #/bin/cp $PROJD/vmd/dat2dcd_thirdBatch.tcl junk.tcl
+         # XYZDIR is Monojoy's directory where the xyz file is located
+	 #python $PROJD/python/replace_keyword.py junk.tcl "_XYZDIR_" $zf4Root/${subDirs[$iDir]}
+  	 #python $PROJD/python/replace_keyword.py junk.tcl "_NAME_" $name
+	 #vmd -dispdev text -eofexit -e junk.tcl  #generates _NAME_dcd
+	 #/bin/rm junk.tcl
 	#CREATE UNWRAPED DCD FILES
-	#/bin/cp $PROJD/vmd/dat2unwrapeddcd_thirdBatch.tcl junk.tcl
-        # XYZDIR is Monojoy's directory where the xyz file is located
-	#python $PROJD/python/replace_keyword.py junk.tcl "_XYZDIR_" $zf4Root/${subDirs[$iDir]}
-  	#python $PROJD/python/replace_keyword.py junk.tcl "_NAME_" $name
-	#vmd -dispdev text -eofexit -e junk.tcl
-	#/bin/rm junk.tcl
+	 #/bin/cp $PROJD/vmd/dat2unwrapeddcd_thirdBatch.tcl junk.tcl
+         # XYZDIR is Monojoy's directory where the xyz file is located
+	 #python $PROJD/python/replace_keyword.py junk.tcl "_XYZDIR_" $zf4Root/${subDirs[$iDir]}
+  	 #python $PROJD/python/replace_keyword.py junk.tcl "_NAME_" $name
+	 #vmd -dispdev text -eofexit -e junk.tcl
+	 #/bin/rm junk.tcl
 	#REMOVE TRANSLATIONS AND ROTATIONS AT EACH ELEMENTARY STEP (do "module load amber")
-	#/bin/cp $PROJD/cpptraj/rms2prev.cpptraj junk.cpptraj
-	#perl -pi -e "s/_NAME_/$name/g" junk.cpptraj
-	#cpptraj -p $name.pdb -i junk.cpptraj &> /dev/null
+	 #/bin/cp $PROJD/cpptraj/rms2prev.cpptraj junk.cpptraj
+	 #perl -pi -e "s/_NAME_/$name/g" junk.cpptraj
+	 #cpptraj -p $name.pdb -i junk.cpptraj &> /dev/null
 	#CALCULATE MSD FOR rms2prev TRAJECTORIES
-	python $PROJD/python/diffusion_t0average.py $name.pdb ${name}_rms2prev.dcd 20000 500 1000 20 '@*' diffusion_${name}_rms2prev.dat --rms2t0=no &> /dev/null
+	 #python $PROJD/python/diffusion_t0average.py $name.pdb ${name}_rms2prev.dcd 20000 500 10000 20 '@*' diffusion_${name}_rms2prev.dat --rms2t0=no
+	#MERGE XYZ TRAJECTORIES
+	python $PROJD/python/merge_trajectories.py $zf4Root/${subDirs[$iDir]}  
     done
 done
