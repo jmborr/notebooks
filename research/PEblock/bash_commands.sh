@@ -184,7 +184,19 @@ for iDir in `seq 0 "$lastIndex"`;do
 	 #cpptraj -p $name.pdb -i junk.cpptraj &> /dev/null
 	#CALCULATE MSD FOR rms2prev TRAJECTORIES
 	 #python $PROJD/python/diffusion_t0average.py $name.pdb ${name}_rms2prev.dcd 20000 500 10000 20 '@*' diffusion_${name}_rms2prev.dat --rms2t0=no
-	#MERGE XYZ TRAJECTORIES
-	python $PROJD/python/merge_trajectories.py $zf4Root/${subDirs[$iDir]}  
     done
+done
+
+#####################################
+# THIRD BATCH OF SIMULATIONS, MERGED
+#####################################
+zf4Root="/SNSlocal/projects/zf4/Block_PE_surf"
+subDirs=("Philic_BCP2/50NC/lj8_prod" "Philic_BCP2/100NC/lj8_prod" "Philic_BCP2/200NC/lj8_prod" "Philic_BCP2/300NC/lj8_prod" "Philic_BCP2/400NC/lj8_prod" "Phobic_BCP2/50NC/lj8_prod" "Phobic_BCP2/100NC/lj8_prod" "Phobic_BCP2/200NC/lj8_prod" "Phobic_BCP2/300NC/lj8_prod" "Phobic_BCP2/400NC/lj8_prod")
+nchains=(50 100 200 300 400 50 100 200 300 400)
+lastIndex=9 # ten subdirectories to work with, this is the index of last directory if start counting from zero
+for iDir in `seq 0 "$lastIndex"`;do
+    #mkdir -p $PROJD/${subDirs[$iDir]}/merged
+    cd $PROJD/${subDirs[$iDir]}/merged
+    #MERGE XYZ TRAJECTORIES
+    #python $PROJD/python/merge_trajectories.py $zf4Root/${subDirs[$iDir]} initial.dat ${nchains[$iDir]} peblock.dump --nframes 100
 done

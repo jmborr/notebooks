@@ -10,7 +10,7 @@ from pdb import set_trace as tr
 
 parser = argparse.ArgumentParser(description='''Create output dump file from XYZ components
 Assumed the following files exists in source directory:
-  poly1.dat poly2.dat polyCharge.dat head.dat tail.dat  Ncions.xyz  Pcions.xyz
+  poly1.dat poly2.dat polyCharge.dat head.dat tail.dat  Ncions.dat  Pcions.dat
 ''')
 parser.add_argument('sourcedir', type=str, help='directory where the .dat files reside')
 parser.add_argument('indata', type=str, help='input LAMMPS DATA file')
