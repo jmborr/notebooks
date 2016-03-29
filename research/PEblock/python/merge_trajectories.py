@@ -14,7 +14,7 @@ Assumed the following files exists in source directory:
 ''')
 parser.add_argument('sourcedir', type=str, help='directory where the .dat files reside')
 parser.add_argument('indata', type=str, help='input LAMMPS DATA file')
-parser.add_argument('nchains', type=str, help='number of polymer chains')
+parser.add_argument('nchains', type=int, help='number of polymer chains')
 parser.add_argument('outdump', type=str, help='output LAMMPS DUMP file')
 parser.add_argument('--nframes', type=int, default=-1, help='number of frames. All frames if not specified')
 
@@ -48,7 +48,7 @@ natoms_items='''ITEM: NUMBER OF ATOMS
 '''.format(natoms)
 
 # Create box item
-d=pizzadata.data(os.path.join(args.sourcedir,args.indata))
+d=pizzadata.data(args.indata)
 x=d.headers['xlo xhi']
 y=d.headers['ylo yhi']
 z=d.headers['zlo zhi']
@@ -110,6 +110,7 @@ while ncions:
     nrepeats=6         # 6 repeats in the first block
     npoly_in_repeat=4  # 4 poly1 particles in each repeat
     poly1_index=0      # must be cleared every frame
+    polyCharge_index=0 # must be cleared every frame
     npoly2_in_chain=30 # 30 poly2 particles on each chain
     poly2_index=0      # must be cleared every frame
     for chain_index in range(args.nchains):
@@ -119,6 +120,7 @@ while ncions:
                 poly1_index+=1
                 iatom+=1
             buf+=print_atominfo(iframe,iatom,mol,polyCharge,polyCharge_index,prevxyz,previjk)
+            polyCharge_index+=1
             iatom+=1
         for j in range(npoly2_in_chain):
             buf+=print_atominfo(iframe,iatom,mol,poly2,poly2_index,prevxyz,previjk)
@@ -157,13 +159,13 @@ while ncions:
     #Write to file and Read next frame
     ##################################
     out_filehandle.write(buf)
-    poly=xyzReader.read_xyz(poly_filehandle)  #advance one frame
-    polyCharge=xyzReader.read_xyz(poly_filehandle)  #advance one frame
-    poly2=xyzReader.read_xyz(poly_filehandle)  #advance one frame
-    head=xyzReader.read_xyz(head_filehandle)
-    tail=xyzReader.read_xyz(tail_filehandle)
-    ncions=xyzReader.read_xyz(ncions_filehandle)
-    pcions=xyzReader.read_xyz(pcions_filehandle)
+    poly1     = xyzReader.read_xyz(poly1_filehandle)       #advance one frame
+    polyCharge= xyzReader.read_xyz(polyCharge_filehandle)  #advance one frame
+    poly2     = xyzReader.read_xyz(poly2_filehandle)       #advance one frame
+    head      = xyzReader.read_xyz(head_filehandle)
+    tail      = xyzReader.read_xyz(tail_filehandle)
+    ncions    = xyzReader.read_xyz(ncions_filehandle)
+    pcions    = xyzReader.read_xyz(pcions_filehandle)
     iframe+=1
     if args.nframes>0 and iframe>=args.nframes:
         sys.exit(0)

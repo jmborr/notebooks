@@ -1,0 +1,5 @@
+parm peblock_allH.pdb
+trajin peblock.dcd
+vector vcm center out peblock_cm.dat @* trajout peblock_cm.dcd trajfmt dcd parmout peblock_cm.parm
+go
+quit

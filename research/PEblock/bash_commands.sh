@@ -190,13 +190,31 @@ done
 #####################################
 # THIRD BATCH OF SIMULATIONS, MERGED
 #####################################
-zf4Root="/SNSlocal/projects/zf4/Block_PE_surf"
+#MERGE XYZ TRAJECTORIES (note some source directories are in Monojoy's area, and some in mine)
+python $PROJD/python/merge_trajectories.py /SNSlocal/projects/zf4/Block_PE_surf/Philic_BCP2/50NC/lj8_prod initial.dat 50 peblock.dump
+python $PROJD/python/merge_trajectories.py /SNSlocal/projects/jbq/PEblock/Philic_BCP2/100NC/lj8_prod initial.dat 100 peblock.dump
+python $PROJD/python/merge_trajectories.py /SNSlocal/projects/zf4/Block_PE_surf/Philic_BCP2/200NC/lj8_prod initial.dat 200 peblock.dump
+python $PROJD/python/merge_trajectories.py /SNSlocal/projects/zf4/Block_PE_surf/Philic_BCP2/300NC/lj8_prod initial.dat 300 peblock.dump
+python $PROJD/python/merge_trajectories.py /SNSlocal/projects/zf4/Block_PE_surf/Philic_BCP2/400NC/lj8_prod initial.dat 400 peblock.dump
+python $PROJD/python/merge_trajectories.py /SNSlocal/projects/zf4/Block_PE_surf/Phobic_BCP2/50NC/lj8_prod initial.dat 50 peblock.dump
+python $PROJD/python/merge_trajectories.py /SNSlocal/projects/jbq/PEblock/Phobic_BCP2/100NC/lj8_prod initial.dat 100 peblock.dump
+python $PROJD/python/merge_trajectories.py /SNSlocal/projects/zf4/Block_PE_surf/Phobic_BCP2/200NC/lj8_prod initial.dat 200 peblock.dump
+python $PROJD/python/merge_trajectories.py /SNSlocal/projects/zf4/Block_PE_surf/Phobic_BCP2/300NC/lj8_prod initial.dat 300 peblock.dump
+python $PROJD/python/merge_trajectories.py /SNSlocal/projects/jbq/PEblock/Phobic_BCP2/400NC/lj8_prod initial.dat 400 peblock.dump
+
 subDirs=("Philic_BCP2/50NC/lj8_prod" "Philic_BCP2/100NC/lj8_prod" "Philic_BCP2/200NC/lj8_prod" "Philic_BCP2/300NC/lj8_prod" "Philic_BCP2/400NC/lj8_prod" "Phobic_BCP2/50NC/lj8_prod" "Phobic_BCP2/100NC/lj8_prod" "Phobic_BCP2/200NC/lj8_prod" "Phobic_BCP2/300NC/lj8_prod" "Phobic_BCP2/400NC/lj8_prod")
 nchains=(50 100 200 300 400 50 100 200 300 400)
 lastIndex=9 # ten subdirectories to work with, this is the index of last directory if start counting from zero
 for iDir in `seq 0 "$lastIndex"`;do
     #mkdir -p $PROJD/${subDirs[$iDir]}/merged
     cd $PROJD/${subDirs[$iDir]}/merged
-    #MERGE XYZ TRAJECTORIES
-    #python $PROJD/python/merge_trajectories.py $zf4Root/${subDirs[$iDir]} initial.dat ${nchains[$iDir]} peblock.dump --nframes 100
+    #vmd -dispdev text -e $PROJD/vmd/create_psf.tcl  # create PSF topologies from the LAMMPS data file.
+    #vmd -dispdev text -e $PROJD/vmd/unwrap_lammpstrj.tcl # unwrap trajectories and save in DCD format
+    # CREATE animated GIFs by manually opening vmd and following commands from $PROJD/vmd/create_animated.tcl
+    #vmd -dispdev win -e $PROJD/vmd/create_animated.tcl
+    #vmd -dispdev text -e $PROJD/vmd/generate_pdbfile.tcl  # CREATE PDB file of the whole system
+    #python $PROJD/python/rename_allH.py # create PDB file for creation of center of mass trajectories
+    #cpptraj -i $PROJD/amber/center_of_mass_position.cpptraj # Create trajectories for the center of mass
+    #python $PROJD/python/diffusion_t0average.py peblock_cm.parm peblock_cm.dcd 20000 500 10000 100 '@2' diffusion_peblock_cm.dat --rms2t0=no
+    #python $PROJD/python/rename_atomnames.py # Create PDB file suitable for amber calculations
 done
