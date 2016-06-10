@@ -137,12 +137,14 @@ done
 # THIRD BATCH OF SIMULATIONS
 ##############################
 zf4Root="/SNSlocal/projects/zf4/Block_PE_surf"
-subDirs=("Philic_BCP2/400NC/lj8_prod" "Philic_BCP2/300NC/lj8_prod" "Philic_BCP2/200NC/lj8_prod" "Philic_BCP2/50NC/lj8_prod" "Phobic_BCP2/300NC/lj8_prod" "Phobic_BCP2/200NC/lj8_prod" "Phobic_BCP2/50NC/lj8_prod")
-lastIndex=6 # seven subdirectories to work with, this is the index of last directory if start counting from zero
+subDirs=("Philic_BCP2/400NC/lj6_prod" "Philic_BCP2/300NC/lj8_prod" "Philic_BCP2/200NC/lj6_prod" "Philic_BCP2/100NC/lj8_prod" "Philic_BCP2/50NC/lj8_prod" "Phobic_BCP2/400NC/lj8_prod" "Phobic_BCP2/300NC/lj8_prod" "Phobic_BCP2/200NC/lj8_prod" "Phobic_BCP2/100NC/lj8_prod" "Phobic_BCP2/50NC/lj8_prod")
+lastIndex=9 # ten subdirectories to work with, this is the index of last directory if start counting from zero
+
 for iDir in `seq 0 "$lastIndex"`;do
     mkdir -p $PROJD/${subDirs[$iDir]}
     #Use VMD: load dump.xyz and save the first frame as dump.pdb
     cd $PROJD/${subDirs[$iDir]}/
+    #NOTE: dump.pdb was created with VMD from dump.xyz
     #grep ' H '  dump.pdb > poly1.pdb       # neutral monomers of PE
     #grep ' He ' dump.pdb > poly2.pdb       # phylic or phobic block of PE
     #grep ' Li ' dump.pdb > polyCharge.pdb  # cation monomers of PE
@@ -183,9 +185,47 @@ for iDir in `seq 0 "$lastIndex"`;do
 	 #perl -pi -e "s/_NAME_/$name/g" junk.cpptraj
 	 #cpptraj -p $name.pdb -i junk.cpptraj &> /dev/null
 	#CALCULATE MSD FOR rms2prev TRAJECTORIES
-	 #python $PROJD/python/diffusion_t0average.py $name.pdb ${name}_rms2prev.dcd 20000 500 10000 20 '@*' diffusion_${name}_rms2prev.dat --rms2t0=no
+	#python $PROJD/python/diffusion_t0average.py $name.pdb ${name}_rms2prev.dcd 20000 500 10000 20 '@*' diffusion_${name}_rms2prev.dat --rms2t0=no &
+	# CALCULATE I(Q,t)
+	#/bin/cp -r $PROJD/sassena/database $PROJD/sassena/sassena_*xml $PROJD/sassena/qvectors.txt .
+	#mpirun -np 8 sassena --config=sassena_${name}.xml &> sassena_${name}.log &
+	#NOTE: we run h52dat.py outside the loops
+	#python $PROJD/python/nonnegative.py fqt_${name}.dat fqtNN_${name}.dat  #keep only I(Q, t>=0)
+	#echo -n "${subDirs[$iDir]}/fqtNN_${name}.dat  "
     done
 done
+
+# Calculate I(Q,t) only for philic
+subDirs=("Philic_BCP2/50NC/lj8_prod" "Philic_BCP2/100NC/lj8_prod" "Philic_BCP2/200NC/lj6_prod" "Philic_BCP2/300NC/lj8_prod" "Philic_BCP2/400NC/lj6_prod")
+lastIndex=4 # five Phobic subdirectories to work with, this is the index of last directory if start counting from zero
+for iDir in `seq 0 "$lastIndex"`;do
+    cd $PROJD/${subDirs[$iDir]}/
+    for name in poly1 poly2 polyCharge tail head Ncions Pcions;do
+	#/bin/cp -r $PROJD/sassena/database $PROJD/sassena/sassena_*xml $PROJD/sassena/qvectors.txt .
+	#mpirun -np 8 sassena --config=sassena_${name}.xml &> sassena_${name}.log &
+	#NOTE: we run h52dat.py outside the loops
+	#python $PROJD/python/nonnegative.py fqt_${name}.dat fqtNN_${name}.dat  #keep only I(Q, t>=0)
+	echo -n "${subDirs[$iDir]}/fqtNN_${name}.dat  "
+	#CALCULATE MSD FOR rms2prev TRAJECTORIES
+	#echo -n "${subDirs[$iDir]}/diffusion_${name}_rms2prev.dat "
+    done
+done
+python $PROJD/h52dat.py  # creates fqt_${name}.dat from the sassena HDF5 files
+
+# Calculate I(Q,t) only for phobic
+subDirs=("Phobic_BCP2/50NC/lj8_prod" "Phobic_BCP2/100NC/lj8_prod" "Phobic_BCP2/200NC/lj8_prod" "Phobic_BCP2/300NC/lj8_prod" "Phobic_BCP2/400NC/lj8_prod")
+lastIndex=4 # five Phobic subdirectories to work with, this is the index of last directory if start counting from zero
+for iDir in `seq 0 "$lastIndex"`;do
+  cd $PROJD/${subDirs[$iDir]}/
+  for name in poly1 poly2 polyCharge tail head Ncions Pcions;do
+      #  /bin/cp -r $PROJD/sassena/database $PROJD/sassena/sassena_*xml $PROJD/sassena/qvectors.txt .
+      #mpirun -np 8 sassena --config=sassena_${name}.xml &> sassena_${name}.log &
+      #python $PROJD/python/nonnegative.py fqt_${name}.dat fqtNN_${name}.dat  #keep only I(Q, t>=0)
+      #echo -n "${subDirs[$iDir]}/fqtNN_${name}.dat  "
+      echo -n "${subDirs[$iDir]}/diffusion_${name}_rms2prev.dat "
+  done
+done
+
 
 #####################################
 # THIRD BATCH OF SIMULATIONS, MERGED
@@ -217,4 +257,13 @@ for iDir in `seq 0 "$lastIndex"`;do
     #cpptraj -i $PROJD/amber/center_of_mass_position.cpptraj # Create trajectories for the center of mass
     #python $PROJD/python/diffusion_t0average.py peblock_cm.parm peblock_cm.dcd 20000 500 10000 100 '@2' diffusion_peblock_cm.dat --rms2t0=no
     #python $PROJD/python/rename_atomnames.py # Create PDB file suitable for amber calculations
+    #python $PROJD/python/diffusion_t0average.py peblock_amber.pdb peblock.dcd 20000 500 10000 100 '@PN' diffusion_poly1.dat --rms2t0=no &
+    #python $PROJD/python/diffusion_t0average.py peblock_amber.pdb peblock.dcd 20000 500 10000 100 '@PH' diffusion_poly2.dat --rms2t0=no &
+    #python $PROJD/python/diffusion_t0average.py peblock_amber.pdb peblock.dcd 20000 500 10000 100 '@PC' diffusion_polyCharge.dat --rms2t0=no &
+    #python $PROJD/python/diffusion_t0average.py peblock_amber.pdb peblock.dcd 20000 500 10000 100 '@H'  diffusion_head.dat --rms2t0=no &
+    #python $PROJD/python/diffusion_t0average.py peblock_amber.pdb peblock.dcd 20000 500 10000 100 '@T'  diffusion_tail.dat --rms2t0=no &
+    #python $PROJD/python/diffusion_t0average.py peblock_amber.pdb peblock.dcd 20000 500 10000 100 '@N'  diffusion_Ncions.dat --rms2t0=no &
+    #python $PROJD/python/diffusion_t0average.py peblock_amber.pdb peblock.dcd 20000 500 10000 100 '@P'  diffusion_Pcions.dat --rms2t0=no &
+   echo -n "${subDirs[$iDir]}/merged/peblock.dcd "
 done
+
