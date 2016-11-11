@@ -19,7 +19,7 @@ def checkexists(file, doexit=True):
     return True
 
 def scan_notebook(name, extensions):
-    '''Search the notebook file for pattern matchings
+    '''Search the notebook file for pattern matchings. Also include the notebook itself
     '''
     handle,tmpname = mkstemp(dir='/tmp', prefix='junk')
     os.system("cat {0}|tr -d '\' > {1}".format(name,tmpname)) # remove backslash plague
@@ -31,6 +31,7 @@ def scan_notebook(name, extensions):
         files += [ match.split(extension)[0]+extension for match in matches] # clean up backspaces mess
     os.system('/bin/rm {0}'.format(tmpname))
     files = list(set(files)) # remove duplicates
+    files.append(os.path.basename(name))  # include notebook itself
     return files
 
 def filterin(files, source):
@@ -63,7 +64,8 @@ def filterout(files, source, destination):
     return filtered
 
 def update_destination(files, source, destination):
-    '''Copy the files from source to destination'''
+    '''Copy the files from source to destination
+    '''
 
     for file in files:
         sourcepath = os.path.join(source,file)
