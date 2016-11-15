@@ -12,4 +12,4 @@ if not os.path.exists(args.dir):
     raise IOError , 'project {0} not found'.format(args.dir)
     sys.exit(1)
 
-os.system( ' ipython notebook --pylab inline --notebook-dir={0}'.format(args.dir) )
+os.system( ' ipython notebook --notebook-dir={0}'.format(args.dir) )
