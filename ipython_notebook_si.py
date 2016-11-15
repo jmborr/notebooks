@@ -80,7 +80,7 @@ def update_destination(files, source, destination):
         print 'No files transferred'
 
 parser = argparse.ArgumentParser(description='Update supporting files for the ipython notebook')
-parser.add_argument('name', help='filepath to the ipython notebook')
+parser.add_argument('name', help='ipython notebook file name')
 parser.add_argument('source', help='source directory containing the files.')
 parser.add_argument('destination', help='destination directory.')
 extensions='agr,cif,conf,cpptraj,doc,docx,f,gif,in,jpeg,jpg,mol2,mpg,pbs,pdb,pdf,png,PNG,pptx,ptraj,py,sdf,sh,vmd,xml'
@@ -89,6 +89,7 @@ size_limit=10000000L #10MB
 parser.add_argument('--sizelimit', help='fetch only files with size under limit; Units are bytes; Default={0}'.format(size_limit))
 args=parser.parse_args()
 
+args.name=os.path.join(args.source,os.path.basename(args.name))
 for argument in (args.name, args.source, args.destination):
     checkexists(argument)
 
