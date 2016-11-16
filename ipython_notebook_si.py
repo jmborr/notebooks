@@ -83,7 +83,7 @@ parser = argparse.ArgumentParser(description='Update supporting files for the ip
 parser.add_argument('name', help='ipython notebook file name')
 parser.add_argument('source', help='source directory containing the files.')
 parser.add_argument('destination', help='destination directory.')
-extensions='agr,cif,conf,cpptraj,doc,docx,f,gif,in,jpeg,jpg,mol2,mpg,pbs,pdb,pdf,png,PNG,pptx,ptraj,py,sdf,sh,vmd,xml'
+extensions='agr,cif,conf,cpptraj,doc,docx,f,gif,in,jpeg,jpg,mol2,mpg,pbs,pdb,pdf,png,PNG,pptx,ptraj,py,sdf,sh,vmd,xml,yaml'
 parser.add_argument('--extensions', help='only files with selected extensions will be fetched. Default: "{0}"'.format(extensions))
 size_limit=10000000L #10MB
 parser.add_argument('--sizelimit', help='fetch only files with size under limit; Units are bytes; Default={0}'.format(size_limit))
