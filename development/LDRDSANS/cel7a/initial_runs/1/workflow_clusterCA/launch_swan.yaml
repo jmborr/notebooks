@@ -1,0 +1,10 @@
+host: swan.ornl.gov
+logdir: null
+name: fireworks_jmborr
+password: temptemp
+port: 27017
+logdir: null
+strm_lvl: INFO
+user_indices: []
+username: jmborr
+

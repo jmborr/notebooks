@@ -1,0 +1,44 @@
+fws:
+- fw_id: 1
+  spec:
+    _category: ftp
+    _tasks:
+    - _fw_name: ScriptTask
+      script: >
+        id=$(ssh jmborr@cli.globusonline.org transfer --generate-id);
+	local=/SNS/lustre/CAMM/users/jbq/LDRDSANS/cel7a/initial_runs/1/workflow_clusterCA;
+	remote=/lustre/atlas/scratch/jmborr/bip141/cel7a/initial_runs/1/titan;
+        ssh jmborr@cli.globusonline.org transfer --taskid $id -- neutrons#dtn01.sns.gov/$local/CA.binpos olcf#dtn_atlas/$remote;
+        ssh jmborr@cli.globusonline.org transfer --taskid $id -- neutrons#dtn01.sns.gov/$local/CA.names olcf#dtn_atlas/$names;
+        ssh jmborr@cli.globusonline.org wait $id;
+        echo $(date) 'step 1 on' $(hostname) >> $HOME/cluster_CA.log
+- fw_id: 2
+  spec:
+    _category: titan
+    _tasks:
+    - _fw_name: ScriptTask
+      script:>
+        remote=/lustre/atlas/scratch/jmborr/bip141/cel7a/initial_runs/1/titan
+        module load fast_protein_cluster
+	cd $remote
+	setenv OMP_NUM_THREADS 8
+	aprun -n 1 -d 8 -j 1 fast_protein_cluster -i CA -o CA --binary_coords --rmsd --nclusters 10 --nthreads 8 --hcomplete --gpu
+   _queueadapter:
+     walltime: '02:00:00'
+- fw_id: 5
+  spec:
+    _category: ftp
+    _tasks:
+    - _fw_name: ScriptTask
+      script: >
+        local=/SNS/lustre/CAMM/users/jbq/LDRDSANS/cel7a/initial_runs/1/workflow_clusterCA;
+	remote=/lustre/atlas/scratch/jmborr/bip141/cel7a/initial_runs/1/titan;
+        id=$(ssh jmborr@cli.globusonline.org transfer --generate-id);
+	ssh $USER@cli.globusonline.org transfer --taskid $id -- olcf#dtn_atlas/$remote/CA_* neutrons#dtn01.sns.gov/$local/
+links:
+  1:
+  - 2
+  2:
+  - 3
+metadata: {}
+
