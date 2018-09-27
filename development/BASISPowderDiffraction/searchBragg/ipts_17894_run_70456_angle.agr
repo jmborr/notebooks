@@ -1,0 +1,1483 @@
+# Grace project file
+#
+@version 50125
+@page size 792, 612
+@page scroll 5%
+@page inout 5%
+@link page off
+@map font 8 to "Courier", "Courier"
+@map font 10 to "Courier-Bold", "Courier-Bold"
+@map font 11 to "Courier-BoldOblique", "Courier-BoldOblique"
+@map font 9 to "Courier-Oblique", "Courier-Oblique"
+@map font 14 to "Courier-Regular", "Courier-Regular"
+@map font 15 to "Dingbats-Regular", "Dingbats-Regular"
+@map font 4 to "Helvetica", "Helvetica"
+@map font 6 to "Helvetica-Bold", "Helvetica-Bold"
+@map font 7 to "Helvetica-BoldOblique", "Helvetica-BoldOblique"
+@map font 5 to "Helvetica-Oblique", "Helvetica-Oblique"
+@map font 20 to "NimbusMonoL-Bold", "NimbusMonoL-Bold"
+@map font 21 to "NimbusMonoL-BoldOblique", "NimbusMonoL-BoldOblique"
+@map font 22 to "NimbusMonoL-Regular", "NimbusMonoL-Regular"
+@map font 23 to "NimbusMonoL-RegularOblique", "NimbusMonoL-RegularOblique"
+@map font 24 to "NimbusRomanNo9L-Medium", "NimbusRomanNo9L-Medium"
+@map font 25 to "NimbusRomanNo9L-MediumItalic", "NimbusRomanNo9L-MediumItalic"
+@map font 26 to "NimbusRomanNo9L-Regular", "NimbusRomanNo9L-Regular"
+@map font 27 to "NimbusRomanNo9L-RegularItalic", "NimbusRomanNo9L-RegularItalic"
+@map font 28 to "NimbusSansL-Bold", "NimbusSansL-Bold"
+@map font 29 to "NimbusSansL-BoldCondensed", "NimbusSansL-BoldCondensed"
+@map font 30 to "NimbusSansL-BoldCondensedItalic", "NimbusSansL-BoldCondensedItalic"
+@map font 31 to "NimbusSansL-BoldItalic", "NimbusSansL-BoldItalic"
+@map font 32 to "NimbusSansL-Regular", "NimbusSansL-Regular"
+@map font 33 to "NimbusSansL-RegularCondensed", "NimbusSansL-RegularCondensed"
+@map font 34 to "NimbusSansL-RegularCondensedItalic", "NimbusSansL-RegularCondensedItalic"
+@map font 35 to "NimbusSansL-RegularItalic", "NimbusSansL-RegularItalic"
+@map font 36 to "StandardSymbolsL-Regular", "StandardSymbolsL-Regular"
+@map font 12 to "Symbol", "Symbol"
+@map font 2 to "Times-Bold", "Times-Bold"
+@map font 3 to "Times-BoldItalic", "Times-BoldItalic"
+@map font 1 to "Times-Italic", "Times-Italic"
+@map font 0 to "Times-Roman", "Times-Roman"
+@map font 42 to "URWBookmanL-DemiBold", "URWBookmanL-DemiBold"
+@map font 43 to "URWBookmanL-DemiBoldItalic", "URWBookmanL-DemiBoldItalic"
+@map font 44 to "URWBookmanL-Light", "URWBookmanL-Light"
+@map font 45 to "URWBookmanL-LightItalic", "URWBookmanL-LightItalic"
+@map font 46 to "URWChanceryL-MediumItalic", "URWChanceryL-MediumItalic"
+@map font 47 to "URWGothicL-Book", "URWGothicL-Book"
+@map font 48 to "URWGothicL-BookOblique", "URWGothicL-BookOblique"
+@map font 49 to "URWGothicL-Demi", "URWGothicL-Demi"
+@map font 50 to "URWGothicL-DemiOblique", "URWGothicL-DemiOblique"
+@map font 51 to "URWPalladioL-Bold", "URWPalladioL-Bold"
+@map font 52 to "URWPalladioL-BoldItalic", "URWPalladioL-BoldItalic"
+@map font 53 to "URWPalladioL-Italic", "URWPalladioL-Italic"
+@map font 54 to "URWPalladioL-Roman", "URWPalladioL-Roman"
+@map font 55 to "Utopia-Bold", "Utopia-Bold"
+@map font 56 to "Utopia-BoldItalic", "Utopia-BoldItalic"
+@map font 57 to "Utopia-Italic", "Utopia-Italic"
+@map font 58 to "Utopia-Regular", "Utopia-Regular"
+@map font 13 to "ZapfDingbats", "ZapfDingbats"
+@map color 0 to (255, 255, 255), "white"
+@map color 1 to (0, 0, 0), "black"
+@map color 2 to (255, 0, 0), "red"
+@map color 3 to (0, 255, 0), "green"
+@map color 4 to (0, 0, 255), "blue"
+@map color 5 to (255, 255, 0), "yellow"
+@map color 6 to (188, 143, 143), "brown"
+@map color 7 to (220, 220, 220), "grey"
+@map color 8 to (148, 0, 211), "violet"
+@map color 9 to (0, 255, 255), "cyan"
+@map color 10 to (255, 0, 255), "magenta"
+@map color 11 to (255, 165, 0), "orange"
+@map color 12 to (114, 33, 188), "indigo"
+@map color 13 to (103, 7, 72), "maroon"
+@map color 14 to (64, 224, 208), "turquoise"
+@map color 15 to (0, 139, 0), "green4"
+@reference date 0
+@date wrap off
+@date wrap year 1950
+@default linewidth 1.0
+@default linestyle 1
+@default color 1
+@default pattern 1
+@default font 0
+@default char size 1.000000
+@default symbol size 1.000000
+@default sformat "%.8g"
+@background color 0
+@page background fill on
+@timestamp off
+@timestamp 0.03, 0.03
+@timestamp color 1
+@timestamp rot 0
+@timestamp font 0
+@timestamp char size 1.000000
+@timestamp def "Thu Sep 27 11:13:29 2018"
+@r0 off
+@link r0 to g0
+@r0 type above
+@r0 linestyle 1
+@r0 linewidth 1.0
+@r0 color 1
+@r0 line 0, 0, 0, 0
+@r1 off
+@link r1 to g0
+@r1 type above
+@r1 linestyle 1
+@r1 linewidth 1.0
+@r1 color 1
+@r1 line 0, 0, 0, 0
+@r2 off
+@link r2 to g0
+@r2 type above
+@r2 linestyle 1
+@r2 linewidth 1.0
+@r2 color 1
+@r2 line 0, 0, 0, 0
+@r3 off
+@link r3 to g0
+@r3 type above
+@r3 linestyle 1
+@r3 linewidth 1.0
+@r3 color 1
+@r3 line 0, 0, 0, 0
+@r4 off
+@link r4 to g0
+@r4 type above
+@r4 linestyle 1
+@r4 linewidth 1.0
+@r4 color 1
+@r4 line 0, 0, 0, 0
+@g0 on
+@g0 hidden false
+@g0 type XY
+@g0 stacked false
+@g0 bar hgap 0.000000
+@g0 fixedpoint off
+@g0 fixedpoint type 0
+@g0 fixedpoint xy 0.000000, 0.000000
+@g0 fixedpoint format general general
+@g0 fixedpoint prec 6, 6
+@with g0
+@    world 0, 0, 200, 3000
+@    stack world 0, 0, 0, 0
+@    znorm 1
+@    view 0.150000, 0.150000, 1.150000, 0.850000
+@    title "ipts_17894_run_70456_angle"
+@    title font 0
+@    title size 1.500000
+@    title color 1
+@    subtitle ""
+@    subtitle font 0
+@    subtitle size 1.000000
+@    subtitle color 1
+@    xaxes scale Normal
+@    yaxes scale Normal
+@    xaxes invert off
+@    yaxes invert off
+@    xaxis  on
+@    xaxis  type zero false
+@    xaxis  offset 0.000000 , 0.000000
+@    xaxis  bar on
+@    xaxis  bar color 1
+@    xaxis  bar linestyle 1
+@    xaxis  bar linewidth 1.0
+@    xaxis  label ""
+@    xaxis  label layout para
+@    xaxis  label place auto
+@    xaxis  label char size 1.000000
+@    xaxis  label font 0
+@    xaxis  label color 1
+@    xaxis  label place normal
+@    xaxis  tick on
+@    xaxis  tick major 50
+@    xaxis  tick minor ticks 1
+@    xaxis  tick default 6
+@    xaxis  tick place rounded true
+@    xaxis  tick in
+@    xaxis  tick major size 1.000000
+@    xaxis  tick major color 1
+@    xaxis  tick major linewidth 1.0
+@    xaxis  tick major linestyle 1
+@    xaxis  tick major grid off
+@    xaxis  tick minor color 1
+@    xaxis  tick minor linewidth 1.0
+@    xaxis  tick minor linestyle 1
+@    xaxis  tick minor grid off
+@    xaxis  tick minor size 0.500000
+@    xaxis  ticklabel on
+@    xaxis  ticklabel format general
+@    xaxis  ticklabel prec 5
+@    xaxis  ticklabel formula ""
+@    xaxis  ticklabel append ""
+@    xaxis  ticklabel prepend ""
+@    xaxis  ticklabel angle 0
+@    xaxis  ticklabel skip 0
+@    xaxis  ticklabel stagger 0
+@    xaxis  ticklabel place normal
+@    xaxis  ticklabel offset auto
+@    xaxis  ticklabel offset 0.000000 , 0.010000
+@    xaxis  ticklabel start type auto
+@    xaxis  ticklabel start 0.000000
+@    xaxis  ticklabel stop type auto
+@    xaxis  ticklabel stop 0.000000
+@    xaxis  ticklabel char size 1.000000
+@    xaxis  ticklabel font 0
+@    xaxis  ticklabel color 1
+@    xaxis  tick place both
+@    xaxis  tick spec type none
+@    yaxis  on
+@    yaxis  type zero false
+@    yaxis  offset 0.000000 , 0.000000
+@    yaxis  bar on
+@    yaxis  bar color 1
+@    yaxis  bar linestyle 1
+@    yaxis  bar linewidth 1.0
+@    yaxis  label ""
+@    yaxis  label layout para
+@    yaxis  label place auto
+@    yaxis  label char size 1.000000
+@    yaxis  label font 0
+@    yaxis  label color 1
+@    yaxis  label place normal
+@    yaxis  tick on
+@    yaxis  tick major 500
+@    yaxis  tick minor ticks 1
+@    yaxis  tick default 6
+@    yaxis  tick place rounded true
+@    yaxis  tick in
+@    yaxis  tick major size 1.000000
+@    yaxis  tick major color 1
+@    yaxis  tick major linewidth 1.0
+@    yaxis  tick major linestyle 1
+@    yaxis  tick major grid off
+@    yaxis  tick minor color 1
+@    yaxis  tick minor linewidth 1.0
+@    yaxis  tick minor linestyle 1
+@    yaxis  tick minor grid off
+@    yaxis  tick minor size 0.500000
+@    yaxis  ticklabel on
+@    yaxis  ticklabel format general
+@    yaxis  ticklabel prec 5
+@    yaxis  ticklabel formula ""
+@    yaxis  ticklabel append ""
+@    yaxis  ticklabel prepend ""
+@    yaxis  ticklabel angle 0
+@    yaxis  ticklabel skip 0
+@    yaxis  ticklabel stagger 0
+@    yaxis  ticklabel place normal
+@    yaxis  ticklabel offset auto
+@    yaxis  ticklabel offset 0.000000 , 0.010000
+@    yaxis  ticklabel start type auto
+@    yaxis  ticklabel start 0.000000
+@    yaxis  ticklabel stop type auto
+@    yaxis  ticklabel stop 0.000000
+@    yaxis  ticklabel char size 1.000000
+@    yaxis  ticklabel font 0
+@    yaxis  ticklabel color 1
+@    yaxis  tick place both
+@    yaxis  tick spec type none
+@    altxaxis  off
+@    altyaxis  off
+@    legend on
+@    legend loctype view
+@    legend 0.85, 0.8
+@    legend box color 1
+@    legend box pattern 1
+@    legend box linewidth 1.0
+@    legend box linestyle 1
+@    legend box fill color 0
+@    legend box fill pattern 1
+@    legend font 0
+@    legend char size 1.000000
+@    legend color 1
+@    legend length 4
+@    legend vgap 1
+@    legend hgap 1
+@    legend invert false
+@    frame type 0
+@    frame linestyle 1
+@    frame linewidth 1.0
+@    frame color 1
+@    frame pattern 1
+@    frame background color 0
+@    frame background pattern 0
+@    s0 hidden false
+@    s0 type xy
+@    s0 symbol 0
+@    s0 symbol size 1.000000
+@    s0 symbol color 1
+@    s0 symbol pattern 1
+@    s0 symbol fill color 1
+@    s0 symbol fill pattern 0
+@    s0 symbol linewidth 1.0
+@    s0 symbol linestyle 1
+@    s0 symbol char 65
+@    s0 symbol char font 0
+@    s0 symbol skip 0
+@    s0 line type 1
+@    s0 line linestyle 1
+@    s0 line linewidth 1.0
+@    s0 line color 1
+@    s0 line pattern 1
+@    s0 baseline type 0
+@    s0 baseline off
+@    s0 dropline off
+@    s0 fill type 0
+@    s0 fill rule 0
+@    s0 fill color 1
+@    s0 fill pattern 1
+@    s0 avalue off
+@    s0 avalue type 2
+@    s0 avalue char size 1.000000
+@    s0 avalue font 0
+@    s0 avalue color 1
+@    s0 avalue rot 0
+@    s0 avalue format general
+@    s0 avalue prec 3
+@    s0 avalue prepend ""
+@    s0 avalue append ""
+@    s0 avalue offset 0.000000 , 0.000000
+@    s0 errorbar on
+@    s0 errorbar place both
+@    s0 errorbar color 1
+@    s0 errorbar pattern 1
+@    s0 errorbar size 1.000000
+@    s0 errorbar linewidth 1.0
+@    s0 errorbar linestyle 1
+@    s0 errorbar riser linewidth 1.0
+@    s0 errorbar riser linestyle 1
+@    s0 errorbar riser clip off
+@    s0 errorbar riser clip length 0.100000
+@    s0 comment "searchBragg/ipts_17894_run_70456_angle.dat"
+@    s0 legend  ""
+@target G0.S0
+@type xy
+6.15755 0
+6.2731 0
+6.3887 0
+6.50437 0
+6.62009 0
+6.73587 0
+6.8517 0
+6.96759 0
+7.08353 0
+7.19952 0
+7.31557 0
+7.43166 0
+7.54781 0
+7.664 0
+7.78024 0
+7.89653 0
+8.01286 0
+8.12924 0
+8.24567 0
+8.36213 0
+8.47864 0
+8.59519 0
+8.71178 0
+8.82841 0
+8.94508 0
+9.06179 0
+9.17853 0
+9.29531 0
+9.41212 0
+9.52897 0
+9.64584 0
+9.76276 0
+9.8797 0
+9.99667 0
+10.1137 0
+10.2307 0
+10.3478 0
+10.4648 0
+10.5819 0
+10.6991 0
+10.8162 0
+10.9334 0
+11.0506 0
+11.1678 0
+11.285 0
+11.4023 0
+11.5196 0
+11.6369 0
+11.7542 0
+11.8715 0
+11.9888 0
+12.1062 0
+12.2235 0
+12.3409 0
+12.4582 0
+12.5756 0
+12.693 0
+12.8104 0
+12.9278 0
+13.0452 0
+13.1626 0
+13.28 0
+13.3974 0
+13.5149 0
+13.6323 0
+13.7497 0
+13.8671 0
+13.9845 0
+14.1019 0
+14.2193 0
+14.3367 0
+14.4541 0
+14.5714 0
+14.6888 0
+14.8062 0
+14.9235 0
+15.0408 0
+15.1581 0
+15.2755 0
+15.3927 0
+15.51 0
+15.6273 0
+15.7445 0
+15.8617 0
+15.9789 0
+16.0961 0
+16.2132 0
+16.3304 0
+16.4475 0
+16.5646 0
+16.6816 0
+16.7986 0
+16.9156 0
+17.0326 0
+17.1496 0
+17.2665 0
+17.3833 0
+17.5002 0
+17.617 0
+17.7338 0
+17.8505 0
+17.9672 0
+18.0839 0
+18.2005 0
+18.3171 0
+18.4337 0
+18.5502 0
+18.6666 0
+18.7831 0
+18.8994 0
+19.0158 0
+19.1321 0
+19.2483 0
+19.3645 0
+19.4806 0
+19.5967 0
+19.7128 0
+19.8288 0
+19.9447 0
+20.0606 0
+20.1764 0
+20.2922 0
+20.4079 0
+20.5236 0
+20.6392 0
+20.7548 0
+20.8702 0
+23.3078 0
+23.4233 0
+23.539 0
+23.6547 0
+23.7704 0
+23.8862 0
+24.0021 0
+24.118 0
+24.234 0
+24.35 0
+24.4661 215
+24.5822 261
+24.6984 248
+24.8146 315
+24.9309 376
+25.0472 512
+25.1636 589
+25.28 645
+25.3965 652
+25.513 715
+25.6296 679
+25.7462 639
+25.8628 627
+25.9795 602
+26.0962 638
+26.213 593
+26.3298 615
+26.4466 626
+26.5635 549
+26.6804 494
+26.7973 462
+26.9143 407
+27.0313 396
+27.1483 398
+27.2653 372
+27.3824 376
+27.4996 347
+27.6167 330
+27.7339 339
+27.8511 450
+27.9683 526
+28.0855 632
+28.2028 735
+28.3201 761
+28.4374 839
+28.5547 754
+28.6721 903
+28.7894 878
+28.9068 875
+29.0242 849
+29.1416 780
+29.259 770
+29.3764 783
+29.4939 684
+29.6113 629
+29.7288 565
+29.8463 471
+29.9638 469
+30.0812 446
+30.1987 394
+30.3162 399
+30.4337 407
+30.5512 398
+30.6687 401
+30.7862 373
+30.9037 371
+31.0212 379
+31.1387 363
+31.2562 370
+31.3737 400
+31.4912 467
+31.6087 459
+31.7262 454
+31.8436 473
+31.9611 495
+32.0785 471
+32.1959 465
+32.3134 453
+32.4308 473
+32.5482 414
+32.6655 417
+32.7829 411
+32.9002 379
+33.0176 372
+33.1349 313
+33.2522 338
+33.3694 312
+33.4867 364
+33.6039 326
+33.7211 325
+33.8383 363
+33.9554 341
+34.0725 396
+34.1896 365
+34.3067 391
+34.4237 362
+34.5407 405
+34.6577 359
+34.7746 378
+34.8915 385
+35.0084 421
+35.1252 448
+35.242 400
+35.3587 424
+35.4755 393
+35.5921 406
+35.7088 389
+35.8254 354
+35.9419 355
+36.0584 330
+36.1749 325
+36.2913 278
+36.4077 259
+36.524 218
+36.6403 237
+36.7565 184
+36.8727 176
+36.9889 145
+37.1049 146
+37.221 0
+37.3369 0
+37.4529 0
+37.5687 0
+37.6845 0
+37.8003 0
+37.916 0
+38.0316 0
+38.1472 0
+40.5851 0
+40.7008 0
+40.8164 0
+40.9322 0
+41.048 0
+41.1639 0
+41.2798 0
+41.3958 0
+41.5118 0
+41.6279 0
+41.744 150
+41.8602 173
+41.9765 235
+42.0928 256
+42.2091 225
+42.3255 264
+42.4419 243
+42.5584 285
+42.675 275
+42.7915 297
+42.9081 294
+43.0248 346
+43.1415 349
+43.2582 348
+43.375 333
+43.4918 309
+43.6087 328
+43.7256 314
+43.8425 341
+43.9595 295
+44.0765 334
+44.1935 310
+44.3106 295
+44.4277 304
+44.5448 283
+44.6619 295
+44.7791 296
+44.8963 268
+45.0136 269
+45.1308 265
+45.2481 229
+45.3654 242
+45.4827 260
+45.6001 246
+45.7174 270
+45.8348 254
+45.9522 279
+46.0697 290
+46.1871 291
+46.3046 337
+46.422 357
+46.5395 351
+46.657 343
+46.7745 365
+46.892 283
+47.0096 269
+47.1271 272
+47.2446 292
+47.3622 278
+47.4797 292
+47.5973 309
+47.7149 263
+47.8324 256
+47.95 298
+48.0675 271
+48.1851 304
+48.3027 310
+48.4202 267
+48.5378 299
+48.6554 264
+48.7729 264
+48.8904 262
+49.008 247
+49.1255 245
+49.243 287
+49.3605 283
+49.478 286
+49.5955 316
+49.713 311
+49.8304 271
+49.9479 318
+50.0653 308
+50.1827 272
+50.3001 256
+50.4175 226
+50.5348 210
+50.6521 227
+50.7694 265
+50.8867 264
+51.004 272
+51.1212 277
+51.2384 292
+51.3556 265
+51.4727 273
+51.5899 273
+51.707 269
+51.824 294
+51.9411 288
+52.0581 281
+52.175 254
+52.2919 261
+52.4088 268
+52.5257 262
+52.6425 261
+52.7593 226
+52.876 240
+52.9927 254
+53.1094 267
+53.226 242
+53.3426 229
+53.4591 204
+53.5756 190
+53.692 176
+53.8084 147
+53.9248 134
+54.0411 120
+54.1573 94
+54.2735 0
+54.3896 0
+54.5057 0
+54.6217 0
+54.7377 0
+54.8537 0
+54.9695 0
+55.0853 0
+55.2011 0
+55.3168 0
+55.4324 0
+57.824 0
+57.9396 0
+58.0553 0
+58.1711 0
+58.2869 0
+58.4028 0
+58.5187 0
+58.6347 0
+58.7508 0
+58.8669 0
+58.983 496
+59.0992 483
+59.2155 549
+59.3318 627
+59.4482 732
+59.5646 845
+59.681 916
+59.7975 909
+59.9141 940
+60.0306 871
+60.1473 798
+60.2639 725
+60.3807 666
+60.4974 652
+60.6142 570
+60.731 482
+60.8479 468
+60.9648 401
+61.0818 406
+61.1987 325
+61.3158 332
+61.4328 317
+61.5499 307
+61.667 302
+61.7841 309
+61.9013 311
+62.0185 323
+62.1357 300
+62.253 284
+62.3702 293
+62.4875 306
+62.6049 285
+62.7222 295
+62.8396 288
+62.9569 288
+63.0743 309
+63.1918 327
+63.3092 281
+63.4267 314
+63.5441 309
+63.6616 297
+63.7791 278
+63.8966 331
+64.0142 309
+64.1317 297
+64.2492 296
+64.3668 321
+64.4843 299
+64.6019 298
+64.7195 312
+64.837 277
+64.9546 297
+65.0722 283
+65.1898 266
+65.3074 260
+65.4249 298
+65.5425 316
+65.6601 273
+65.7777 312
+65.8952 290
+66.0128 255
+66.1304 234
+66.2479 193
+66.3655 215
+66.483 257
+66.6005 297
+66.718 282
+66.8355 271
+66.953 277
+67.0705 270
+67.1879 302
+67.3054 262
+67.4228 279
+67.5402 271
+67.6576 294
+67.7749 322
+67.8923 319
+68.0096 310
+68.1269 275
+68.2442 267
+68.3614 321
+68.4787 277
+68.5958 310
+68.713 258
+68.8302 264
+68.9473 267
+69.0643 265
+69.1814 278
+69.2984 286
+69.4154 278
+69.5323 260
+69.6492 247
+69.7661 215
+69.8829 207
+69.9997 194
+70.1165 240
+70.2332 211
+70.3499 218
+70.4665 227
+70.5831 194
+70.6996 202
+70.8161 180
+70.9326 159
+71.049 148
+71.1653 160
+71.2817 142
+71.3979 130
+71.5141 130
+71.6303 129
+71.7464 121
+71.8624 0
+71.9784 0
+72.0944 0
+72.2102 0
+72.3261 0
+72.4418 0
+72.5575 0
+72.6732 0
+75.1054 0
+75.2209 0
+75.3365 0
+75.4521 0
+75.5678 0
+75.6835 0
+75.7993 0
+75.9151 0
+76.031 0
+76.147 221
+76.263 237
+76.3791 241
+76.4952 248
+76.6113 271
+76.7276 229
+76.8438 269
+76.9601 259
+77.0765 248
+77.1929 279
+77.3093 253
+77.4258 278
+77.5423 257
+77.6589 269
+77.7755 244
+77.8921 254
+78.0088 249
+78.1256 256
+78.2423 277
+78.3591 302
+78.4759 242
+78.5928 265
+78.7097 228
+78.8266 209
+78.9436 191
+79.0606 205
+79.1776 232
+79.2946 262
+79.4117 263
+79.5288 240
+79.6459 289
+79.7631 277
+79.8802 265
+79.9974 277
+80.1147 280
+80.2319 276
+80.3491 265
+80.4664 284
+80.5837 260
+80.701 289
+80.8183 284
+80.9357 283
+81.053 285
+81.1704 282
+81.2877 260
+81.4051 269
+81.5225 295
+81.6399 284
+81.7573 285
+81.8747 280
+81.9922 269
+82.1096 314
+82.227 270
+82.3444 236
+82.4619 213
+82.5793 200
+82.6967 213
+82.8142 227
+82.9316 309
+83.049 285
+83.1664 325
+83.2838 292
+83.4012 281
+83.5186 306
+83.636 284
+83.7534 266
+83.8708 292
+83.9881 297
+84.1055 300
+84.2228 286
+84.3401 296
+84.4575 323
+84.5747 303
+84.692 307
+84.8093 296
+84.9265 274
+85.0437 273
+85.1609 264
+85.2781 285
+85.3952 293
+85.5123 297
+85.6294 286
+85.7465 288
+85.8636 287
+85.9806 234
+86.0976 216
+86.2145 233
+86.3315 234
+86.4484 287
+86.5652 311
+86.682 351
+86.7988 318
+86.9156 369
+87.0323 407
+87.149 450
+87.2657 575
+87.3823 583
+87.4988 665
+87.6154 675
+87.7318 801
+87.8483 878
+87.9647 921
+88.081 1044
+88.1973 1029
+88.3136 1108
+88.4298 1160
+88.546 1256
+88.6621 1263
+88.7781 1316
+88.8942 0
+89.0101 0
+89.126 0
+89.2419 0
+89.3577 0
+89.4734 0
+89.5891 0
+89.7047 0
+89.8203 0
+89.9358 0
+92.3269 0
+92.4424 0
+92.558 0
+92.6736 0
+92.7893 0
+92.905 0
+93.0208 0
+93.1366 0
+93.2525 0
+93.3685 0
+93.4845 0
+93.6005 1045
+93.7167 985
+93.8328 941
+93.949 895
+94.0653 884
+94.1816 860
+94.2979 891
+94.4143 950
+94.5307 967
+94.6472 908
+94.7637 859
+94.8803 810
+94.9969 710
+95.1135 603
+95.2302 741
+95.3469 822
+95.4637 987
+95.5805 1204
+95.6973 1221
+95.8142 1332
+95.9311 1273
+96.048 1276
+96.1649 1256
+96.2819 1249
+96.3989 1317
+96.516 1217
+96.633 1247
+96.7501 1175
+96.8673 1236
+96.9844 1168
+97.1016 1183
+97.2188 1119
+97.336 1109
+97.4532 1067
+97.5704 1047
+97.6877 1036
+97.805 920
+97.9223 884
+98.0396 854
+98.1569 761
+98.2743 685
+98.3916 564
+98.509 468
+98.6264 399
+98.7438 385
+98.8612 425
+98.9786 431
+99.096 429
+99.2134 450
+99.3308 464
+99.4482 481
+99.5656 488
+99.6831 533
+99.8005 643
+99.9179 699
+100.035 800
+100.153 804
+100.27 883
+100.388 959
+100.505 1035
+100.622 1117
+100.74 1213
+100.857 1348
+100.975 1374
+101.092 1437
+101.209 1506
+101.327 1513
+101.444 1490
+101.561 1458
+101.679 1446
+101.796 1368
+101.913 1281
+102.03 1052
+102.148 814
+102.265 748
+102.382 867
+102.499 995
+102.616 1099
+102.733 1119
+102.851 1136
+102.968 1058
+103.085 1081
+103.202 985
+103.319 913
+103.436 873
+103.552 890
+103.669 807
+103.786 756
+103.903 658
+104.02 636
+104.137 587
+104.253 579
+104.37 472
+104.487 429
+104.603 414
+104.72 362
+104.836 275
+104.953 248
+105.069 219
+105.186 162
+105.302 156
+105.418 156
+105.535 110
+105.651 105
+105.767 88
+105.883 72
+105.999 77
+106.115 0
+106.231 0
+106.347 0
+106.463 0
+106.579 0
+106.694 0
+106.81 0
+106.926 0
+107.041 0
+107.157 0
+109.576 0
+109.692 0
+109.807 0
+109.923 0
+110.039 0
+110.155 0
+110.27 0
+110.386 0
+110.502 0
+110.618 410
+110.735 390
+110.851 360
+110.967 312
+111.083 331
+111.199 370
+111.316 399
+111.432 374
+111.549 424
+111.665 403
+111.782 433
+111.898 423
+112.015 384
+112.132 387
+112.248 365
+112.365 383
+112.482 360
+112.599 396
+112.716 380
+112.832 397
+112.949 407
+113.066 380
+113.183 357
+113.3 373
+113.417 347
+113.534 361
+113.652 358
+113.769 318
+113.886 333
+114.003 338
+114.12 345
+114.238 347
+114.355 283
+114.472 255
+114.589 254
+114.707 252
+114.824 304
+114.942 311
+115.059 318
+115.176 306
+115.294 358
+115.411 320
+115.529 332
+115.646 326
+115.764 309
+115.881 300
+115.999 343
+116.116 301
+116.234 330
+116.351 358
+116.469 352
+116.586 380
+116.704 363
+116.821 389
+116.939 385
+117.056 367
+117.174 365
+117.291 350
+117.409 360
+117.526 362
+117.644 366
+117.761 339
+117.879 331
+117.996 296
+118.114 292
+118.231 291
+118.349 312
+118.466 352
+118.584 362
+118.701 328
+118.819 365
+118.936 338
+119.053 355
+119.171 287
+119.288 328
+119.405 292
+119.523 329
+119.64 323
+119.757 317
+119.875 329
+119.992 357
+120.109 343
+120.226 387
+120.343 378
+120.46 358
+120.578 360
+120.695 374
+120.812 363
+120.929 333
+121.046 347
+121.163 398
+121.279 368
+121.396 396
+121.513 407
+121.63 419
+121.747 367
+121.863 418
+121.98 441
+122.097 428
+122.213 474
+122.33 549
+122.446 568
+122.563 559
+122.679 607
+122.795 635
+122.912 620
+123.028 669
+123.144 713
+123.26 687
+123.377 0
+123.493 0
+123.609 0
+123.725 0
+123.84 0
+123.956 0
+124.072 0
+124.188 0
+124.303 0
+124.419 0
+126.852 0
+126.968 0
+127.083 0
+127.199 0
+127.315 0
+127.431 0
+127.547 0
+127.663 0
+127.779 0
+127.895 0
+128.011 0
+128.127 0
+128.243 0
+128.359 1613
+128.476 1662
+128.592 1652
+128.708 1721
+128.825 1710
+128.941 1597
+129.058 1588
+129.174 1677
+129.291 1702
+129.408 1771
+129.524 1776
+129.641 1936
+129.758 2068
+129.875 2165
+129.992 2181
+130.108 2177
+130.225 2080
+130.342 2085
+130.459 1885
+130.576 1799
+130.693 1577
+130.81 1346
+130.928 1480
+131.045 1531
+131.162 1574
+131.279 1688
+131.396 1685
+131.513 1654
+131.631 1706
+131.748 1720
+131.865 1589
+131.983 1517
+132.1 1610
+132.217 1502
+132.335 1431
+132.452 1432
+132.57 1396
+132.687 1329
+132.804 1442
+132.922 1388
+133.039 1379
+133.157 1383
+133.274 1328
+133.392 1315
+133.509 1368
+133.627 1328
+133.744 1357
+133.862 1276
+133.979 1227
+134.097 1154
+134.214 979
+134.332 907
+134.449 854
+134.567 871
+134.684 984
+134.802 1007
+134.919 948
+135.037 990
+135.154 931
+135.272 925
+135.389 861
+135.507 884
+135.624 843
+135.742 760
+135.859 732
+135.977 720
+136.094 676
+136.211 715
+136.329 654
+136.446 616
+136.564 587
+136.681 588
+136.798 586
+136.915 565
+137.033 521
+137.15 559
+137.267 569
+137.384 521
+137.502 531
+137.619 496
+137.736 459
+137.853 504
+137.97 471
+138.087 406
+138.204 490
+138.321 451
+138.438 442
+138.555 499
+138.672 443
+138.788 436
+138.905 466
+139.022 394
+139.139 396
+139.255 359
+139.372 322
+139.488 331
+139.605 318
+139.721 305
+139.838 292
+139.954 288
+140.071 237
+140.187 272
+140.303 252
+140.419 283
+140.535 280
+140.652 309
+140.768 0
+140.884 0
+141 0
+141.115 0
+141.231 0
+141.347 0
+141.463 0
+141.578 0
+141.694 0
+144.104 0
+144.219 0
+144.335 0
+144.45 0
+144.566 0
+144.682 0
+144.798 0
+144.914 0
+145.03 0
+145.146 554
+145.262 663
+145.378 654
+145.494 665
+145.61 702
+145.726 828
+145.842 821
+145.959 810
+146.075 851
+146.192 890
+146.308 924
+146.425 924
+146.541 825
+146.658 700
+146.774 612
+146.891 560
+147.008 707
+147.125 840
+147.241 928
+147.358 954
+147.475 951
+147.592 944
+147.709 935
+147.826 939
+147.943 936
+148.06 901
+148.177 925
+148.294 881
+148.411 925
+148.528 976
+148.645 910
+148.762 882
+148.88 928
+148.997 896
+149.114 914
+149.231 913
+149.349 907
+149.466 888
+149.583 912
+149.701 935
+149.818 926
+149.935 918
+150.053 871
+150.17 828
+150.287 747
+150.405 632
+150.522 550
+150.64 654
+150.757 723
+150.875 743
+150.992 744
+151.11 782
+151.227 750
+151.344 759
+151.462 743
+151.579 756
+151.697 753
+151.814 787
+151.932 762
+152.049 776
+152.167 762
+152.284 776
+152.402 772
+152.519 783
+152.636 792
+152.754 819
+152.871 819
+152.989 840
+153.106 845
+153.223 824
+153.341 827
+153.458 824
+153.575 794
+153.693 877
+153.81 838
+153.927 724
+154.044 659
+154.162 603
+154.279 681
+154.396 746
+154.513 813
+154.63 818
+154.747 826
+154.864 899
+154.981 875
+155.098 864
+155.215 885
+155.332 857
+155.449 876
+155.566 874
+155.683 840
+155.8 796
+155.917 750
+156.033 816
+156.15 0
+156.267 0
+156.383 0
+156.5 0
+156.617 0
+156.733 0
+156.85 0
+156.966 0
+157.082 0
+157.199 0
+157.315 0
+157.431 0
+157.547 0
+157.664 0
+157.78 0
+157.896 0
+158.012 0
+158.128 0
+158.244 0
+158.359 0
+158.475 0
+158.591 0
+158.706 0
+&
