@@ -1,0 +1,7 @@
+ipts_13326_run_53202_angle.dat
+ipts_13326_run_53293_angle.dat
+ipts_13326_run_53135_angle.dat
+ipts_18019_run_68616_angle.dat
+ipts_13326_run_53259_angle.dat
+ipts_13326_run_53272_angle.dat
+ipts_13326_run_53325_angle.dat
